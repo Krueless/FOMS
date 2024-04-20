@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Branch implements Serializable{
 
@@ -13,8 +14,8 @@ public class Branch implements Serializable{
 	 * @param staffQuota
 	 */
 	public Branch(String branchName, String location, int staffQuota) {
-		// TODO - implement Branch.Branch
-		throw new UnsupportedOperationException();
+		this.branchName = branchName;
+        	this.location = location;
 	}
 	
 	public String getBranchName() {
@@ -25,6 +26,7 @@ public class Branch implements Serializable{
 	 * 
 	 * @param branchName
 	 */
+
 	public void setBranchName(String branchName) {
 		this.branchName = branchName;
 	}
@@ -52,5 +54,12 @@ public class Branch implements Serializable{
 	public void setLocation(String location) {
 		this.location = location;
 	}
+
+	public String toString(){
+        String out;
+        out = "Branch Name: " + branchName + ", Location: " + location + ", Staff Quota: " + StaffQuota;
+        return out;
+    }
+	
 
 }
