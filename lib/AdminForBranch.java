@@ -1,21 +1,31 @@
 public class AdminForBranch extends Admin implements IAdminForBranch {
-
 	private IDataManager branchDB;
 	private IDisplay displayFormatter;
-
-	public void openBranch() {
-		// TODO - implement AdminForBranch.openBranch
-		throw new UnsupportedOperationException();
+	public AdminForBranch(IDataManager branchDB,IDisplay displayFormatter){
+		this.branchDB=branchDB;
+		this.displayFormatter=displayFormatter;
 	}
-
-	public void closeBranch() {
-		// TODO - implement AdminForBranch.closeBranch
-		throw new UnsupportedOperationException();
+	public void openBranch(){
+		//obtain the attributes for the new branch
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter the staff quota");
+		int staffQuota=sc.nextInt();
+		ArrayList<FoodItem> menu=new ArrayList<FoodItem>();
+		System.out.println("Enter the branch name");
+		String branchName=sc.nextLine();
+		ArrayList<Order> orderList=new ArrayList<Order>();
+		Sytem.out.println("Enter the location");
+		String location=sc.nextLine();
+		//create a new branch object
+		Branch branch=new Branch(staffQuota,menu,branchName,orderList,location);
+		//add the new Branch object to branchList in DataManagerForBranch
+	        branchDB.add(branch);
+	    }
+	public void closeBranch(){
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter the branch to be closed");
+		String branchName=sc.nextLine();
+		Branch branch=branchDB.find(branchName);//find the branch
+		branchDB.delete(branch);//delete the branch
 	}
-
-	public AdminForBranch() {
-		// TODO - implement AdminForBranch.AdminForBranch
-		throw new UnsupportedOperationException();
-	}
-
 }
