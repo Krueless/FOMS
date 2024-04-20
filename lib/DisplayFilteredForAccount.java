@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class DisplayFilteredForAccount implements IDisplayFilteredForAccount {
 
 	/**
@@ -5,8 +7,13 @@ public class DisplayFilteredForAccount implements IDisplayFilteredForAccount {
 	 * @param data
 	 */
 	public void displayAll(Object data) {
-		// TODO - implement DisplayFilteredForAccount.displayAll
-		throw new UnsupportedOperationException();
+		if (data instanceof ArrayList){
+            @SuppressWarnings("unchecked")
+            ArrayList<Object> array = (ArrayList<Object>) data;
+            for (int i = 0; i < array.size(); i++){
+                System.out.println(i+1 +": " + array.get(i).toString());
+            }
+        }
 	}
 
 	/**
@@ -15,9 +22,19 @@ public class DisplayFilteredForAccount implements IDisplayFilteredForAccount {
 	 * @param branchName
 	 */
 	public void displayFilteredByBranch(IGetBranchName data, String branchName) {
-		// TODO - implement DisplayFilteredForAccount.displayFilteredByBranch
-		throw new UnsupportedOperationException();
+		if (data instanceof ArrayList){
+            @SuppressWarnings("unchecked")
+            ArrayList<IGetBranchName> array = (ArrayList<IGetBranchName>) data;
+            int j = 1;
+            for (int i = 0; i < array.size(); i++){
+                if (array.get(i).getBranchName().compareTo(branchName) == 0){
+                    System.out.println(j +": " + array.get(i).toString());
+                    j++ ;
+                }
+            }
+        }
 	}
+	//TODO implement error checking for admin
 
 	/**
 	 * 
@@ -25,8 +42,13 @@ public class DisplayFilteredForAccount implements IDisplayFilteredForAccount {
 	 * @param role
 	 */
 	public void displayFilteredByRole(ArrayList<Account> data, String role) {
-		// TODO - implement DisplayFilteredForAccount.displayFilteredByRole
-		throw new UnsupportedOperationException();
+		int j = 1 ;
+        for (Account account: data){
+            if (account.getRole().compareTo(role) == 0){
+                System.out.println(j + ": " + account.toString());
+                j++ ;
+            }
+        }
 	}
 
 	/**
@@ -35,8 +57,13 @@ public class DisplayFilteredForAccount implements IDisplayFilteredForAccount {
 	 * @param gender
 	 */
 	public void displayFilteredByGender(ArrayList<Account> data, String gender) {
-		// TODO - implement DisplayFilteredForAccount.displayFilteredByGender
-		throw new UnsupportedOperationException();
+		int j = 1 ;
+        for (Account account: data){
+            if (account.getGender().compareTo(gender) == 0){
+                System.out.println(j + ": " + account.toString());
+                j++ ;
+            }
+        }
 	}
 
 	/**
@@ -45,8 +72,13 @@ public class DisplayFilteredForAccount implements IDisplayFilteredForAccount {
 	 * @param age
 	 */
 	public void displayFilteredByAge(ArrayList<Account> data, int age) {
-		// TODO - implement DisplayFilteredForAccount.displayFilteredByAge
-		throw new UnsupportedOperationException();
+		int j = 1 ;
+        for (Account account: data){
+            if (account.getAge() == age){
+                System.out.println(j + ": " + account.toString());
+                j++ ;
+            }
+        }
 	}
 
 }

@@ -1,7 +1,6 @@
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
 import java.nio.file.*;
 import java.util.Scanner;
 import java.io.Serializable;
@@ -117,7 +116,7 @@ public class DataManagerForBranch implements IDataManager<Branch,String>, Serial
                 String line = scanner.nextLine();
                 String[] data = line.split(",");
                 // Create new Branch object and add to the list
-                Branch branch = new Branch(data[0], data[1]); // Adapt constructor call as necessary
+                Branch branch = new Branch(data[0], data[1], Integer.parseInt(data[2])); // Adapt constructor call as necessary
                 branchList.add(branch);
             }
         } catch (FileNotFoundException e) {

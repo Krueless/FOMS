@@ -1,6 +1,8 @@
+import java.util.Scanner;
+
 public class BranchUI {
 
-	private IDataManager branchDB;
+	private IDataManager<Branch,String> branchDB;
 	private IDisplay displayFormatter;
 
 	/**
@@ -23,9 +25,9 @@ public class BranchUI {
 	/**
 	 * 
 	 * @param branchDB
-	 * @param dataFormatter
+	 * @param displayFormatter
 	 */
-	public BranchUI(IDataManager<Branch, String> branchDB, IDisplay dataFormatter) {
+	public BranchUI(IDataManager<Branch, String> branchDB, IDisplay displayFormatter) {
 		this.branchDB = branchDB;
         	this.displayFormatter = displayFormatter;
         	boolean keep_asking = true;

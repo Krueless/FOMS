@@ -1,4 +1,7 @@
-public class FoodItem implements IGetBranchName {
+import java.io.Serializable;
+
+public class FoodItem implements IGetBranchName, Serializable {
+	private int foodItemID;
 	private String name;
 	private String itemCategory;
 	private double price;
@@ -16,6 +19,16 @@ public class FoodItem implements IGetBranchName {
 		this.branchName = branchName;
 	}
 
+	public int getID(){
+        return foodItemID;
+    }
+
+	public String toString(){
+        String out;
+        out = "Name: " + name + ", Price: " + price + ", Branch: " + branchName + ", Category: " + itemCategory;
+        return out;
+    }
+
 	/**
 	 * 
 	 * @param name
@@ -23,9 +36,12 @@ public class FoodItem implements IGetBranchName {
 	 * @param price
 	 * @param branchName
 	 */
-	public FoodItem(String name, String itemCategory, double price, String branchName) {
-		// TODO - implement FoodItem.FoodItem
-		throw new UnsupportedOperationException();
-	}
+	public FoodItem(int foodItemID, String name, double price, String branchName, String itemCategory){
+        this.foodItemID = foodItemID;
+        this.name = name;
+        this.price = price;
+        this.branchName = branchName;
+        this.itemCategory = itemCategory;
+    }
 
 }

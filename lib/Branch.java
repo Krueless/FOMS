@@ -1,5 +1,4 @@
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class Branch implements Serializable{
 
@@ -15,7 +14,8 @@ public class Branch implements Serializable{
 	 */
 	public Branch(String branchName, String location, int staffQuota) {
 		this.branchName = branchName;
-        	this.location = location;
+        this.location = location;
+		this.staffQuota = staffQuota;
 	}
 	
 	public String getBranchName() {
@@ -57,7 +57,7 @@ public class Branch implements Serializable{
 
 	public String toString(){
         String out;
-        out = "Branch Name: " + branchName + ", Location: " + location + ", Staff Quota: " + StaffQuota;
+        out = "Branch Name: " + branchName + ", Location: " + location + ", Staff Quota: " + staffQuota;
         return out;
     }
 	
