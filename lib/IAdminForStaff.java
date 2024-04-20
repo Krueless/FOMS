@@ -1,17 +1,17 @@
 public interface IAdminForStaff {
 
-	void editStaff();
+	public abstract void editStaff();
 
-	void removeStaff();
+	public abstract void removeStaff();
 
-	void addStaff();
+	public abstract void addStaff();
 
-	void displayStaff();
+	public abstract void displayStaff();
 
-	void assignManager();
+	public abstract void assignManager();
 
-	void promoteStaff();
+	public abstract void promoteStaff();
 
-	void transferStaff();
+	public abstract void transferStaff();
 
 }
