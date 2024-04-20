@@ -3,69 +3,102 @@ public class Staff extends Account implements IGetBranchName {
 	protected String branchName;
 	protected IDataManager<Order,String> orderDB;
 	protected IDisplay displayFormatter;
-
-	/**
-	 * 
-	 * @param name
-	 * @param staffID
-	 * @param role
-	 * @param gender
-	 * @param age
-	 * @param branchName
-	 * @param orderDB
-	 * @param diaplayFormatter
-	 */
-	public Staff(String name, String staffID, String role, String gender, int age, String branchName, IDataManager<Order,String> orderDB, IDisplay diaplayFormatter) {
-		// TODO - implement Staff.Staff
-		this.name = name;
-		this.staffID = staffID;
-		this.role = role;
-		this.gender = gender;
-		this.branchName = branchName;
-		this.orderDB = orderDB;
-		this.displayFormatter =diaplayFormatter;
-		throw new UnsupportedOperationException();
+	public Staff(String staffID,String password,String role,String gender,int age,String branchName,IDataManager orderDB){
+		super(staffID,password,role,gender,age);
+		this.branchName=branchName;
+		if (orderDB instanceof DataManagerForOrder) {
+		    this.orderDB=orderDB;
+		} else {
+		    System.out.println("Error! Incorrect data manager");
+		}
+		this.displayFormatter=new Display();
 	}
 
 	public String getBranchName() {
 		return this.branchName;
 	}
 
-	public void displayNewOrders() {
-		// TODO - implement Staff.displayNewOrders
-		throw new UnsupportedOperationException();
+	public void displayNewOrders(IDataManager dataManager){
+		if(!(dataManager instanceof DataManagerForBranch)){
+		    return;
+		}
+		DataManagerForBranch dataManagerBranch=(DataManagerForBranch)dataManager;
+		Branch branch=dataManagerBranch.find(branchName);
+		ArrayList <Order> orderList=branch.getOrderList();
+		for(int i=0;i<orderList.size();i++){
+		    Order currentOrder=orderList.get(i);
+		    if(currentOrder.getOrderStatus()==PREPARING){
+			//displayorder
+			currentOrder.toString();
+		    }
+		}
 	}
-
-	/**
-	 * 
-	 * @param orderID
-	 */
-	public void viewOrder(int orderID) {
-		// TODO - implement Staff.viewOrder
-		throw new UnsupportedOperationException();
+	
+	public void viewOrder(int orderID){
+		Order order=orderDB.find(orderID);
+		//displayorder
+		order.toString(); //use toString() method in Order class to get all attributes (encapsulation)
 	}
-
-	/**
-	 * 
-	 * @param orderID
-	 */
-	public void processOrder(int orderID) {
-		// TODO - implement Staff.processOrder
-		throw new UnsupportedOperationException();
+	
+	public void processOrder(int orderID){
+		Order order=orderDB.find(orderID);
+		order.setOrderStatus(3);
 	}
-
-	public void showOptions() {
-		// TODO - implement Staff.showOptions
-		throw new UnsupportedOperationException();
+	
+	public void selectOptions(int choice){
+		Scanner sc=new Scanner(System.in);
+		switch(choice){
+		    case 1:
+		    DataManagerForBranch branchDB=DataManagerForBranch.getInstance();
+		    displayNewOrders(branchDB);
+		    break;
+		    case 2:
+		    System.out.println("Enter the orderID:");
+		    int orderID=sc.nextInt();
+		    viewOrder(orderID);
+		    break;
+		    case 3:
+		    System.out.println("Enter the orderID:");
+		    int orderID=sc.nextInt();
+		    processOrder(orderID);
+		    break;
+		}
+		sc.close();
 	}
-
-	/**
-	 * 
-	 * @param choice
-	 */
-	public void selectOptions(int choice) {
-		// TODO - implement Staff.selectOptions
-		throw new UnsupportedOperationException();
+	
+	public void displayOptions(){
+		Scanner sc=new Scanner(System.in);
+		boolean valid=false;
+		while(!valid){
+		    try{
+			System.out.println("Please select one of the following options");
+			System.out.println("1. display new orders");
+			System.out.println("2. view order");
+			System.out.println("3. process order");
+			int option=sc.nextInt();
+			switch(option){
+			    case 1:
+			    selectOptions(1);
+			    valid=true;
+			    break;
+			    case 2:
+			    selectOptions(2);
+			    valid=true;
+			    break;
+			    case 3:
+			    selectOption(3);
+			    valid=true;
+			    break;
+			    default:
+			    System.out.println("Invalid option. Please try again");
+			    break;
+			}
+		    } catch (Exception e) {
+			System.out.println("An error occurred: "+e.getMessage());
+			System.out.println("Please try again");
+		    }
+		}
+		sc.close();
 	}
 
 }
