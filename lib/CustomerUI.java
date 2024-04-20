@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class CustomerUI {
 
 	private String branchName;
+	private IDataManager<Order,Integer> orderDB;
 
 	public void createOrder() {
 		DataManagerForOrder orderDB = DataManagerForOrder.getInstance();
@@ -16,8 +17,7 @@ public class CustomerUI {
 	 * @param orderID
 	 */
 	public void checkOrder(int orderID) {
-		// TODO - implement CustomerUI.checkOrder
-		throw new UnsupportedOperationException();
+		System.out.println(orderDB.find(orderID).toString());
 	}
 
 	public void showCustomerOptions() {
@@ -62,8 +62,10 @@ public class CustomerUI {
 	 * 
 	 * @param branchName
 	 */
-	public CustomerUI(String branchName) {
+	public CustomerUI(String branchName, IDataManager<Order,Integer> orderDB) {
 		this.branchName = branchName;
+		this.orderDB = orderDB;
+
         showCustomerOptions();
 	}
 

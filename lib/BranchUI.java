@@ -39,7 +39,8 @@ public class BranchUI {
 		                String branchName = sc.nextLine();
 		                if (chooseBranch(branchName)){
 		                    keep_asking = false;
-		                    new CustomerUI(branchName);
+							DataManagerForOrder orderDB = DataManagerForOrder.getInstance();
+		                    new CustomerUI(branchName, orderDB);
 		                }
 		    	}
 		    	catch(Exception e){
