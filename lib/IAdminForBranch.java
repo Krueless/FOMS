@@ -1,7 +1,7 @@
 public interface IAdminForBranch {
 
-	void openBranch();
+	public abstract void openBranch();
 
-	void closeBranch();
+	public abstract void closeBranch();
 
 }
