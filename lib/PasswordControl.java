@@ -29,7 +29,7 @@ public class PasswordControl implements IPasswordControl {
 	 * @param newPassword
 	 */
 	public Boolean resetPassword(Account account, String newPassword) {
-		if (newPassword.length() >= 8){
+		if (newPassword.length() >= 8 && newPassword != "password"){
 			account.setPassword(newPassword);
 			accountDB.update(account);
 			return true;

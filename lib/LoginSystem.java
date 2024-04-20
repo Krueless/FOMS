@@ -54,7 +54,7 @@ public class LoginSystem {
 	public void promptPasswordChange(Account account) {
 		// TODO - implement LoginSystem.promptPasswordChange
 		Scanner sc = new Scanner(System.in);
-		System.out.println("New password should be at least 8 characters long.");
+		System.out.println("New password must be at least 8 characters long and different from default password.");
 		System.out.println("Enter new password: ");
 		String pwd = sc.nextLine();
 		sc.close();
