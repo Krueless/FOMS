@@ -1,7 +1,7 @@
 public interface IAdminForPayment {
 
-	void addPaymentMethod();
+	public abstract void addPaymentMethod();
 
-	void removePaymentMethod();
+	public abstract void removePaymentMethod();
 
 }
