@@ -54,13 +54,14 @@ public class MainUI {
 			DataManagerForBranch branchDB = DataManagerForBranch.getInstance();
 			Display displayFormatter = new Display();
 			BranchUI branchUI = new BranchUI(branchDB, displayFormatter);
+            branchUI.showBranches();
 		}
 		else{
-			PasswordControl pwControl = new PasswordControl();
+			PasswordControl pwControl = new PasswordControl(DataManagerForAccount.getInstance());
 			LoginSystem loginSystem = new LoginSystem(pwControl);
-
+            loginSystem.showLoginPage();
 		}
-        throw new UnsupportedOperationException("This method is not yet implemented.");
+       
     }
 
     /**

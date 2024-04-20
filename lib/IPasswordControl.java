@@ -1,5 +1,4 @@
 public interface IPasswordControl {
-
 	/**
 	 * 
 	 * @param staffID
@@ -12,14 +11,12 @@ public interface IPasswordControl {
 	 * @param account
 	 * @param newPassword
 	 */
-	void resetPassword(Account account, String newPassword);
-
-	IDataManager getAccountDB();
+	Boolean resetPassword(Account account, String newPassword);
 
 	/**
 	 * 
 	 * @param account
 	 */
-	void checkFirstLogin(Account account);
+	Boolean checkFirstLogin(Account account);
 
 }

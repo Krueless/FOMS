@@ -1,6 +1,14 @@
-import IPasswordControl.*;
-
 public class PasswordControl implements IPasswordControl {
+
+	private IDataManagerWithCount accountDB;
+
+	/**
+	 * 
+	 * @param accountDB
+	 */
+	public PasswordControl(IDataManagerWithCount accountDB) {
+		this.accountDB = accountDB;
+	}
 
 	/**
 	 * 
@@ -8,8 +16,11 @@ public class PasswordControl implements IPasswordControl {
 	 * @param inputPassword
 	 */
 	public Account validate(String staffID, String inputPassword) {
-		// TODO - implement PasswordControl.validate
-		throw new UnsupportedOperationException();
+		Account acc = accountDB.find(staffID);
+		if (acc != null && acc.validatePassword(inputPassword)) 
+			return acc;
+		else 
+			return null;
 	}
 
 	/**
@@ -17,29 +28,22 @@ public class PasswordControl implements IPasswordControl {
 	 * @param account
 	 * @param newPassword
 	 */
-	public void resetPassword(Account account, String newPassword) {
-		// TODO - implement PasswordControl.operation
-		throw new UnsupportedOperationException();
+	public Boolean resetPassword(Account account, String newPassword) {
+		if (newPassword.length() >= 8){
+			account.setPassword(newPassword);
+			accountDB.update(account);
+			return true;
+		}
+		else
+			return false;
 	}
 
 	/**
 	 * 
 	 * @param account
 	 */
-	public void checkFirstLogin(Account account) {
-		// TODO - implement PasswordControl.checkFirstLogin
-		throw new UnsupportedOperationException();
+	public Boolean checkFirstLogin(Account account) {
+		return account.getPassword() == "password";
 	}
-
-	/**
-	 * 
-	 * @param accountDB
-	 */
-	public PasswordControl(IDataManager accountDB) {
-		// TODO - implement PasswordControl.PasswordControl
-		throw new UnsupportedOperationException();
-	}
-
-	private IDataManager accountDB;
 
 }
