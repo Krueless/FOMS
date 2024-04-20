@@ -1,1 +1,0 @@
-DataManagerForOrder.getInstance()

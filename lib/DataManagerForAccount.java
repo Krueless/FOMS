@@ -22,9 +22,11 @@ public class DataManagerForAccount implements IDataManagerWithCount{
 
 	private void loadData(){
 		try{
-			serializer.deserialize();
+			accountList = serializer.deserialize();
 		}catch (IOException | ClassNotFoundException e){
 			System.out.println("Serialized file not found or invalid, initializing from CSV.");
+			e.printStackTrace();
+			accountList = new ArrayList<Account>();
 			initializeFromCSV();
 		}
 	}
@@ -37,7 +39,6 @@ public class DataManagerForAccount implements IDataManagerWithCount{
 		File f = new File("../src/staff_list.csv");
 		try{
 			Scanner sc = new Scanner(f);
-			sc.nextLine();
 			while (sc.hasNextLine()) {
 				String line = sc.nextLine();
 				String[] data = line.split(",");
@@ -54,6 +55,8 @@ public class DataManagerForAccount implements IDataManagerWithCount{
 						break;
 				}
 			}
+			serializer.serialize(accountList);
+			System.out.println("CSV data initialised.");
 			sc.close();
 		}catch (FileNotFoundException e){
 			System.out.println("Error: CSV File not found");
@@ -68,11 +71,13 @@ public class DataManagerForAccount implements IDataManagerWithCount{
 	 * @param oldAccount
 	 * @param newAccount
 	 */
-	public void update(Account oldAccount, Account newAccount) {
+	public void update(Account newAccount) {
 		// TODO - implement DataManagerForAccount.update
+		String staffID = newAccount.getStaffID();
 		for (int i = 0; i < accountList.size(); i++) {
-			if (accountList.get(i).getStaffID() == newAccount.getStaffID()){
+			if (accountList.get(i).getStaffID().equals(staffID)){
 				accountList.set(i, newAccount);
+				System.out.println("Successfully updated staff.");
 				break;
 			}
 		}
@@ -105,7 +110,7 @@ public class DataManagerForAccount implements IDataManagerWithCount{
 	 */
 	public Account find(String staffID) {
 		for (int i = 0; i < accountList.size(); i++) {
-			if (accountList.get(i).getStaffID() == staffID){
+			if (accountList.get(i).getStaffID().equals(staffID)){
 				return accountList.get(i);
 			}
 		}
