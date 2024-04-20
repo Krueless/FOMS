@@ -1,0 +1,7 @@
+public enum OrderStatus {
+	ORDERING,
+	PREPARING,
+	READY_TO_PICKUP,
+	COMPLETED,
+	CANCELLED
+}
