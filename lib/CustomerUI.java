@@ -5,8 +5,10 @@ public class CustomerUI {
 	private String branchName;
 
 	public void createOrder() {
-		// TODO - implement CustomerUI.createOrder
-		throw new UnsupportedOperationException();
+		DataManagerForOrder orderDB = DataManagerForOrder.getInstance();
+		DataManagerForFoodItem foodItemDB = DataManagerForFoodItem.getInstance();
+		Display displayformatter = new Display();
+		new OrderControl(branchName, orderDB, foodItemDB, displayformatter);
 	}
 
 	/**
