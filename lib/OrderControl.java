@@ -3,10 +3,9 @@ public class OrderControl {
 	private IDataManager orderDB;
 	private IDataManager foodItemDB;
 	private IDisplay displayFormatter;
-	private IOrderControlForCheckout checkout;
-	private IOrderControlForCart cart;
-	private String branchName;
-	private Order order;
+	private OrderControlForCheckout checkout;
+	private OrderControlForCart cart;
+	private string branchName;
 
 	public void viewMenu() {
 		// TODO - implement OrderControl.viewMenu
@@ -15,18 +14,6 @@ public class OrderControl {
 
 	public void showOptions() {
 		// TODO - implement OrderControl.showOptions
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * 
-	 * @param branchName
-	 * @param orderDB
-	 * @param foodItemDB
-	 * @param displayFormatter
-	 */
-	public OrderControl(String branchName, IDataManager orderDB, IDataManager foodItemDB, IDisplay displayFormatter) {
-		// TODO - implement OrderControl.OrderControl
 		throw new UnsupportedOperationException();
 	}
 

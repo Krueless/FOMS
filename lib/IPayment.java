@@ -1,17 +1,7 @@
 public interface IPayment {
 
-	/**
-	 * 
-	 * @param order
-	 */
-	boolean processPayment(Order order);
+	boolean processPayment();
 
-	/**
-	 * 
-	 * @param order
-	 */
-	void printReceipt(Order order);
-
-	String getName();
+	void printReceipt();
 
 }

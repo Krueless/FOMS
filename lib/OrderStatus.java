@@ -1,4 +1,4 @@
-public enum OrderStatus {
+public enum orderStatus {
 	ORDERING,
 	PREPARING,
 	READY_TO_PICKUP,

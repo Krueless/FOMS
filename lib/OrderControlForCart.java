@@ -1,28 +1,16 @@
-public class OrderControlForCart implements IOrderControlForCart {
+public class OrderControlForCart {
 
-	/**
-	 * 
-	 * @param order
-	 */
-	public Order addToCart(Order order) {
+	public void addToCart() {
 		// TODO - implement OrderControlForCart.addToCart
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * 
-	 * @param order
-	 */
-	public Order removeFromCart(Order order) {
+	public void removeFromCart() {
 		// TODO - implement OrderControlForCart.removeFromCart
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * 
-	 * @param order
-	 */
-	public Order editCart(Order order) {
+	public void editCart() {
 		// TODO - implement OrderControlForCart.editCart
 		throw new UnsupportedOperationException();
 	}
