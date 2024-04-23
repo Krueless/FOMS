@@ -22,6 +22,10 @@ public class Staff extends Account implements IGetBranchName {
 		return this.branchName;
 	}
 
+	public void setBranchName(String branchName){
+		this.branchName=branchName;
+	}
+	
 	public void displayNewOrders(IDataManager dataManager){
 		if(!(dataManager instanceof DataManagerForBranch)){
 		    return;
