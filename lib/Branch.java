@@ -21,9 +21,6 @@ public class Branch implements Serializable{
 	public String getBranchName() {
 		return this.branchName;
 	}
-	public String setBranchName(string branchName){
-		this.branchName=branchName;
-	}
 	/**
 	 * 
 	 * @param branchName
