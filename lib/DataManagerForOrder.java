@@ -1,51 +1,67 @@
+package OOP_Project_Classes;
 public class DataManagerForOrder implements IDataManager {
 
 	private ArrayList<Order> orderList;
 	private static DataManagerForOrder instance;
 
 	private DataManagerForOrder() {
-		// TODO - implement DataManagerForOrder.DataManagerForOrder
-		throw new UnsupportedOperationException();
 	}
 
 	public static DataManagerForOrder getInstance() {
-		return this.instance;
+		if (instance == null) {
+			instance = new DataManagerForOrder();
+		}
+		return instance;
 	}
 
-	/**
-	 * 
-	 * @param o
-	 */
-	public void update(Object o) {
-		// TODO - implement DataManagerForOrder.update
-		throw new UnsupportedOperationException();
+	public void update(Order newOrder) 
+	{
+		for(int i = 0; i < orderlist.size(); i++)
+		{
+			if (orderList.get(i).getorderID() == newOrder.getOrderID())
+			{
+				orderList.set(i, newOrder);
+				return;
+			}
+		}
 	}
 
-	/**
-	 * 
-	 * @param o
-	 */
-	public void add(Object o) {
-		// TODO - implement DataManagerForOrder.add
-		throw new UnsupportedOperationException();
+	public void add(Order order) 
+	{
+		for(int i = 0; i < orderlist.size(); i++)
+		{
+			if (orderList.get(i).getorderID() == order.getOrderID())
+			{
+				System.out.println("Order is already inside");
+				return;
+			}
+		orderList.add(order);
 	}
 
-	/**
-	 * 
-	 * @param o
-	 */
-	public void delete(Object o) {
-		// TODO - implement DataManagerForOrder.delete
-		throw new UnsupportedOperationException();
+	public void delete(Order order) {
+		for(int i = 0; i < orderlist.size(); i++)
+		{
+			if (orderList.get(i).getorderID() == order.getOrderID())
+			{
+				orderList.remove(i);
+				return;
+			}
+		}
+		System.out.println("Order not found in order list");
 	}
 
-	/**
-	 * 
-	 * @param datum
-	 */
-	public Object find(Object datum) {
-		// TODO - implement DataManagerForOrder.find
-		throw new UnsupportedOperationException();
+	public Order find(int orderID) 
+	{
+		for(int i = 0; i < orderlist.size(); i++)
+		{
+			if (orderList.get(i).getorderID() == orderID())
+			{
+				return orderList.get(i);
+			}
+		}
+		System.out.println("Order not found in order list");
 	}
 
 }
+
+// DONE

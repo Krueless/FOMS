@@ -1,51 +1,70 @@
+package OOP_Project_Classes;
 public class DataManagerForPayment implements IDataManager {
 
 	private ArrayList<IPayment> paymentList;
 	private static DataManagerForPayment instance;
 
 	private DataManagerForPayment() {
-		// TODO - implement DataManagerForPayment.DataManagerForPayment
-		throw new UnsupportedOperationException();
 	}
 
-	public static DataManagerForPayment getInstance() {
-		return this.instance;
+	public static DataManagerForPayment getInstance() 
+	{
+		if (instance == null) 
+		{
+			instance = new DataManagerForPayment;
+		}
+		return instance;
 	}
 
-	/**
-	 * 
-	 * @param o
-	 */
-	public void update(Object o) {
-		// TODO - implement DataManagerForPayment.update
-		throw new UnsupportedOperationException();
+	public void update(IPayment newPayment) 
+	{
+		for(int i = 0; i < paymentList.size(); i++)
+		{
+			if (paymentList.get(i).getName().equals(newPayment.getName()))
+			{
+				paymentList.set(i, newPayment);
+				return;
+			}
+		}
 	}
 
-	/**
-	 * 
-	 * @param o
-	 */
-	public void add(Object o) {
-		// TODO - implement DataManagerForPayment.add
-		throw new UnsupportedOperationException();
+	public void add(IPayment payment) 
+	{
+		for(int i = 0; i < paymentList.size(); i++)
+		{
+			if (paymentList.get(i).getName().equals(payment.getName()))
+			{
+				System.out.println("Payment is already inside.");
+				return;
+			}
+		}
+		paymentList.add(payment);
+		return;
 	}
 
-	/**
-	 * 
-	 * @param o
-	 */
-	public void delete(Object o) {
-		// TODO - implement DataManagerForPayment.delete
-		throw new UnsupportedOperationException();
+	public void delete(IPayment payment) 
+	{
+		for(int i = 0; i < paymentList.size(); i++)
+		{
+			if (paymentList.get(i).getName().equals(payment.getName()))
+			{
+				paymentList.remove(i);
+				return;
+			}
+		}
+		System.out.println("Payment method is not inside the list");
+		return;
 	}
 
-	/**
-	 * 
-	 * @param datum
-	 */
-	public Object find(Object datum) {
-		// TODO - implement DataManagerForPayment.find
-		throw new UnsupportedOperationException();
+	public IPayment find(String paymentName) 
+	{
+		for(int i = 0; i < paymentList.size(); i++)
+		{
+			if (paymentList.get(i).getName().equals(paymentName))
+			{
+				return paymentList.get(i);
+			}
+		}
 	}
 
 }
