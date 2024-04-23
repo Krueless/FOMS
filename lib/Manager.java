@@ -20,14 +20,12 @@ public class Manager extends Staff{
         int FoodID=sc.nextInt();
         System.out.println("Enter the name of the food item");
         String name=sc.nextLine();
-        System.out.println("Enter the description of the food item");
-        String description=sc.nextLine();
         System.out.println("Enter the category of the food item");
         String itemCategory=sc.nextLine();
         System.out.println("Enter the price of the food item");
         double price=sc.nextDouble();
         //construct new food item
-        FoodItem fooditem=new FoodItem(FoodID,name,description,itemCategory,price,super.branchName);
+        FoodItem fooditem=new FoodItem(FoodID,name,price,super.getBranchName(),itemCategory);
         //add the new food item to menu
         foodItemDB.add(fooditem);
     }
