@@ -20,7 +20,7 @@ public class Staff extends Account implements IGetBranchName {
 	}
 
 	public void setBranchName(String branchName){
-		this.branchName=branchName;
+		this.branchName=new String(branchName);
 	}
 	
 	public void displayNewOrders(){
