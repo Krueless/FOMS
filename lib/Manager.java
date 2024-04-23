@@ -1,3 +1,4 @@
+import java.util.Scanner;
 public class Manager extends Staff{
     private IDataManager foodItemDB;
     private IDataManager accountDB;
@@ -10,7 +11,7 @@ public class Manager extends Staff{
     }
     public void displayStaff(){
         String branchName=super.getBranchName();
-        displayFormatter.displayFilteredByBranch(branchName);
+        displayFormatter.displayFilteredByBranch(accountDB.getAll(),branchName);
     }
     public void addItem(){
         //get details of food item
@@ -91,6 +92,7 @@ public class Manager extends Staff{
                 break;
             }
         }while(choice>=1 && choice<=5);
+        
     }
     public void removeItem(){
         Scanner sc=new Scanner(System.in);
