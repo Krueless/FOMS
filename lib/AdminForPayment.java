@@ -1,9 +1,7 @@
 public class AdminForPayment extends Admin implements IAdminForPayment {
 	private IDataManager paymentDB;
-	private IDisplay displayFormatter;
-	public AdminForPayment(IDataManager paymentDB,IDisplay displayFormatter){
-	    this.paymentDB=paymentDB;
-	    this.displayFormatter=displayFormatter;
+	public AdminForPayment(){
+	    this.paymentDB=DataManagerForPayment.getInstance();
 	}
 	public void addPaymentMethod(){
 	    Scanner sc=new Scanner(System.in);
