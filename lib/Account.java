@@ -1,5 +1,5 @@
 import java.io.Serializable;
-public abstract class Account implements Serializable {
+public abstract class Account implements Serializable, IGetBranchName {
 
 	protected String staffID;
 	protected String password = "password";
@@ -21,8 +21,7 @@ public abstract class Account implements Serializable {
 	 * @param password
 	 */
 	public boolean validatePassword(String password) {
-		// TODO - implement Account.validatePassword
-		throw new UnsupportedOperationException();
+		return this.password.equals(password);
 	}
 
 	public String getStaffID() {

@@ -2,12 +2,12 @@ import java.util.Scanner;
 public class AdminForStaff implements IAdminForStaff{
     private IDataManager accountDB;
     private IDataManager branchDB;
-    private IDisplay displayFormatter;
+    private IDisplayFilteredForAccount displayFormatter;
     private QuotaChecker quotaChecker;
     public AdminForStaff(){
         this.accountDB=DataManagerForAccount.getInstance();
         this.branchDB=DataManagerForBranch.getInstance();
-        this.displayFormatter=new //TODO
+        this.displayFormatter=new DisplayWithFilterAndSort();
 	this.quotaChecker=new QuotaChecker();
     }
     public void editStaff(){
@@ -60,21 +60,26 @@ public class AdminForStaff implements IAdminForStaff{
     }
     public void addStaff(){
         Scanner sc=new Scanner(System.in);
-        System.out.println("Enter staffID");
-        String staffID=sc.nextLine();
-        System.out.println("Enter password");
-        String password=sc.nextLine();
-        System.out.println("Enter role");
-        String role=sc.nextLine();
-        System.out.println("Enter gender");
-        String gender=sc.nextLine();
-        System.out.println("Enter age");
-        int age=sc.nextInt();
-        System.out.println("Enter branch");
+	System.out.println("Enter branch to assign Staff");
         String branchName=sc.nextLine();
-        DataManagerForOrder orderDB=//get DataManagerForOrder object
-        Staff staffAccount=new Staff(staffID,password,role,gender,age,branchName,orderDB);
-        accountDB.add(staffAccount);
+	if(quotaChecker.checkStaffQuota(branchName)){
+		//add staff
+		System.out.println("Enter name");
+		String name-sc.nextLine();
+	        System.out.println("Enter staffID");
+	        String staffID=sc.nextLine();
+	        System.out.println("Enter password");
+	        String password=sc.nextLine();
+	        String role="S";
+	        System.out.println("Enter gender");
+	        String gender=sc.nextLine();
+	        System.out.println("Enter age");
+	        int age=sc.nextInt();
+	        Staff staffAccount=new Staff(name,staffID,role,gender,age,password,branchName);
+	        accountDB.add(staffAccount);
+	}else{
+		System.out.println("Staff quota is reached. Cannot add staff");
+	}
     }
     public void displayStaff(){
         Scanner sc=new Scanner(System.in);
@@ -108,7 +113,19 @@ public class AdminForStaff implements IAdminForStaff{
 	String branchName=sc.nextLine();
 	if(quotaChecker.checkManagerQuota(branchName)){
 		//add manager
-		System.out.println("
+		System.out.println("Enter name");
+		String name-sc.nextLine();
+	        System.out.println("Enter staffID");
+	        String staffID=sc.nextLine();
+	        System.out.println("Enter password");
+	        String password=sc.nextLine();
+	        String role="M";
+	        System.out.println("Enter gender");
+	        String gender=sc.nextLine();
+	        System.out.println("Enter age");
+	        int age=sc.nextInt();
+	        Manager managerAccount=new Manager(name,staffID,role,gender,age,password,branchName);
+	        accountDB.add(managerAccount);
 	}else{
 		System.out.printf("Manager quota is reached. Cannot add manager");
 	}
@@ -120,9 +137,19 @@ public class AdminForStaff implements IAdminForStaff{
         String staffID=sc.nextLine();
         Account staffAccount=accountDB.find(staffID);
         //create a new Manager object and copy all attributes of staff
-        Manager(String staffID,String password,String role,String gender,int age,String branchName,IDataManager orderDB,IDataManager foodItemDB,IDataManager accountDB);
+	String name=staffAccount.name;
+	String staffID=staffAccount.staffID;
+	String role=staffAccount.role;
+	String gender=staffAccount.gender;
+	int age=staffAccount.age;
+	int password=staffAccount.password;
+	Staff staffAccount=(Staff)staffAccount;
+	String branchName=staffAccount.getBranchName();
+	Manager managerAccount=new Manager(name,staffID,role,gender,age,password,branchName);
         //delete the Staff object to the accountList in DataManagerForAccount
+	accountDB.delete(staffAccount);
         //add the Manager object to the accountList in Data ManagerForAccount
+	accountDB.add(managerAccount);
     }
     public void transferStaff(){
         Scanner sc=new Scanner(System.in);
@@ -134,14 +161,9 @@ public class AdminForStaff implements IAdminForStaff{
         //which branch to transfer to
         System.out.println("Enter branch to transfer staff to");
         String branchName=sc.nextLine();
-        //remove from staffs list in previous branch and append to staffs list in new branch
-        
-        //subtract from numStaff in previous branch and add to numStaff in new branch
-        Branch previousBranch=branchDB.find(staff.getBranchName());
-        Branch newBranch=branchDB.find(branchName);
-        previousBranch.changeNumStaff(-1);
-        newBranch.changeNumStaff(1);
         //change branchName of Staff object
         staff.setBranchName(branchName);
+	//update in database
+	accountDB.update(staff);
     }
 }

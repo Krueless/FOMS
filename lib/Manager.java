@@ -1,48 +1,17 @@
+import java.util.Scanner;
 public class Manager extends Staff{
     private IDataManager foodItemDB;
     private IDataManager accountDB;
-    public Manager(String staffID,String password,String role,String gender,int age,String branchName,IDataManager orderDB,IDataManager foodItemDB,IDataManager accountDB){
-        super(staffID,password,role,gender,age,branchName,orderDB);
-        if(foodItemDB==null){
-            System.out.println("No foodItemDB input in parameter");
-        }else  if(!(foodItemDB instanceof DataManagerForMenu)){
-            System.out.println("Error: Incorrect DataManager");
-        }else{
-            this.foodItemDB=foodItemDB;
-        }
-
-        if(accountDB==null){
-            System.out.println("No foodItemDB input in parameter");
-        }else  if(!(accountDB instanceof DataManagerForAccount)){
-            System.out.println("Error: Incorrect DataManager");
-        }else{
-            this.accountDB=accountDB;
-        }
+    private IDisplayFilteredBy displayFormatter;
+    public Manager(String name,String staffID,String role,String gender,int age,String password,String branchName){
+        super(name,staffID,role,gender,age,password,branchName);
+        this.foodItemDB=DataManagerForFoodItem.getInstance();
+        this.accountDB=DataManagerForAccount.getInstance();
+        this.displayFormatter=new DisplayWithFilter();
     }
-    public void displayStaff(IDataManager dataManager,IDisplayFilteredForAccount displayFormatter){
-        if(!(dataManager instanceof DataManagerForBranch)){
-            return;
-        }
-        DataManagerForBranch branchDB=(DataManagerForBranch)dataManager;
-        Branch branch=branchDB.find(branchName);
-        ArrayList <Staff> staffList = branch.getStaffList();
-        Scanner sc=new Scanner(System.in);
-        System.out.println("Choose filter by");
-        System.out.println("1. role");
-        System.out.println("2. gender");
-        System.out.println("3. age");
-        int choice=sc.nextInt();
-        switch(choice){
-            case 1:
-            displayFormatter.displaySortedByRole(staffList);
-            break;
-            case 2:
-            displayFormatter.displaySortedByGender(staffList);
-            break;
-            case 3:
-            displayFormatter.displaySortedByAge(staffList);
-            break;
-        }
+    public void displayStaff(){
+        String branchName=super.getBranchName();
+        displayFormatter.displayFilteredByBranch(accountDB.getAll(),branchName);
     }
     public void addItem(){
         //get details of food item
@@ -51,14 +20,12 @@ public class Manager extends Staff{
         int FoodID=sc.nextInt();
         System.out.println("Enter the name of the food item");
         String name=sc.nextLine();
-        System.out.println("Enter the description of the food item");
-        String description=sc.nextLine();
         System.out.println("Enter the category of the food item");
         String itemCategory=sc.nextLine();
         System.out.println("Enter the price of the food item");
         double price=sc.nextDouble();
         //construct new food item
-        FoodItem fooditem=new FoodItem(FoodID,name,description,itemCategory,price,super.branchName);
+        FoodItem fooditem=new FoodItem(FoodID,name,price,super.getBranchName(),itemCategory);
         //add the new food item to menu
         foodItemDB.add(fooditem);
     }
@@ -66,10 +33,11 @@ public class Manager extends Staff{
         //get the foodID of the food item to edit
         Scanner sc=new Scanner(System.in);
         System.out.println("Enter the FoodID");
-        int FoodID=sc.nextInt();
+        int foodID=sc.nextInt();
         //search for the fooditem in foodItemDB
-        ArrayList<FoodItem> foodItems=foodItemDB.find(super.branchName);
-        FoodItem foodItem;
+        Integer foodIDInteger=new Integer(foodID);
+        FoodItem foodItem=foodItemDB.find(foodIDInteger);
+        //
         int i;
         for(i=0;i<foodItems.size();i++){
             foodItem=foodItems.get(i);
@@ -123,6 +91,7 @@ public class Manager extends Staff{
                 break;
             }
         }while(choice>=1 && choice<=5);
+        
     }
     public void removeItem(){
         Scanner sc=new Scanner(System.in);

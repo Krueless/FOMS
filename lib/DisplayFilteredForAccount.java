@@ -27,14 +27,16 @@ public class DisplayFilteredForAccount implements IDisplayFilteredForAccount {
             ArrayList<IGetBranchName> array = (ArrayList<IGetBranchName>) data;
             int j = 1;
             for (int i = 0; i < array.size(); i++){
-                if (array.get(i).getBranchName().compareTo(branchName) == 0){
-                    System.out.println(j +": " + array.get(i).toString());
-                    j++ ;
-                }
+				if (!(array.get(i) instanceof Admin)){
+					if (array.get(i).getBranchName().compareTo(branchName) == 0){
+						System.out.println(j +": " + array.get(i).toString());
+						j++ ;
+                	}
+				}
+                
             }
         }
 	}
-	//TODO implement error checking for admin
 
 	/**
 	 * 

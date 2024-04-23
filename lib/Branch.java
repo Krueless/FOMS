@@ -21,7 +21,6 @@ public class Branch implements Serializable{
 	public String getBranchName() {
 		return this.branchName;
 	}
-
 	/**
 	 * 
 	 * @param branchName

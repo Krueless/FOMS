@@ -1,41 +1,40 @@
+import java.util.Scanner;
 public class Staff extends Account implements IGetBranchName {
 
 	protected String branchName;
 	protected IDataManager orderDB;
-	protected IDisplay displayFormatter;
-	public Staff(String staffID,String password,String role,String gender,int age,String branchName,IDataManager orderDB){
+	protected IDisplayFilteredBy displayFormatter;
+	public Staff(String name,String staffID,String role,String gender,int age,String password,String branchName){
+		super.name=name;
 		super.staffID=staffID;
 		super.password=password;
 		super.role=role;
 		super.gender=gender;
 		super.age=age;
 		this.branchName=branchName;
-		if (orderDB instanceof DataManagerForOrder) {
-		    this.orderDB=orderDB;
-		} else {
-		    System.out.println("Error! Incorrect data manager");
-		}
-		this.displayFormatter=new Display();
+		this.orderDB=DataManagerForOrder.getInstance();
+		this.displayFormatter=new DisplayWithFilter();
 	}
 
 	public String getBranchName() {
 		return this.branchName;
 	}
 
-	public void displayNewOrders(IDataManager dataManager){
-		if(!(dataManager instanceof DataManagerForBranch)){
-		    return;
-		}
-		DataManagerForBranch dataManagerBranch=(DataManagerForBranch)dataManager;
-		Branch branch=dataManagerBranch.find(branchName);
-		ArrayList<Order> orderList=branch.getOrderList();
+	public void setBranchName(String branchName){
+		this.branchName=new String(branchName);
+	}
+	
+	public void displayNewOrders(){
+		ArrayList<Order> orderList=orderDB.getAll();
+		ArrayList<Order> newOrders=new ArrayList<Order>();
+		//loop through orderList and add only the new orders to newOrders
 		for(int i=0;i<orderList.size();i++){
-		    Order currentOrder=orderList.get(i);
-		    if(currentOrder.getOrderStatus()==PREPARING){
-			//displayorder
-			currentOrder.toString();
-		    }
+			Order order=orderList.get(i);
+			if(order.getOrderStatus()==PREPARING){
+				newOrders.add(order);
+			}
 		}
+		displayFormatter.displayFilteredByBranch(newOrders,branchName);
 	}
 	
 	public void viewOrder(int orderID){
@@ -53,8 +52,7 @@ public class Staff extends Account implements IGetBranchName {
 		Scanner sc=new Scanner(System.in);
 		switch(choice){
 		    case 1:
-		    DataManagerForBranch branchDB=DataManagerForBranch.getInstance();
-		    displayNewOrders(branchDB);
+		    displayNewOrders();
 		    break;
 		    case 2:
 		    System.out.println("Enter the orderID:");
@@ -66,6 +64,7 @@ public class Staff extends Account implements IGetBranchName {
 		    int orderID=sc.nextInt();
 		    processOrder(orderID);
 		    break;
+		    default:break;
 		}
 		sc.close();
 	}

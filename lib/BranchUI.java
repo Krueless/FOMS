@@ -20,6 +20,7 @@ public class BranchUI {
 
 	public void showBranches() {
 		displayFormatter.displayAll(branchDB.getAll());
+		System.out.println("Please key in the branch name which you would like to visit.");
 	}
 
 	/**
@@ -33,21 +34,14 @@ public class BranchUI {
         	boolean keep_asking = true;
         	Scanner sc = new Scanner(System.in);
         	while (keep_asking){
-	            	try{
-		                showBranches();
-		                System.out.println("Please key in the branch name which you would like to visit.");
-		                String branchName = sc.nextLine();
-		                if (chooseBranch(branchName)){
-		                    keep_asking = false;
-							DataManagerForOrder orderDB = DataManagerForOrder.getInstance();
-		                    new CustomerUI(branchName, orderDB);
-		                }
-		    	}
-		    	catch(Exception e){
-				System.out.println("An error occurred: " + e.getMessage());
-				System.out.println("Please try again.\n");
-		    	}
-		}
+				showBranches();
+				String branchName = sc.nextLine();
+				if (chooseBranch(branchName)){
+					keep_asking = false;
+					DataManagerForOrder orderDB = DataManagerForOrder.getInstance();
+					new CustomerUI(branchName, orderDB);
+				}
+			}
 		sc.close();
 	}
 
