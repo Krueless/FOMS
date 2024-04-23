@@ -1,19 +1,19 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 public class Staff extends Account implements IGetBranchName {
 
 	protected String branchName;
-	protected IDataManager orderDB;
-	protected IDisplayFilteredBy displayFormatter;
-	public Staff(String name,String staffID,String role,String gender,int age,String password,String branchName){
+	protected IDataManager<Order,Integer> orderDB;
+	protected IDisplayFilteredByBranch displayFormatter;
+	public Staff(String name,String staffID,String role,String gender,int age,String branchName, IDataManager<Order, Integer> orderDB, IDisplayFilteredByBranch displayFormatter){
 		super.name=name;
 		super.staffID=staffID;
-		super.password=password;
 		super.role=role;
 		super.gender=gender;
 		super.age=age;
 		this.branchName=branchName;
 		this.orderDB=DataManagerForOrder.getInstance();
-		this.displayFormatter=new DisplayWithFilter();
+		this.displayFormatter=displayFormatter;
 	}
 
 	public String getBranchName() {
@@ -69,7 +69,7 @@ public class Staff extends Account implements IGetBranchName {
 		sc.close();
 	}
 	
-	public void displayOptions(){
+	public void showOptions(){
 		Scanner sc=new Scanner(System.in);
 		boolean valid=false;
 		while(!valid){

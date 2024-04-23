@@ -8,7 +8,7 @@ import java.util.Scanner;
  * This class uses the Singleton design pattern to ensure that only one instance of this manager exists throughout the application.
  * It provides methods to add, update, delete, and find orders in the list based on their IDs.
  */
-public class DataManagerForOrder implements IDataManager {
+public class DataManagerForOrder implements IDataManager<Order, Integer> {
 
     private ArrayList<Order> orderList; 
     private static DataManagerForOrder instance;  

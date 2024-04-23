@@ -1,13 +1,12 @@
 import java.util.Scanner;
 public class Manager extends Staff{
-    private IDataManager foodItemDB;
-    private IDataManager accountDB;
-    private IDisplayFilteredBy displayFormatter;
-    public Manager(String name,String staffID,String role,String gender,int age,String password,String branchName){
-        super(name,staffID,role,gender,age,password,branchName);
-        this.foodItemDB=DataManagerForFoodItem.getInstance();
-        this.accountDB=DataManagerForAccount.getInstance();
-        this.displayFormatter=new DisplayWithFilter();
+    private IDataManager<FoodItem, Integer> foodItemDB;
+    private IDataManager<Account, String> accountDB;
+    private IDisplayFilteredByBranch displayFormatter;
+    public Manager(String name,String staffID,String role,String gender,int age,String branchName, IDataManager<Order, Integer> orderDB, IDisplayFilteredByBranch displayFormatter, IDataManager<FoodItem,Integer> foodItemDB, IDataManager<Account, String> accountDB){
+        super(name,staffID,role,gender,age,branchName,orderDB,displayFormatter);
+        this.foodItemDB=foodItemDB;
+        this.accountDB=accountDB;
     }
     public void displayStaff(){
         String branchName=super.getBranchName();
@@ -28,6 +27,7 @@ public class Manager extends Staff{
         FoodItem fooditem=new FoodItem(FoodID,name,price,super.getBranchName(),itemCategory);
         //add the new food item to menu
         foodItemDB.add(fooditem);
+        sc.close();
     }
     public void editItem(){
         //get the foodID of the food item to edit
