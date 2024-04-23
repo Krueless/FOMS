@@ -2,19 +2,16 @@ public class Admin extends Account {
 	private IAdminForStaff adminForStaff;
 	private IAdminForBranch adminForBranch;
 	private IAdminForPayment adminForPayment;
-	public Admin(String name,String staffID,String role,String gender,int age,String password,IDisplay displayFormatter){
+	public Admin(String name,String staffID,String role,String gender,int age,String password){
 		super.name=name;
 		super.staffID=staffID;
 		super.role=role;
 		super.gender=gender;
 		super.age=age;
 		super.password=password;
-	        if(displayFormatter==null){
-	            System.out.println("Error: displayFormatter is null");
-	        }
-	        adminForStaff=new AdminForStaff(accountDB,branchDB,displayFormatter);
-	        adminForBranch=new AdminForBranch(branchDB,displayFormatter);
-	        adminForPayment=new AdminForPayment(paymentDB,displayFormatter);
+	        adminForStaff=new AdminForStaff();
+	        adminForBranch=new AdminForBranch();
+	        adminForPayment=new AdminForPayment();
 	}
 	
 	public void selectOptions(int choice) {
