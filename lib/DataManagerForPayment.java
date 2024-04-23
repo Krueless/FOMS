@@ -1,70 +1,153 @@
-package OOP_Project_Classes;
-public class DataManagerForPayment implements IDataManager {
+import java.util.ArrayList;
 
-	private ArrayList<IPayment> paymentList;
-	private static DataManagerForPayment instance;
+/**
+ * The {@code DataManagerForPayment} class manages a list of {@code IPayment} objects.
+ * This class uses the Singleton design pattern to ensure that only one instance of this manager exists throughout the application.
+ * It provides methods to add, update, delete, and find payment methods in the list based on their names.
+ */
+public class DataManagerForPayment implements IDataManager, Serializable
+{
 
-	private DataManagerForPayment() {
-	}
+    private ArrayList<IPayment> paymentList; 
+    private static DataManagerForPayment instance;  
 
-	public static DataManagerForPayment getInstance() 
+    /**
+     * Private constructor to prevent instantiation outside of this class.
+     */
+    private DataManagerForPayment() 
 	{
-		if (instance == null) 
+		paymentList = new ArrayList<>();
+	    serializer = new Serializer<IPayment>("../src/paymentMethods.ser");
+		loadData();
+    }
+
+    /**
+     * Provides access to the singleton instance of the {@code DataManagerForPayment}.
+     * If the instance does not exist, it is created.
+     *
+     * @return The singleton instance of {@code DataManagerForPayment}.
+     */
+    public static DataManagerForPayment getInstance() 
+	{
+        if (instance == null) 
 		{
-			instance = new DataManagerForPayment;
+            instance = new DataManagerForPayment();
+        }
+        return instance;
+    }
+
+	private void loadData(){
+		try
+		{
+			paymentList = serializer.deserialize();
 		}
-		return instance;
+		catch (IOException | ClassNotFoundException e)
+		{
+			System.out.println("Serialized file not found or invalid, initializing from CSV.");
+			e.printStackTrace();
+			paymentList = new ArrayList<IPayment>();
+			initializeFromCSV();
+		}
 	}
 
-	public void update(IPayment newPayment) 
+	private void initializeFromCSV() 
 	{
-		for(int i = 0; i < paymentList.size(); i++)
-		{
-			if (paymentList.get(i).getName().equals(newPayment.getName()))
-			{
-				paymentList.set(i, newPayment);
-				return;
+	
+		File f = new File("../src/paymentMethods.csv");
+		try{
+			Scanner sc = new Scanner(f);
+			while (sc.hasNextLine()) {
+				String line = sc.nextLine();
+				String[] data = line.split(",");
+				String paymentType = data[0];
+				String paymentName = data[1];
+				switch(paymentType)
+				{
+					case "Credit":
+					paymentList.add(new Credit(paymentName));
+					break;
+					case "Online":
+					paymentList.add(new Online(paymentName));
+					break;
+				}
 			}
+			serializer.serialize(paymentList);
+			System.out.println("CSV data initialised.");
+			sc.close();
+		}catch (FileNotFoundException e){
+			System.out.println("Error: CSV File not found");
+			e.printStackTrace();
 		}
-	}
+       
+    }
 
-	public void add(IPayment payment) 
-	{
-		for(int i = 0; i < paymentList.size(); i++)
-		{
-			if (paymentList.get(i).getName().equals(payment.getName()))
-			{
-				System.out.println("Payment is already inside.");
-				return;
-			}
-		}
-		paymentList.add(payment);
-		return;
-	}
+    /**
+     * Updates an existing payment method in the payment list with new details.
+     * If the payment method exists, it is replaced with the new payment object.
+     *
+     * @param newPayment The new payment object to replace the existing payment method.
+     */
+    public void update(IPayment newPayment) {
+        for (int i = 0; i < paymentList.size(); i++) {
+            if (paymentList.get(i).getName().equals(newPayment.getName())) {
+                paymentList.set(i, newPayment);
+				System.out.println("Payment method successfully updated!");
+                return;
+            }
+			System.out.println("Payment method could not be found.");
+        }
+    }
 
-	public void delete(IPayment payment) 
-	{
-		for(int i = 0; i < paymentList.size(); i++)
-		{
-			if (paymentList.get(i).getName().equals(payment.getName()))
-			{
-				paymentList.remove(i);
-				return;
-			}
-		}
-		System.out.println("Payment method is not inside the list");
-		return;
-	}
+    /**
+     * Adds a new payment method to the payment list.
+     * If a payment method with the same name already exists, it outputs a message and does not add the payment method.
+     *
+     * @param payment The new payment method to add to the list.
+     */
+    public void add(IPayment payment) {
+        for (int i = 0; i < paymentList.size(); i++) {
+            if (paymentList.get(i).getName().equals(payment.getName())) {
+                System.out.println("Payment method is already inside.");
+                return;
+            }
+        }
+        paymentList.add(payment);
+		System.out.println("Payment method successfully added!");
+    }
 
-	public IPayment find(String paymentName) 
-	{
-		for(int i = 0; i < paymentList.size(); i++)
-		{
-			if (paymentList.get(i).getName().equals(paymentName))
-			{
-				return paymentList.get(i);
-			}
-		}
-	}
+    /**
+     * Deletes a payment method from the payment list based on its name.
+     * If the payment method exists, it is removed; otherwise, it prints a message indicating that the payment method was not found.
+     *
+     * @param payment The payment method to be deleted.
+     */
+    public void delete(IPayment payment) {
+        for (int i = 0; i < paymentList.size(); i++) {
+            if (paymentList.get(i).getName().equals(payment.getName())) {
+                paymentList.remove(i);
+				System.out.println("Payment method removed!");
+                return;
+            }
+        }
+        System.out.println("Payment method is not inside the list.");
+    }
+
+    /**
+     * Finds and returns a payment method from the payment list based on its name.
+     * If the payment method is found, it is returned; otherwise, it returns {@code null} indicating that the payment method was not found.
+     *
+     * @param paymentName The name of the payment method to find.
+     * @return The found {@code IPayment} object, or {@code null} if not found.
+     */
+    public IPayment find(String paymentName) {
+        for (int i = 0; i < paymentList.size(); i++) {
+            if (paymentList.get(i).getName().equals(paymentName)) {
+				System.out.println("Payment method found!");
+                return paymentList.get(i);
+            }
+        }
+        System.out.println("Payment method not found.");
+        return null;
+    }
 
 }

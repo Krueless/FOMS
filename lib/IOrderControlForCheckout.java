@@ -1,15 +1,7 @@
+package OOP_Project_Classes;
+
 public interface IOrderControlForCheckout {
-
-	/**
-	 * 
-	 * @param order
-	 */
-	Order changeOrderStatus(Order order);
-
-	/**
-	 * 
-	 * @param order
-	 */
-	Order chooseDineInOption(Order order);
-
+    public Order changeOrderStatus(Order order, OrderStatus orderStatus);
+    public Order changeDineInOption(Order order);
+    public void checkOut(Order order, IDisplay displayFormatter);
 }

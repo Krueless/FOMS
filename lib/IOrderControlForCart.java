@@ -1,21 +1,5 @@
 public interface IOrderControlForCart {
-
-	/**
-	 * 
-	 * @param order
-	 */
-	Order addToCart(Order order);
-
-	/**
-	 * 
-	 * @param order
-	 */
-	Order removeFromCart(Order order);
-
-	/**
-	 * 
-	 * @param order
-	 */
-	Order editCart(Order order);
-
+    public Order addtoCart(Order order, String branchName, IDataManager menuDB);
+    public Order removeFromCart(Order order, IDisplay displayFormatter);
+    public Order editCart(Order order, IDisplay displayFormatter); 
 }
