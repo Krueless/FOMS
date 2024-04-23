@@ -2,12 +2,12 @@ import java.util.Scanner;
 public class AdminForStaff implements IAdminForStaff{
     private IDataManager accountDB;
     private IDataManager branchDB;
-    private IDisplay displayFormatter;
+    private IDisplayFilteredForAccount displayFormatter;
     private QuotaChecker quotaChecker;
     public AdminForStaff(){
         this.accountDB=DataManagerForAccount.getInstance();
         this.branchDB=DataManagerForBranch.getInstance();
-        this.displayFormatter=new //TODO
+        this.displayFormatter=new DisplayWithFilterAndSort();
 	this.quotaChecker=new QuotaChecker();
     }
     public void editStaff(){
@@ -60,21 +60,26 @@ public class AdminForStaff implements IAdminForStaff{
     }
     public void addStaff(){
         Scanner sc=new Scanner(System.in);
-        System.out.println("Enter staffID");
-        String staffID=sc.nextLine();
-        System.out.println("Enter password");
-        String password=sc.nextLine();
-        System.out.println("Enter role");
-        String role=sc.nextLine();
-        System.out.println("Enter gender");
-        String gender=sc.nextLine();
-        System.out.println("Enter age");
-        int age=sc.nextInt();
-        System.out.println("Enter branch");
+	System.out.println("Enter branch to assign Staff");
         String branchName=sc.nextLine();
-        DataManagerForOrder orderDB=//get DataManagerForOrder object
-        Staff staffAccount=new Staff(staffID,password,role,gender,age,branchName,orderDB);
-        accountDB.add(staffAccount);
+	if(quotaChecker.checkStaffQuota(branchName)){
+		//add staff
+		System.out.println("Enter name");
+		String name-sc.nextLine();
+	        System.out.println("Enter staffID");
+	        String staffID=sc.nextLine();
+	        System.out.println("Enter password");
+	        String password=sc.nextLine();
+	        String role="S";
+	        System.out.println("Enter gender");
+	        String gender=sc.nextLine();
+	        System.out.println("Enter age");
+	        int age=sc.nextInt();
+	        Staff staffAccount=new Staff(name,staffID,role,gender,age,password,branchName);
+	        accountDB.add(staffAccount);
+	}else{
+		System.out.println("Staff quota is reached. Cannot add staff");
+	}
     }
     public void displayStaff(){
         Scanner sc=new Scanner(System.in);
@@ -108,7 +113,19 @@ public class AdminForStaff implements IAdminForStaff{
 	String branchName=sc.nextLine();
 	if(quotaChecker.checkManagerQuota(branchName)){
 		//add manager
-		System.out.println("
+		System.out.println("Enter name");
+		String name-sc.nextLine();
+	        System.out.println("Enter staffID");
+	        String staffID=sc.nextLine();
+	        System.out.println("Enter password");
+	        String password=sc.nextLine();
+	        String role="M";
+	        System.out.println("Enter gender");
+	        String gender=sc.nextLine();
+	        System.out.println("Enter age");
+	        int age=sc.nextInt();
+	        Manager managerAccount=new Manager(name,staffID,role,gender,age,password,branchName);
+	        accountDB.add(managerAccount);
 	}else{
 		System.out.printf("Manager quota is reached. Cannot add manager");
 	}
