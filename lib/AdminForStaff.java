@@ -3,6 +3,7 @@ public class AdminForStaff implements IAdminForStaff{
     private IDataManager accountDB;
     private IDataManager branchDB;
     private IDisplay displayFormatter;
+    private QuotaChecker quotaChecker;
     public AdminForStaff(IDataManager accountDB, IDataManager branchDB, IDisplay displayFormatter){
         this.accountDB=accountDB;
         this.branchDB=branchDB;
@@ -10,6 +11,7 @@ public class AdminForStaff implements IAdminForStaff{
             System.out.println("Error: Incorrect display formatter");
         }
         this.displayFormatter=displayFormatter;
+	this.quotaChecker=new QuotaChecker();
     }
     public void editStaff(){
         Scanner sc=new Scanner(System.in);
@@ -72,8 +74,11 @@ public class AdminForStaff implements IAdminForStaff{
 	Scanner sc=new Scanner(System.in);
 	System.out.println("Enter the branch to assign Manager");
 	String branchName=sc.nextLine();
-	if(QuotaChecker.checkQuota(branchName)){
+	if(quotaChecker.checkManagerQuota(branchName)){
 		//add manager
+		System.out.println("
+	}else{
+		System.out.printf("Manager quota is reached. Cannot add manager");
 	}
     }
     public void promoteStaff(){
