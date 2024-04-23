@@ -5,21 +5,6 @@
 public class OrderedFoodItem extends FoodItem {
 
     private int quantity;
-
-    /**
-     * Constructs a new OrderedFoodItem with specific details about the food item and the quantity ordered.
-     *
-     * @param name The name of the food item.
-     * @param itemCategory The category of the food item (side, set meal, burger, drink).
-     * @param price The price of a single unit of the food item.
-     * @param branchName The name of the branch where the food item is available.
-     * @param quantity The quantity of the food item ordered.
-     */
-    public OrderedFoodItem(String name, String itemCategory, double price, String branchName, int quantity) {
-        super(name, itemCategory, price, branchName);
-        this.quantity = quantity;
-    }
-
     /**
      * Constructs a new OrderedFoodItem from an existing FoodItem object and a specified quantity.
      *
@@ -27,10 +12,9 @@ public class OrderedFoodItem extends FoodItem {
      * @param quantity The quantity of the food item ordered.
      */
     public OrderedFoodItem(FoodItem foodItem, int quantity) {
-        super(foodItem.getName(), foodItem.getItemCategory(), foodItem.getPrice(), foodItem.getBranchName());
+        super(foodItem.getID(), foodItem.getName(), foodItem.getPrice(), foodItem.getItemCategory(), foodItem.getBranchName());
         this.quantity = quantity;
     }
-
     /**
      * Calculates the total price of the ordered item based on its quantity and unit price.
      *

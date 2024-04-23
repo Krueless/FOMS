@@ -56,17 +56,22 @@ public class PaymentUI {
 	private int getValidNumber(int max)
 	{
 		System.out.println("Please input how many you want");
+        Scanner sc = new Scanner(System.in);
+        int quantity = -1;
 		try {
-            int quantity = sc.nextInt();
-        } catch (InputMismatchException e) {
+            quantity = sc.nextInt();
+        } catch (Exception e) {
             System.out.println("Please input a valid integer");
-			return getValidQuantity();
+            sc.close();
+			return getValidNumber(max);
         }
 		if (quantity<=0 || quantity > max)
 		{
 			System.out.println("Please input a valid number!");
-			return getValidQuantity(max);
+            sc.close();
+			return getValidNumber(max);
 		}
+        sc.close();
 		return quantity;
 	}
 

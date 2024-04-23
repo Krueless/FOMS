@@ -1,7 +1,6 @@
 
 import java.util.ArrayList;
 import java.io.*; 
-import java.util.Scanner;
 
 /**
  * The {@code DataManagerForOrder} class manages a list of {@code Order} objects.
@@ -12,7 +11,7 @@ public class DataManagerForOrder implements IDataManager<Order, Integer> {
 
     private ArrayList<Order> orderList; 
     private static DataManagerForOrder instance;  
-	private final Serializer<Account> serializer;
+	private final Serializer<Order> serializer;
 
     /**
      * Private constructor to prevent instantiation outside of this class.
@@ -39,7 +38,7 @@ public class DataManagerForOrder implements IDataManager<Order, Integer> {
 	private void loadData(){
 		try{
 			orderList = serializer.deserialize();
-		}catch (IOException | ClassNotFoundException | FileNotFoundException e){
+		}catch (IOException | ClassNotFoundException e){
 			orderList = new ArrayList<Order>();
 		}
 	}
@@ -54,15 +53,15 @@ public class DataManagerForOrder implements IDataManager<Order, Integer> {
 
 
     public void update(Order newOrder) {
-		if (order == null)
+		if (newOrder == null)
 		{
 			System.out.println("Invalid order placed, please try again");
 		}
         for (int i = 0; i < orderList.size(); i++) {
             if (orderList.get(i).getOrderID() == newOrder.getOrderID()) {
                 orderList.set(i, newOrder);
+                System.out.println("Order successfully updated!");
                 return;
-				System.out.println("Order successfully updated!");
             }
         }
 		System.out.println("Order could not be found in the list, please try again.");
@@ -103,8 +102,8 @@ public class DataManagerForOrder implements IDataManager<Order, Integer> {
         for (int i = 0; i < orderList.size(); i++) {
             if (orderList.get(i).getOrderID() == order.getOrderID()) {
                 orderList.remove(i);
+                System.out.println("Order is successfully removed!");
                 return;
-				System.out.println("Order is successfully removed!");
             }
         }
         System.out.println("Order not found in order list");
@@ -117,7 +116,7 @@ public class DataManagerForOrder implements IDataManager<Order, Integer> {
      * @param orderID The ID of the order to find.
      * @return The found {@code Order} object, or {@code null} if not found.
      */
-    public Order find(int orderID) {
+    public Order find(Integer orderID) {
         for (int i = 0; i < orderList.size(); i++) {
             if (orderList.get(i).getOrderID() == orderID) {
                 return orderList.get(i);
@@ -125,6 +124,10 @@ public class DataManagerForOrder implements IDataManager<Order, Integer> {
         }
         System.out.println("Order not found in order list");
         return null;
+    }
+
+    public ArrayList <Order> getAll(){
+        return this.orderList;
     }
 }
 // DONE

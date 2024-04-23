@@ -19,6 +19,18 @@ public class FoodItem implements IGetBranchName, Serializable {
 		this.branchName = branchName;
 	}
 
+	public String getName(){
+		return name;
+	}
+
+	public String getItemCategory(){
+		return itemCategory;
+	}
+
+	public double getPrice(){
+		return price;
+	}
+
 	public int getID(){
         return foodItemID;
     }

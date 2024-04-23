@@ -83,7 +83,7 @@ public class Credit implements IPayment
 		try 
 		{
 			System.out.println("Please input your credit card number");
-			String creditCardNumber = sc.nextLong(); 
+			long creditCardNumber = sc.nextLong(); 
 			System.out.println("Please input your CVV");
 			int cvv = sc.nextInt(); 
 		} 

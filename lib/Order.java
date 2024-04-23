@@ -138,20 +138,25 @@ public class Order implements Serializable{
      */
     @Override
     public String toString() {
-        String returnString = String.format("OrderID: %d\nOrderStatus: %s\nPrice: %.2f\n",
-                                            this.orderID, this.orderStatus, this.price);
-        if (this.takeaway) {
-            returnString += "Takeaway\n";
-        } 
-		else {
-            returnString += "Not Takeaway\n";
+        String returnString = null;
+        switch(orderStatus){
+            case OrderStatus.ORDERING:
+            returnString = "Order has not yet been sent";
+            break;
+            case OrderStatus.PREPARING:
+            returnString = "Order is being Prepared";
+            break;
+            case OrderStatus.READY_TO_PICKUP:
+            returnString = "Order is ready to be picked up!";
+            break;
+            case OrderStatus.COMPLETED:
+            returnString = "Order was completed and has been picked up.";
+            break;
+            case OrderStatus.CANCELLED:
+            returnString = "Order was cancelled";
+            break;
         }
-        returnString += "CartItems:\n";
-        for (OrderedFoodItem item : this.cartItems) {
-            returnString += String.format("\tName: %s\tQuantity: %d\tPrice: %.2f\n",
-                                          item.getFoodItem().getName(), item.getQuantity(), item.calculatePrice());
-        }
-        returnString += String.format("Timestamp: %s\n", this.getTimestamp());
         return returnString;
+
     }
 }

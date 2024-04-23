@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.ArrayList;
 
 /**
  * Manages the functionalities related to modifying the shopping cart, including adding to, removing from,
@@ -14,14 +13,13 @@ public class OrderControlForCart {
      * @param branchName The name of the branch to fetch menu items from.
      * @return The updated order after adding the new item.
      */
-    public Order addToCart(Order order, String branchName, IDataManager menuDB) 
+    public Order addToCart(Order order, IDataManager<FoodItem, Integer> foodItemDB) 
 	{
-		FoodItem foodItem = getFoodItem(menuDB);
+		FoodItem foodItem = getFoodItem(foodItemDB);
         int quantity = getValidNumber();
         OrderedFoodItem orderedFoodItem = new OrderedFoodItem(foodItem, quantity);
         order.getCartItems().add(orderedFoodItem);
 		System.out.println("Item successfully added to cart!");
-        sc.close();
         return order;
     }
 
@@ -43,6 +41,7 @@ public class OrderControlForCart {
 
         if (index == order.getCartItems().size() + 1) {
             System.out.println("Going back to Customer Interface");
+            sc.close();
 			return null;
         } else {
             order.getCartItems().remove(index);
@@ -68,6 +67,7 @@ public class OrderControlForCart {
         int index = getValidNumber(order.getCartItems().size() + 1);
         if (index == order.getCartItems().size() + 1) {
             System.out.println("Going back to Customer Interface");
+            sc.close();
 			return null;
         } else {
             System.out.println("Please input what quantity you want to change it to");
@@ -80,48 +80,55 @@ public class OrderControlForCart {
         return order;
     }
 
-	private FoodItem getFoodItemName(IDataManager menuDB)
+	private FoodItem getFoodItem(IDataManager<FoodItem, Integer> foodItemDB)
 	{
-        Scanner sc = new Scanner(System.in);
         System.out.println("Please input the name of the food item you want");
-        String foodItemName = sc.nextLine();
-        FoodItem foodItem = menuDB.find(branchName, foodItemName);
+        int foodItemID = getValidNumber();
+        FoodItem foodItem = foodItemDB.find(foodItemID);
 		if (foodItem == null)
 		{
-			System.out.println("Please choose a valid food item/input the name correctly");
-			return getFoodItemName(IDataManager menudb);
+			System.out.println("Please choose a valid food item");
+			return getFoodItem(foodItemDB);
 		}
+        return foodItem;
 	}
 	private int getValidNumber()
 	{
+        Scanner sc = new Scanner(System.in);
 		System.out.println("Please input how many you want");
+        int quantity = -1;
 		try {
-            int quantity = sc.nextInt();
-        } catch (InputMismatchException e) {
+            quantity = sc.nextInt();
+        } catch (Exception e) {
             System.out.println("Please input a valid integer");
-			return getValidQuantity();
+            sc.close();
+			return getValidNumber();
         }
 		if (quantity<=0)
 		{
 			System.out.println("Please input a positive number!");
-			return getValidQuantity();
+            sc.close();
+			return getValidNumber();
 		}
+        sc.close();
 		return quantity;
 	}
 
 	private int getValidNumber(int max)
 	{
+        Scanner sc = new Scanner(System.in);
 		System.out.println("Please input how many you want");
+        int quantity = -1;
 		try {
-            int quantity = sc.nextInt();
-        } catch (InputMismatchException e) {
+            quantity = sc.nextInt();
+        } catch (Exception e) {
             System.out.println("Please input a valid integer");
-			return getValidQuantity();
+			return getValidNumber();
         }
 		if (quantity<=0 || quantity > max)
 		{
 			System.out.println("Please input a valid number!");
-			return getValidQuantity(max);
+			return getValidNumber(max);
 		}
 		return quantity;
 	}

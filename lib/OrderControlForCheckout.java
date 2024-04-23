@@ -43,7 +43,6 @@ public class OrderControlForCheckout {
      * @return The order with its dine-in option updated, if changed.
      */
     public Order changeDineInOption(Order order) {
-        Scanner sc = new Scanner(System.in);
         String dineInOption = order.getTakeaway() ? "takeout" : "dine-in";
         System.out.println("Dine-in option is currently " + dineInOption);
         System.out.println("Would you like to change it? If so, enter 1 else enter 0");
@@ -52,24 +51,28 @@ public class OrderControlForCheckout {
 		{
 			order.setTakeaway(!order.getTakeaway());
 		}
-        sc.close();
         return order;
     }
 
 	private int getValidNumber()
 	{
+        Scanner sc = new Scanner(System.in);
 		System.out.println("Please input how many you want");
+        int number = -1;
 		try {
-            int choice = sc.nextInt();
-        } catch (InputMismatchException e) {
+            number = sc.nextInt();
+        } catch (Exception e) {
             System.out.println("Please input a valid number!");
+            sc.close();
 			return getValidNumber();
         }
-		if (quantity != 0 || quantity != 1)
+		if (number != 0 || number != 1)
 		{
 			System.out.println("Please input a valid number!");
+            sc.close();
 			return getValidNumber();
 		}
-		return quantity;
+        sc.close();
+		return number;
 	}
 }

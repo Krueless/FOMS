@@ -1,15 +1,18 @@
 import java.util.ArrayList;
+import java.io.*; 
+import java.util.Scanner;
 
 /**
  * The {@code DataManagerForPayment} class manages a list of {@code IPayment} objects.
  * This class uses the Singleton design pattern to ensure that only one instance of this manager exists throughout the application.
  * It provides methods to add, update, delete, and find payment methods in the list based on their names.
  */
-public class DataManagerForPayment implements IDataManager, Serializable
+public class DataManagerForPayment implements IDataManager<IPayment, String>
 {
 
     private ArrayList<IPayment> paymentList; 
-    private static DataManagerForPayment instance;  
+    private static DataManagerForPayment instance;
+    private final Serializer<IPayment> serializer; 
 
     /**
      * Private constructor to prevent instantiation outside of this class.
@@ -148,6 +151,10 @@ public class DataManagerForPayment implements IDataManager, Serializable
         }
         System.out.println("Payment method not found.");
         return null;
+    }
+
+    public ArrayList<IPayment> getAll(){
+        return this.paymentList;
     }
 
 }

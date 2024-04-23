@@ -7,8 +7,8 @@ import java.util.Scanner;
  */
 public class OrderControl {
 
-    private IDataManager orderDB;           // Interface to interact with order data
-    private IDataManager foodItemDB;        // Interface to interact with food item data
+    private IDataManager<Order, Integer> orderDB;           // Interface to interact with order data
+    private IDataManager<FoodItem, Integer> foodItemDB;        // Interface to interact with food item data
     private IDisplay displayFormatter;      // Interface for displaying data
     private OrderControlForCheckout checkout; // Controls the checkout process
     private OrderControlForCart cart;       // Controls the cart management process
@@ -26,7 +26,7 @@ public class OrderControl {
      * @param order The current order to be managed.
      * @param branchName The branch name where the order is being placed.
      */
-    public OrderControl(IDataManager orderDB, IDataManager foodItemDB, IDisplay displayFormatter, Order order, String branchName) {
+    public OrderControl(IDataManager<Order, Integer> orderDB, IDataManager<FoodItem, Integer> foodItemDB, IDisplay displayFormatter, Order order, String branchName) {
         this.orderDB = orderDB;
         this.foodItemDB = foodItemDB;
         this.displayFormatter = displayFormatter;
@@ -40,7 +40,8 @@ public class OrderControl {
      * Displays the menu filtered by the branch using the display formatter.
      */
     public void viewMenu() {
-        displayFormatter.displayFilteredByBranch(foodItemDB.getAll(), branchName);
+        DisplayFilteredByBranch branchDisplayFormatter = (DisplayFilteredByBranch) displayFormatter;
+        branchDisplayFormatter.displayFilteredByBranch(foodItemDB.getAll(), branchName);
     }
 
     /**
@@ -64,19 +65,21 @@ public class OrderControl {
      */
     public void chooseOptions() {
         Scanner sc = new Scanner(System.in);
-		boolean quit = false
+		boolean quit = false;
 		while (!quit)
 		{
+            int choice = -1;
 			try {
-				int choice = sc.nextInt();
-			} catch (InputMismatchException e) {
+				choice = sc.nextInt();
+			} catch (Exception e) {
 				System.out.println("You did not enter a valid number");
 				chooseOptions();
+                return;
 			}
 			switch (choice) {
 				case 1:
 					viewMenu();
-					Order newOrder = cart.addToCart(order, branchName, menuDB);
+					Order newOrder = cart.addToCart(order, foodItemDB);
 					if(newOrder == null) break;
 					orderDB.update(newOrder);
 					break;
@@ -95,8 +98,8 @@ public class OrderControl {
 					orderDB.update(newOrder);
 					break;
 				case 5:
-					newOrder = checkout.checkOut(order, displayFormatter);
-					newOrder = checkout.changeOrderStatus(newOrder, OrderStatus.PREPARING);
+					checkout.checkOut(order, displayFormatter);
+					newOrder = checkout.changeOrderStatus(order, OrderStatus.PREPARING);
 					orderDB.update(newOrder);
 					quit = true;
 					break;
@@ -105,6 +108,7 @@ public class OrderControl {
 					break;
 				default:
 					System.out.println("Please choose a valid option");
+            }
 	}
         sc.close();
     }
