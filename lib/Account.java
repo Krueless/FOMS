@@ -1,5 +1,5 @@
 import java.io.Serializable;
-public abstract class Account implements Serializable, IGetBranchName {
+public abstract class Account implements Serializable {
 
 	protected String staffID;
 	protected String password = "password";
