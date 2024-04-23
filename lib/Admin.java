@@ -3,7 +3,12 @@ public class Admin extends Account {
 	private IAdminForBranch adminForBranch;
 	private IAdminForPayment adminForPayment;
 	public Admin(String name,String staffID,String role,String gender,int age,String password,IDataManager branchDB,IDataManager paymentDB,IDataManager accountDB,IDisplay displayFormatter){
-		super(name,staffID,role,gender,age,password);
+		super.name=name;
+		super.staffID=staffID;
+		super.role=role;
+		super.gender=gender;
+		super.age=age;
+		super.password=password;
 		if(branchDB==null){
 		    System.out.println("Error: branchDB is null");
 		}else if(!(branchDB instanceof DataManagerForBranch)){
