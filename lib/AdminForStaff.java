@@ -137,9 +137,19 @@ public class AdminForStaff implements IAdminForStaff{
         String staffID=sc.nextLine();
         Account staffAccount=accountDB.find(staffID);
         //create a new Manager object and copy all attributes of staff
-        Manager(String staffID,String password,String role,String gender,int age,String branchName,IDataManager orderDB,IDataManager foodItemDB,IDataManager accountDB);
+	String name=staffAccount.name;
+	String staffID=staffAccount.staffID;
+	String role=staffAccount.role;
+	String gender=staffAccount.gender;
+	int age=staffAccount.age;
+	int password=staffAccount.password;
+	Staff staffAccount=(Staff)staffAccount;
+	String branchName=staffAccount.getBranchName();
+	Manager managerAccount=new Manager(name,staffID,role,gender,age,password,branchName);
         //delete the Staff object to the accountList in DataManagerForAccount
+	accountDB.delete(staffAccount);
         //add the Manager object to the accountList in Data ManagerForAccount
+	accountDB.add(managerAccount);
     }
     public void transferStaff(){
         Scanner sc=new Scanner(System.in);
@@ -151,14 +161,9 @@ public class AdminForStaff implements IAdminForStaff{
         //which branch to transfer to
         System.out.println("Enter branch to transfer staff to");
         String branchName=sc.nextLine();
-        //remove from staffs list in previous branch and append to staffs list in new branch
-        
-        //subtract from numStaff in previous branch and add to numStaff in new branch
-        Branch previousBranch=branchDB.find(staff.getBranchName());
-        Branch newBranch=branchDB.find(branchName);
-        previousBranch.changeNumStaff(-1);
-        newBranch.changeNumStaff(1);
         //change branchName of Staff object
         staff.setBranchName(branchName);
+	//update in database
+	accountDB.update(staff);
     }
 }
