@@ -1,3 +1,4 @@
+import java.util.Scanner;
 public class AdminForStaff implements IAdminForStaff{
     private IDataManager accountDB;
     private IDataManager branchDB;
@@ -68,6 +69,8 @@ public class AdminForStaff implements IAdminForStaff{
     public void assignManager(){
         //checkquota
 	//TODO
+	System.out.println("Enter the branch to assign Manager");
+	if
     }
     public void promoteStaff(){
         Scanner sc=new Scanner(System.in);
