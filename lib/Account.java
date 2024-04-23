@@ -21,8 +21,7 @@ public abstract class Account implements Serializable, IGetBranchName {
 	 * @param password
 	 */
 	public boolean validatePassword(String password) {
-		// TODO - implement Account.validatePassword
-		throw new UnsupportedOperationException();
+		return this.password.equals(password);
 	}
 
 	public String getStaffID() {
