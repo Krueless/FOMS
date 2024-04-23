@@ -72,27 +72,8 @@ public class AdminForStaff implements IAdminForStaff{
 	Scanner sc=new Scanner(System.in);
 	System.out.println("Enter the branch to assign Manager");
 	String branchName=sc.nextLine();
-	Branch branch=branchDB.find(branchName);
-	int numStaff=accountDB.countStaffInBranch(branchName);
-	int numManager=accountDB.countManagerInBranch(branchName);
-	if(numStaff>=1 && numStaff<=4){
-		if(numManager<1){
-			//assign manager
-		}else{
-			//false
-		}
-	}else if(numStaff>=5 && numStaff<=8){
-		if(numManager<1){
-			//assign manager
-		}else{
-			//false
-		}
-	}else if(numStaff>=9 && numStaff<=15){
-		if(numManager<1){
-			//assign manager
-		}else{
-			//false
-		}
+	if(QuotaChecker.checkQuota(branchName)){
+		//add manager
 	}
     }
     public void promoteStaff(){
