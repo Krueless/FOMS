@@ -1,3 +1,4 @@
+import java.util.Scanner;
 public class AdminForBranch extends Admin implements IAdminForBranch {
 	private IDataManager branchDB;
 	private IDisplay displayFormatter;
@@ -10,14 +11,12 @@ public class AdminForBranch extends Admin implements IAdminForBranch {
 		Scanner sc=new Scanner(System.in);
 		System.out.println("Enter the staff quota");
 		int staffQuota=sc.nextInt();
-		ArrayList<FoodItem> menu=new ArrayList<FoodItem>();
 		System.out.println("Enter the branch name");
 		String branchName=sc.nextLine();
-		ArrayList<Order> orderList=new ArrayList<Order>();
 		Sytem.out.println("Enter the location");
 		String location=sc.nextLine();
 		//create a new branch object
-		Branch branch=new Branch(staffQuota,menu,branchName,orderList,location);
+		Branch branch=new Branch(staffQuota,branchName,location);
 		//add the new Branch object to branchList in DataManagerForBranch
 	        branchDB.add(branch);
 	    }
