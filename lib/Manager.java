@@ -33,10 +33,11 @@ public class Manager extends Staff{
         //get the foodID of the food item to edit
         Scanner sc=new Scanner(System.in);
         System.out.println("Enter the FoodID");
-        int FoodID=sc.nextInt();
+        int foodID=sc.nextInt();
         //search for the fooditem in foodItemDB
-        ArrayList<FoodItem> foodItems=foodItemDB.find(super.branchName);
-        FoodItem foodItem;
+        Integer foodIDInteger=new Integer(foodID);
+        FoodItem foodItem=foodItemDB.find(foodIDInteger);
+        //
         int i;
         for(i=0;i<foodItems.size();i++){
             foodItem=foodItems.get(i);
