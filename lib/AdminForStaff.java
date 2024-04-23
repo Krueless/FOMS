@@ -4,20 +4,42 @@ public class AdminForStaff implements IAdminForStaff{
     private IDataManager branchDB;
     private IDisplay displayFormatter;
     private QuotaChecker quotaChecker;
-    public AdminForStaff(IDataManager accountDB, IDataManager branchDB, IDisplay displayFormatter){
-        this.accountDB=accountDB;
-        this.branchDB=branchDB;
-        if(!(displayFormatter instanceof DisplayWithFilterAndSort)){
-            System.out.println("Error: Incorrect display formatter");
-        }
-        this.displayFormatter=displayFormatter;
+    public AdminForStaff(){
+        this.accountDB=DataManagerForAccount.getInstance();
+        this.branchDB=DataManagerForBranch.getInstance();
+        this.displayFormatter=new //TODO
 	this.quotaChecker=new QuotaChecker();
     }
     public void editStaff(){
         Scanner sc=new Scanner(System.in);
         System.out.println("Enter the staffID");
         String staffID=sc.nextLine();
-        accountDB.
+        Account account=accountDB.find(staffID);
+	int choice;
+	do{
+		System.out.println("Select attribute to change");
+		System.out.println("1. name");
+		System.out.println("2. gender");
+		System.out.println("3. age");
+		System.out.println("4. password");
+		choice=sc.nextInt();
+		switch(choice){
+			case 1:
+				account.setName();
+				break;
+			case 2:
+				account.setGender();
+				break;
+			case 3:
+				account.setAge();
+				break;
+			case 4:
+				account.setPassword();
+				break;
+			default:
+				break;
+		}
+	}while(choice>=1 && choice<=4);
     }
     public void removeStaff(){
         Scanner sc=new Scanner(System.in);
