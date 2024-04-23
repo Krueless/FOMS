@@ -63,6 +63,7 @@ public class Staff extends Account implements IGetBranchName {
 		    int orderID=sc.nextInt();
 		    processOrder(orderID);
 		    break;
+		    default:break;
 		}
 		sc.close();
 	}
