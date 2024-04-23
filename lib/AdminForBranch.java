@@ -1,10 +1,8 @@
 import java.util.Scanner;
 public class AdminForBranch extends Admin implements IAdminForBranch {
 	private IDataManager branchDB;
-	private IDisplay displayFormatter;
-	public AdminForBranch(IDataManager branchDB,IDisplay displayFormatter){
-		this.branchDB=branchDB;
-		this.displayFormatter=displayFormatter;
+	public AdminForBranch(){
+		this.branchDB=DataManagerForBranch.getInstance();
 	}
 	public void openBranch(){
 		//obtain the attributes for the new branch
@@ -16,7 +14,7 @@ public class AdminForBranch extends Admin implements IAdminForBranch {
 		Sytem.out.println("Enter the location");
 		String location=sc.nextLine();
 		//create a new branch object
-		Branch branch=new Branch(staffQuota,branchName,location);
+		Branch branch=new Branch(branchName,location,staffQuota);
 		//add the new Branch object to branchList in DataManagerForBranch
 	        branchDB.add(branch);
 	    }
