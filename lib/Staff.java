@@ -24,7 +24,16 @@ public class Staff extends Account implements IGetBranchName {
 	}
 	
 	public void displayNewOrders(){
-		displayFormatter.displayFilteredByBranch(orderDB.getAll(),branchName);
+		ArrayList<Order> orderList=orderDB.getAll();
+		ArrayList<Order> newOrders=new ArrayList<Order>();
+		//loop through orderList and add only the new orders to newOrders
+		for(int i=0;i<orderList.size();i++){
+			Order order=orderList.get(i);
+			if(order.getOrderStatus()==PREPARING){
+				newOrders.add(order);
+			}
+		}
+		displayFormatter.displayFilteredByBranch(newOrders,branchName);
 	}
 	
 	public void viewOrder(int orderID){
