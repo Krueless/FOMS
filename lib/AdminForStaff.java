@@ -22,24 +22,34 @@ public class AdminForStaff implements IAdminForStaff{
 		System.out.println("2. gender");
 		System.out.println("3. age");
 		System.out.println("4. password");
+		System.out.println("5. Exit loop");
 		choice=sc.nextInt();
 		switch(choice){
 			case 1:
-				account.setName();
+				System.out.println("Enter new name");
+				String name=sc.nextLine();
+				account.setName(name);
 				break;
 			case 2:
-				account.setGender();
+				System.out.println("Enter new gender");
+				String gender=sc.nextLine();
+				account.setGender(gender);
 				break;
 			case 3:
-				account.setAge();
+				System.out.println("Enter new age");
+				int age=sc.nextInt();
+				account.setAge(age);
 				break;
 			case 4:
-				account.setPassword();
+				System.out.println("Enter new password");
+				String password=s.nextLine();
+				account.setPassword(password);
 				break;
 			default:
 				break;
 		}
 	}while(choice>=1 && choice<=4);
+	accountDB.update(account);
     }
     public void removeStaff(){
         Scanner sc=new Scanner(System.in);
