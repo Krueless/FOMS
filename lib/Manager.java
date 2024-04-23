@@ -37,18 +37,8 @@ public class Manager extends Staff{
         //search for the fooditem in foodItemDB
         Integer foodIDInteger=new Integer(foodID);
         FoodItem foodItem=foodItemDB.find(foodIDInteger);
-        //
-        int i;
-        for(i=0;i<foodItems.size();i++){
-            foodItem=foodItems.get(i);
-            if(foodItem.getFoodID()==FoodID){
-                //food item found
-                break;
-            }
-        }
-        //if foodItem is not found after searching to end of list
-        if(i==foodItems.size()){
-            System.out.println("FoodID does not exist");
+        if(foodItem.getBranchName().equals(super.getBranchName())==false){
+            System.out.println("FoodItem not in menu of this branch");
             return;
         }
         //foodItem found
@@ -91,29 +81,27 @@ public class Manager extends Staff{
                 break;
             }
         }while(choice>=1 && choice<=5);
-        
+        foodItemDB.update(foodItem);
     }
     public void removeItem(){
         Scanner sc=new Scanner(System.in);
         System.out.println("Enter the FoodID");
-        int FoodID=sc.nextInt();
+        int foodID=sc.nextInt();
         //search for the fooditem with the corresponding FoodID
-        ArrayList<FoodItem> foodItems=foodItemDB.find(super.branchName);
-        FoodItem foodItem;
-        for(int i=0;i<foodItems.size();i++){
-            foodItem=foodItems.get(i);
-            if(foodItem.getFoodID()==FoodID){
-                foodItemDB.delete(foodItem);
-                break;
-            }
+        Integer foodIDInteger=new Integer(foodID);
+        FoodItem foodItem=foodItemDB.find(foodIDInteger);
+        if(foodItem.getBranchName().equals(super.getBranchName())==false){
+            System.out.println("foodItem not in menu of this branch");
+            return;
         }
+        //foodItem found
+        //delete foodItem
+        fooItemDB.delete(foodItem);
     }
     public void selectOptions(int choice){
         switch(choice){
             case 1:
-            DataManagerForBranch branchDB=DataManagerForBranch.getInstance();
-            DisplayWithFilterAndSort displayFormatter=new DisplayWithFilterAndSort();
-            displayStaff(branchDB,displayFormatter); //to be continued
+            displayStaff();
             break;
             case 2:
             addItem();
@@ -124,6 +112,7 @@ public class Manager extends Staff{
             case 4:
             removeItem();
             break;
+            default:break;
         }
     }
     public void displayOptions(){
