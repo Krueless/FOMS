@@ -4,7 +4,11 @@ public class Staff extends Account implements IGetBranchName {
 	protected IDataManager orderDB;
 	protected IDisplay displayFormatter;
 	public Staff(String staffID,String password,String role,String gender,int age,String branchName,IDataManager orderDB){
-		super(staffID,password,role,gender,age);
+		super.staffID=staffID;
+		super.password=password;
+		super.role=role;
+		super.gender=gender;
+		super.age=age;
 		this.branchName=branchName;
 		if (orderDB instanceof DataManagerForOrder) {
 		    this.orderDB=orderDB;
@@ -24,7 +28,7 @@ public class Staff extends Account implements IGetBranchName {
 		}
 		DataManagerForBranch dataManagerBranch=(DataManagerForBranch)dataManager;
 		Branch branch=dataManagerBranch.find(branchName);
-		ArrayList <Order> orderList=branch.getOrderList();
+		ArrayList<Order> orderList=branch.getOrderList();
 		for(int i=0;i<orderList.size();i++){
 		    Order currentOrder=orderList.get(i);
 		    if(currentOrder.getOrderStatus()==PREPARING){
