@@ -1,7 +1,7 @@
 public class Staff extends Account implements IGetBranchName {
 
 	protected String branchName;
-	protected IDataManager<Order,String> orderDB;
+	protected IDataManager orderDB;
 	protected IDisplay displayFormatter;
 	public Staff(String staffID,String password,String role,String gender,int age,String branchName,IDataManager orderDB){
 		super(staffID,password,role,gender,age);
