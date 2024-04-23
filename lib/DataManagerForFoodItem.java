@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.nio.file.*;
 import java.util.Scanner;
 
 public class DataManagerForFoodItem implements IDataManager<FoodItem, Integer>, Serializable {
@@ -11,10 +10,8 @@ public class DataManagerForFoodItem implements IDataManager<FoodItem, Integer>, 
 	private final Serializer<FoodItem> serializer;
 
 	private DataManagerForFoodItem() {
-		foodItemList = new ArrayList<>();
         serializer = new Serializer<FoodItem>("../src/foodItemData.ser");
-        // Deserialize data when initializing the instance
-        deserializeData();
+        loadData();
 	}
 
 	public static DataManagerForFoodItem getInstance() {
@@ -23,6 +20,17 @@ public class DataManagerForFoodItem implements IDataManager<FoodItem, Integer>, 
 		}
 		return instance;
 	}
+
+    public void loadData(){
+        try{
+			foodItemList = serializer.deserialize();
+		}catch (IOException | ClassNotFoundException e){
+			System.out.println("Serialized file not found or invalid, initializing from CSV.");
+			e.printStackTrace();
+			foodItemList = new ArrayList<FoodItem>();
+			initializeFromCSV();
+		}
+    }
 
 	/**
 	 * 
@@ -83,33 +91,10 @@ public class DataManagerForFoodItem implements IDataManager<FoodItem, Integer>, 
 		return foodItemList;
 	}
 
-	public void serializeData() {
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("foodItemData.ser"))) {
-            out.writeObject(foodItemList);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-        // Deserialization method
-        @SuppressWarnings("unchecked")
-        private void deserializeData() {
-            Path filePath = Paths.get("foodItemData.ser");
-            if (Files.exists(filePath)) {
-                try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("foodItemData.ser"))) {
-                    foodItemList = (ArrayList<FoodItem>) in.readObject();
-                } catch (ClassNotFoundException | IOException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                // If the serialized file does not exist, we may need to initialize from CSV
-                initializeFromCSV("food_item_list.csv");
-            }
-        }
-
             // Method to read CSV and initialize data
-    private void initializeFromCSV(String csvFileName) {
-        try (Scanner scanner = new Scanner(new File(csvFileName))) {
+    private void initializeFromCSV() {
+        File f = new File("../src/menu_list.csv");
+        try (Scanner scanner = new Scanner(f)) {
             scanner.nextLine();
             while (scanner.hasNextLine()) {
                 // Assuming the CSV is properly formatted to match the Branch constructor

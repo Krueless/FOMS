@@ -1,9 +1,7 @@
 
 import java.io.*;
 import java.util.ArrayList;
-import java.nio.file.*;
 import java.util.Scanner;
-import java.io.Serializable;
 
 public class DataManagerForBranch implements IDataManager<Branch,String>, Serializable {
 
@@ -13,10 +11,8 @@ public class DataManagerForBranch implements IDataManager<Branch,String>, Serial
 	private final Serializer<Branch> serializer;
 
 	private DataManagerForBranch() {
-		branchList = new ArrayList<>();
 	        serializer = new Serializer<Branch>("../src/branchData.ser");
-	        // Deserialize data when initializing the instance
-	        deserializeData();
+	        loadData();
 	}
 
 	public static DataManagerForBranch getInstance() {
@@ -24,6 +20,17 @@ public class DataManagerForBranch implements IDataManager<Branch,String>, Serial
 			instance = new DataManagerForBranch();
 		}
 		return instance;
+	}
+
+	public void loadData(){
+		try{
+			branchList = serializer.deserialize();
+		}catch (IOException | ClassNotFoundException e){
+			System.out.println("Serialized file not found or invalid, initializing from CSV.");
+			e.printStackTrace();
+			branchList = new ArrayList<Branch>();
+			initializeFromCSV();
+		}
 	}
 
 	/**
@@ -83,33 +90,10 @@ public class DataManagerForBranch implements IDataManager<Branch,String>, Serial
 		return branchList;
 	}
 
-	public void serializeData() {
-        	try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("branchData.ser"))) {
-            		out.writeObject(branchList);
-        	} catch (IOException e) {
-            		e.printStackTrace();
-        	}
-    	}
-
-        // Deserialization method
-        @SuppressWarnings("unchecked")
-        private void deserializeData() {
-            Path filePath = Paths.get("branchData.ser");
-            if (Files.exists(filePath)) {
-                try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("branchData.ser"))) {
-                    branchList = (ArrayList<Branch>) in.readObject();
-                } catch (ClassNotFoundException | IOException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                // If the serialized file does not exist, we may need to initialize from CSV
-                initializeFromCSV("branch_list.csv");
-            }
-        }
-
             // Method to read CSV and initialize data
-    private void initializeFromCSV(String csvFileName) {
-        try (Scanner scanner = new Scanner(new File(csvFileName))) {
+    private void initializeFromCSV() {
+		File f = new File("../src/branch_list.csv");
+        try (Scanner scanner = new Scanner(f)) {
             scanner.nextLine();
             while (scanner.hasNextLine()) {
                 // Assuming the CSV is properly formatted to match the Branch constructor
