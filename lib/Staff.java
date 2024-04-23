@@ -1,3 +1,4 @@
+import java.util.Scanner;
 public class Staff extends Account implements IGetBranchName {
 
 	protected String branchName;
