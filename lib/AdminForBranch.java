@@ -1,6 +1,6 @@
 import java.util.Scanner;
 public class AdminForBranch extends Admin implements IAdminForBranch {
-	private IDataManager branchDB;
+	private IDataManager<Branch, String> branchDB;
 	public AdminForBranch(){
 		this.branchDB=DataManagerForBranch.getInstance();
 	}
