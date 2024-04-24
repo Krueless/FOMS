@@ -9,6 +9,9 @@ public class Manager extends Staff{
         this.foodItemDB=foodItemDB;
         this.accountDB=accountDB;
     }
+   /**
+     * To display the staff list in the branch supervised by the manager. 
+     */
     public void displayStaff(){
         String branchName=super.getBranchName();
         ArrayList<Account> accountList = accountDB.getAll();
@@ -20,6 +23,10 @@ public class Manager extends Staff{
         }
         displayFormatter.displayFilteredByBranch(branchNameList,branchName);
     }
+
+   /**
+     * Manager can add a food item to menu of its branch
+     */
     public void addItem(){
         //get details of food item
         Scanner sc=GlobalResource.SCANNER;
@@ -45,6 +52,10 @@ public class Manager extends Staff{
             System.out.println("Food ID must be number! Returning to user page...");
         }
     }
+
+   /**
+     * Manager can edit an item in the menu of its branch
+     */
     public void editItem(){
         //get the foodID of the food item to edit
         Scanner sc=new Scanner(System.in);
@@ -96,6 +107,10 @@ public class Manager extends Staff{
         }
         sc.close();
     }
+	
+    /**
+     * Manager can remove an item from menu of the branch it is in
+     */
     public void removeItem(){
         Scanner sc=new Scanner(System.in);
         System.out.println("Enter the FoodID");
@@ -116,6 +131,9 @@ public class Manager extends Staff{
         }
         sc.close();
     }
+    /**
+     * Select the options for Manager.
+     */
 
 	public void selectOptions(){
         Scanner sc = new Scanner(System.in);
@@ -147,7 +165,9 @@ public class Manager extends Staff{
         System.out.println("Log out successfully.");
         sc.close();
     }
-    
+   /**
+     * Displays the options for Manager.
+     */
     public void showOptions(){
         System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''");
         System.out.println("Manager Page");
