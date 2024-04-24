@@ -170,8 +170,8 @@ public class Manager extends Staff{
         System.out.println("Log out successfully.");
         sc.close();
     }
-   /**
-     * Displays the options for Manager.
+    /**
+     * Prints the available options that the Manager can do
      */
     public void showOptions(){
         System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''");
