@@ -2,7 +2,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class AdminForStaff implements IAdminForStaff{
-    private IDataManager<Account, String> accountDB;
+    private IDataManagerWithCount accountDB;
     private IDataManager<Branch, String> branchDB;
     private IDisplayFilteredForAccount displayFormatter;
 
@@ -62,7 +62,7 @@ public class AdminForStaff implements IAdminForStaff{
             }while(!exit);
             accountDB.update(account);      
         }else{
-            System.out.println("Account not found! Returning to user options...");
+            System.out.println("Account not found! Returning to user page...");
         }
         sc.close();
     }
@@ -72,35 +72,42 @@ public class AdminForStaff implements IAdminForStaff{
         System.out.println("Enter the staffID");
         String staffID=sc.nextLine();
         Account staffAccount=accountDB.find(staffID);
-        if (staffAccount != null){
+        if (staffAccount != null)
             accountDB.delete(staffAccount);
-
-        }
-        ;
-        sc.close;
+        else
+            System.out.println("Account not found! Returning to user page...");
+        sc.close();
     }
+
     public void addStaff(){
         Scanner sc=new Scanner(System.in);
-	System.out.println("Enter branch to assign Staff");
+	    System.out.println("Enter branch to assign Staff:");
         String branchName=sc.nextLine();
-	if(quotaChecker.checkStaffQuota(branchName)){
-		//add staff
-		System.out.println("Enter name");
-		String name = sc.nextLine();
-	        System.out.println("Enter staffID");
-	        String staffID=sc.nextLine();
-	        String role="S";
-	        System.out.println("Enter gender");
-	        String gender=sc.nextLine();
-	        System.out.println("Enter age");
-	        int age=sc.nextInt();
-			DataManagerForOrder orderDB = DataManagerForOrder.getInstance();
-			DisplayFilteredByBranch displayFormatter = new DisplayFilteredByBranch();
-	        Staff staffAccount=new Staff(name,staffID,role,gender,age,branchName, orderDB, displayFormatter);
-	        accountDB.add(staffAccount);
-	}else{
-		System.out.println("Staff quota is reached. Cannot add staff");
-	}
+        Branch branch = branchDB.find(branchName);
+        if (branch != null){
+            int numStaff = accountDB.countStaffInBranch(branchName);
+            if (numStaff == branch.getStaffQuota()) {
+                System.out.println("Enter name:");
+		        String name = sc.nextLine();
+                System.out.println("Enter staffID:");
+                String staffID=sc.nextLine();
+                String role="S";
+                System.out.println("Enter gender:");
+                String gender=sc.nextLine();
+                System.out.println("Enter age:");
+                int age=sc.nextInt();
+                DataManagerForOrder orderDB = DataManagerForOrder.getInstance();
+                DisplayFilteredByBranch displayFormatter = new DisplayFilteredByBranch();
+                Staff staffAccount=new Staff(name,staffID,role,gender,age,branchName, orderDB, displayFormatter);
+                accountDB.add(staffAccount);
+               
+            }
+            else{
+                System.out.println("Branch has reached staff quota limit. Cannot add staff.");
+                System.out.println("Returning to user page..."); 
+            }  
+        }
+        sc.close();
     }
     public void displayStaff(){
         Scanner sc=new Scanner(System.in);
@@ -119,63 +126,67 @@ public class AdminForStaff implements IAdminForStaff{
         int choice=sc.nextInt();
         switch(choice){
             case 1:
-		ArrayList<Branch> branchList=branchDB.getAll();
-		for(int i=0;i<branchList.size();i++){
-			Branch branch=branchList.get(i);
-			System.out.println(branch.getBranchName());
-			displayFormatter.displayFilteredByBranch(staffList,branch.getBranchName());
-		}
-		break;
+                ArrayList<Branch> branchList=branchDB.getAll();
+                for(int i=0;i<branchList.size();i++){
+                    Branch branch=branchList.get(i);
+                    System.out.println(branch.getBranchName());
+                    displayFormatter.displayFilteredByBranch(staffList,branch.getBranchName());
+                }
+                break;
             case 2:
-		System.out.println("Admin");
-		displayFormatter.displayFilteredByRole(accountList,"A");
-		System.out.println("Manager");
-		displayFormatter.displayFilteredByRole(accountList,"M");
-		System.out.println("Staff");
-		displayFormatter.displayFilteredByRole(accountList,"S");
+                System.out.println("Admin");
+                displayFormatter.displayFilteredByRole(accountList,"A");
+                System.out.println("Manager");
+                displayFormatter.displayFilteredByRole(accountList,"M");
+                System.out.println("Staff");
+                displayFormatter.displayFilteredByRole(accountList,"S");
             	break;
             case 3:
-		System.out.println("Male");
-		displayFormatter.displayFilteredByGender(accountList,"M");
-		System.out.println("Female");
-		displayFormatter.displayFilteredByGender(accountList,"F");
+                System.out.println("Male");
+                displayFormatter.displayFilteredByGender(accountList,"M");
+                System.out.println("Female");
+                displayFormatter.displayFilteredByGender(accountList,"F");
             	break;
             case 4:
-		for(int age=0;age<=100;age++){
-			displayFormatter.displayFilteredByAge(accountList,age);
-		}
+                for(int age=0;age<=100;age++){
+                    displayFormatter.displayFilteredByAge(accountList,age);
+                }
             	break;
-	    default:break;
+	        default:
+                System.out.println("Invalid Option. Returning to user page...");
+                break;
         }
+        sc.close();
     }
+
     public void assignManager(){
         //checkquota
 	//TODO
-	Scanner sc=new Scanner(System.in);
-	System.out.println("Enter the branch to assign Manager");
-	String branchName=sc.nextLine();
-	if(quotaChecker.checkManagerQuota(branchName)){
-		//add manager
-		System.out.println("Enter name");
-		String name = sc.nextLine();
-	        System.out.println("Enter staffID");
-	        String staffID=sc.nextLine();
-	        String role="M";
-	        System.out.println("Enter gender");
-	        String gender=sc.nextLine();
-	        System.out.println("Enter age");
-	        int age=sc.nextInt();
-			DataManagerForOrder orderDB = DataManagerForOrder.getInstance();
-			DisplayFilteredByBranch displayFilteredByBranch = new DisplayFilteredByBranch();
-			DataManagerForFoodItem foodItemDB = DataManagerForFoodItem.getInstance();
-			DataManagerForAccount accountDB = DataManagerForAccount.getInstance();
-	        Manager managerAccount=new Manager(name,staffID,role,gender,age,branchName, orderDB, displayFilteredByBranch, foodItemDB, accountDB);
-	        accountDB.add(managerAccount);
-	}else{
-		System.out.printf("Manager quota is reached. Cannot add manager");
-	}
-    }
-	
+        Scanner sc=new Scanner(System.in);
+        System.out.println("Enter the branch to assign Manager");
+        String branchName=sc.nextLine();
+        if(quotaChecker.checkManagerQuota(branchName)){
+            //add manager
+            System.out.println("Enter name");
+            String name = sc.nextLine();
+                System.out.println("Enter staffID");
+                String staffID=sc.nextLine();
+                String role="M";
+                System.out.println("Enter gender");
+                String gender=sc.nextLine();
+                System.out.println("Enter age");
+                int age=sc.nextInt();
+                DataManagerForOrder orderDB = DataManagerForOrder.getInstance();
+                DisplayFilteredByBranch displayFilteredByBranch = new DisplayFilteredByBranch();
+                DataManagerForFoodItem foodItemDB = DataManagerForFoodItem.getInstance();
+                DataManagerForAccount accountDB = DataManagerForAccount.getInstance();
+                Manager managerAccount=new Manager(name,staffID,role,gender,age,branchName, orderDB, displayFilteredByBranch, foodItemDB, accountDB);
+                accountDB.add(managerAccount);
+        }else{
+            System.out.printf("Manager quota is reached. Cannot add manager");
+        }
+        }
+        
     public void promoteStaff(){
         Scanner sc=new Scanner(System.in);
         //find the staff to be promoted
