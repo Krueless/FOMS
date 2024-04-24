@@ -135,11 +135,15 @@ public class Manager extends Staff{
         boolean valid=false;
         while(!valid){
             try{
+                System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''");
+                System.out.println("Manager Page");
                 System.out.println("Please select one of the following options");
-                System.out.println("1. Display staff in branch");
-                System.out.println("2. Add item to menu");
-                System.out.println("3. Edit item in menu");
-                System.out.println("4. Remove item from menu");
+                System.out.println("(1) Display staff in branch");
+                System.out.println("(2) Add item to menu");
+                System.out.println("(3) Edit item in menu");
+                System.out.println("(4) Remove item from menu");
+                System.out.println("(5) Log out");
+                System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''");
                 int choice=sc.nextInt();
                 if(choice>=1 && choice<=4){
                     selectOptions(choice);
