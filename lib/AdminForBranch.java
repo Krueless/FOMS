@@ -25,6 +25,11 @@ public class AdminForBranch implements IAdminForBranch {
 		System.out.println("Enter the branch to be closed");
 		String branchName=sc.nextLine();
 		Branch branch=branchDB.find(branchName);//find the branch
-		branchDB.delete(branch);//delete the branch
+		if(branch!=null){
+			branchDB.delete(branch);//delete the branch
+		}else{
+			System.out.println("Branch not found! Returning to user page...");
+		}
+		sc.close();
 	}
 }
