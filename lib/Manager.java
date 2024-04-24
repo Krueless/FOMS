@@ -1,5 +1,10 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+
+/**
+ * Represents a Manager member in the system.
+ * Inherits from the Staff class which extends the Account class and implements the IGetBranchName interface.
+ */
 public class Manager extends Staff{
     private IDataManager<FoodItem, Integer> foodItemDB;
     private IDataManager<Account, String> accountDB;
@@ -25,7 +30,7 @@ public class Manager extends Staff{
     }
 
    /**
-     * Manager can add a food item to menu of its branch
+     * Allows Manager to add a food item to menu of its branch
      */
     public void addItem(){
         //get details of food item
@@ -54,7 +59,7 @@ public class Manager extends Staff{
     }
 
    /**
-     * Manager can edit an item in the menu of its branch
+     * Allows Manager to edit an item in the menu of its branch
      */
     public void editItem(){
         //get the foodID of the food item to edit
@@ -109,7 +114,7 @@ public class Manager extends Staff{
     }
 	
     /**
-     * Manager can remove an item from menu of the branch it is in
+     * Allows Manager to remove an item from menu of the branch it is in charge of
      */
     public void removeItem(){
         Scanner sc=new Scanner(System.in);
