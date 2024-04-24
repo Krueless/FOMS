@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * Represents a Manager member in the system.
+ * Represents a Manager in the system.
  * Inherits from the Staff class which extends the Account class and implements the IGetBranchName interface.
  */
 public class Manager extends Staff{
@@ -15,7 +15,7 @@ public class Manager extends Staff{
         this.accountDB=accountDB;
     }
    /**
-     * To display the staff list in the branch supervised by the manager. 
+     * Allows Manager to display the staff list in the branch supervised by the manager. 
      */
     public void displayStaff(){
         String branchName=super.getBranchName();
@@ -59,7 +59,7 @@ public class Manager extends Staff{
     }
 
    /**
-     * Allows Manager to edit an item in the menu of its branch
+     * Allows Manager to edit a food item in the menu of its branch
      */
     public void editItem(){
         //get the foodID of the food item to edit
@@ -136,35 +136,35 @@ public class Manager extends Staff{
         }
         sc.close();
     }
-    /**
-     * Select the options for Manager.
-     */
 
+     /**
+     * Allows the Manager to select options from menu, and handles user input
+     */
 	public void selectOptions(){
-        Scanner sc = new Scanner(System.in);
+	Scanner sc = new Scanner(System.in);
 		boolean quit =false;
 		while(!quit){
-            showOptions();
+	    showOptions();
 			String option=sc.nextLine();
 			switch(option){
 			    case "1":
-                    displayStaff();
-                    break;
+		    displayStaff();
+		    break;
 			    case "2":
-                    addItem();
-                    break;
+		    addItem();
+		    break;
 			    case "3":
-                    editItem();
-                    break;
-                case "4":
-                    removeItem();
-                    break;
-                case "5":
-                    quit = true;
-                    break;
+		    editItem();
+		    break;
+		case "4":
+		    removeItem();
+		    break;
+		case "5":
+		    quit = true;
+		    break;
 			    default:
-			        System.out.println("Invalid option. Please try again");
-			        break;
+				System.out.println("Invalid option. Please try again");
+				break;
 			}
         }
         System.out.println("Log out successfully.");
