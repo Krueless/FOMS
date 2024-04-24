@@ -11,7 +11,6 @@ public class CustomerUI {
 		Display displayformatter = new Display();
         Scanner sc = new Scanner(System.in);
         boolean valid = false;
-        boolean takeaway;
         while (!valid) {
             try {
                 System.out.println("Please select an option. ");
@@ -20,13 +19,13 @@ public class CustomerUI {
                 String option = sc.nextLine();
 
                 switch (option) {
-                    case "1":
+                    case "1": //Dine-in
                         valid = true;
-                        takeaway = false;
+                        new OrderControl(orderDB, foodItemDB, displayformatter, new Order(orderDB.getAll().size() + 1, false), branchName);
                         break;
-                    case "2":
+                    case "2": //Takeaway
                         valid = true;
-                        takeaway = true;
+                        new OrderControl(orderDB, foodItemDB, displayformatter, new Order(orderDB.getAll().size() + 1, true), branchName);
                         break;
                     default:
                         System.out.println("Invalid option. Please try again.\n");
@@ -37,8 +36,6 @@ public class CustomerUI {
                 System.out.println("Please try again.\n");
             }
         }
-        Order newOrder = new Order(orderDB.getAll().size() + 1, takeaway);
-		new OrderControl(orderDB, foodItemDB, displayformatter, newOrder, branchName);
         sc.close();
 	}
 

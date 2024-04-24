@@ -17,7 +17,6 @@ public class DataManagerForOrder implements IDataManager<Order, Integer> {
      * Private constructor to prevent instantiation outside of this class.
      */
     private DataManagerForOrder() {
-        orderList = new ArrayList<>();
 		serializer = new Serializer<Order>("../src/..");
 		loadData();
     }
