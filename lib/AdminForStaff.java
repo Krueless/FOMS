@@ -80,7 +80,6 @@ public class AdminForStaff implements IAdminForStaff{
 	        String staffID=sc.nextLine();
 	        Account staffAccount=accountDB.find(staffID);
 	        if (staffAccount != null){
-	            int numManager = accountDB.countManagerInBranch(branchName);
 	            accountDB.delete(staffAccount);
 		}else{
 	            System.out.println("Account not found! Returning to user page...");
@@ -256,7 +255,7 @@ public class AdminForStaff implements IAdminForStaff{
         System.out.println("Enter staffID");
         String staffID=sc.nextLine();
         Account account=accountDB.find(staffID);
-	if(staffAccount!=null){
+	if(account!=null){
 		if(account instanceof Staff){
 			Staff staffAccount=(Staff)account;//downcast to Staff
 			String branchName=staffAccount.getBranchName();
@@ -312,7 +311,7 @@ public class AdminForStaff implements IAdminForStaff{
 		int numStaff2=accountDB.countStaffInBranch(branchName2);
 		int numManager2=accountDB.countManagerInBranch(branchName2);
 
-		System.out.println("Choose option"):
+		System.out.println("Choose option");
 		System.out.println("1. Transfer staff");
 		System.out.println("2. Transfer manager");
 		int option=sc.nextInt();
