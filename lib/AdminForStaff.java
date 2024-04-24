@@ -13,6 +13,9 @@ public class AdminForStaff implements IAdminForStaff{
         this.displayFormatter=new DisplayFilteredForAccount();
 	
     }
+    /**
+     * Allows admin to edit the attributes in a staff account
+     */
     public void editStaff(){
         Scanner sc=new Scanner(System.in);
         System.out.println("Enter the staffID");
@@ -66,7 +69,10 @@ public class AdminForStaff implements IAdminForStaff{
         }
         sc.close();
     }
-
+	
+    /**
+     * Allows admin to remove an existing staff account from the staff list
+     */
     public void removeStaff(){
         Scanner sc=new Scanner(System.in);
 	System.out.println("Enter branch to remove Staff:");
@@ -94,6 +100,9 @@ public class AdminForStaff implements IAdminForStaff{
         sc.close();
     }
 
+     /**
+     * Allows admin to add a new staff account to the staff list
+     */
     public void addStaff(){
         Scanner sc=new Scanner(System.in);
 	    System.out.println("Enter branch to assign Staff:");
@@ -136,6 +145,10 @@ public class AdminForStaff implements IAdminForStaff{
         }
         sc.close();
     }
+
+    /**
+     * Allows admin to display the staff list with filters
+     */
     public void displayStaff(){
         Scanner sc=new Scanner(System.in);
 		ArrayList<Account> accountList = accountDB.getAll();
@@ -145,70 +158,91 @@ public class AdminForStaff implements IAdminForStaff{
 				staffList.add((IGetBranchName)item);
 			}
 		}
-        System.out.println("Choose filter by");
-        System.out.println("1. Branch");
-        System.out.println("2. Role");
-        System.out.println("3. Gender");
-        System.out.println("4. Age");
-        int choice=sc.nextInt();
-        switch(choice){
-            case 1:
-                System.out.println("Enter branch to display");
-		String branchName=sc.nextLine();
-		//check if branch exists
-		Branch branch=branchDB.find(branchName);
-		if(branch!=null){
-			displayFormatter.displayFilteredByBranch(staffList,branchName);
-		}else{
-			System.out.println("Branch not found! Returning to user page...");
-		}
-                break;
-            case 2:
-		System.out.println("Choose role to display");
-                System.out.println("1. Admin");
-                System.out.println("2. Manager");
-                System.out.println("3. Staff");
-		int role=sc.nextInt();
-		switch(role){
-			case 1:
-				displayFormatter.displayFilteredByRole(accountList,"A");
+	Boolean exit=false;
+	String choice;
+	do{
+	        System.out.println("Choose filter by");
+	        System.out.println("1. Branch");
+	        System.out.println("2. Role");
+	        System.out.println("3. Gender");
+	        System.out.println("4. Age");
+		System.out.println("5. Exit");
+		choice=sc.nextLine();
+		        switch(choice){
+		            case "1":
+		                System.out.println("Enter branch to display");
+				String branchName=sc.nextLine();
+				//check if branch exists
+				Branch branch=branchDB.find(branchName);
+				if(branch!=null){
+					displayFormatter.displayFilteredByBranch(staffList,branchName);
+				}else{
+					System.out.println("Branch not found.");
+				}
+		                break;
+		            case "2":
+				System.out.println("Choose role to display");
+		                System.out.println("1. Admin");
+		                System.out.println("2. Manager");
+		                System.out.println("3. Staff");
+				String role=sc.nextLine();
+				switch(role){
+					case "1":
+						displayFormatter.displayFilteredByRole(accountList,"A");
+						break;
+					case "2":
+						displayFormatter.displayFilteredByRole(accountList,"M");
+						break;
+					case "3":
+						displayFormatter.displayFilteredByRole(accountList,"S");
+						break;
+					default:
+						System.out.println("Invalid option.");
+						break;
+				}
+		            	break;
+		            case "3":
+				System.out.println("Choose gender to display");
+		                System.out.println("1. Male");
+		                System.out.println("2. Female");
+				String gender=sc.nextLine();
+				switch(gender){
+					case "1":
+						displayFormatter.displayFilteredByGender(accountList,"M");
+						break;
+					case "2":
+						displayFormatter.displayFilteredByGender(accountList,"F");
+						break;
+					default:
+						System.out.println("Invalid option.");
+						break;
+				}
+		            	break;
+		            case "4":
+				System.out.println("Choose age to display");
+				try{
+					int age=sc.nextInt();
+			                displayFormatter.displayFilteredByAge(accountList,age);
+				}catch(InputMismatchException e){
+					System.out.println("Age must be a number.");
+					sc.nextLine(); //consume the invalid input
+				}
+		            	break;
+			    case "5":
+				System.out.println("Returning to user page...");
+				exit=true;
 				break;
-			case 2:
-				displayFormatter.displayFilteredByRole(accountList,"M");
-				break;
-			case 3:
-				displayFormatter.displayFilteredByRole(accountList,"S");
-				break;
-			default: break;
-		}
-            	break;
-            case 3:
-		System.out.println("Choose gender to display");
-                System.out.println("1. Male");
-                System.out.println("2. Female");
-		int gender=sc.nextInt();
-		switch(gender){
-			case 1:
-				displayFormatter.displayFilteredByGender(accountList,"M");
-				break;
-			case 2:
-				displayFormatter.displayFilteredByGender(accountList,"F");
-				break;
-			default: break;
-		}
-            	break;
-            case 4:
-		System.out.println("Choose age to display");
-		int age=sc.nextInt();
-                displayFormatter.displayFilteredByAge(accountList,age);
-            	break;
-	    default:
-                System.out.println("Invalid Option. Returning to user page...");
-                break;
-        }
+			    default:
+		                System.out.println("Invalid Option.");
+		                break;
+		        }
+		}while(!exit);
         sc.close();
     }
 
+    /**
+     * Allows admin to assign Managers to a branch within the quota constraint
+     */
     public void assignManager(){
         Scanner sc=new Scanner(System.in);
         System.out.println("Enter the branch to assign Manager");
@@ -248,7 +282,10 @@ public class AdminForStaff implements IAdminForStaff{
 	}
 	sc.close();
     }
-        
+
+     /**
+     * Allows admin to promote a staff to branch manager
+     */
     public void promoteStaff(){
         Scanner sc=new Scanner(System.in);
         //find the staff to be promoted
@@ -290,7 +327,10 @@ public class AdminForStaff implements IAdminForStaff{
 	}
 	sc.close();
     }
-	
+
+    /**
+     * Allows admin to transfer a Staff/Manager between branches
+     */
     public void transferStaff(){
         Scanner sc=new Scanner(System.in);
 	//take in 2 branches and check if they both exist
