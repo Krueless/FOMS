@@ -175,23 +175,26 @@ public class Order implements Serializable, IGetBranchName{
     }
 
 
+    /**
+     * @return
+     */
     public String viewOrderStatus() {
         updateCancelled();
         String returnString = null;
         switch(orderStatus){
-            case OrderStatus.ORDERING:
+            case ORDERING:
             returnString = "Order has not yet been sent";
             break;
-            case OrderStatus.PREPARING:
+            case PREPARING:
             returnString = "Order is being Prepared";
             break;
-            case OrderStatus.READY_TO_PICKUP:
+            case READY_TO_PICKUP:
             returnString = "Order is ready to be picked up!";
             break;
-            case OrderStatus.COMPLETED:
+            case COMPLETED:
             returnString = "Order was completed and has been picked up.";
             break;
-            case OrderStatus.CANCELLED:
+            case CANCELLED:
             returnString = "Order was cancelled.";
             break;
         }

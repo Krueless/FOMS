@@ -91,6 +91,7 @@ public class DataManagerForAccount implements IDataManagerWithCount{
 	public void add(Account account) {
 		// TODO - implement DataManagerForAccount.add
 		accountList.add(account);
+        System.out.println("Successfully added account.");
 		serializer.serialize(accountList);
 	}
 
@@ -100,8 +101,12 @@ public class DataManagerForAccount implements IDataManagerWithCount{
 	 */
 	public void delete(Account account) {
 		// TODO - implement DataManagerForAccount.delete
-		accountList.remove(account);
-		serializer.serialize(accountList);
+		if (accountList.remove(account)){
+            System.out.println("Successfully removed account.");
+		    serializer.serialize(accountList);
+        }else{
+            System.out.println("Failed to remove account.");
+        }
 	}
 
 	/**

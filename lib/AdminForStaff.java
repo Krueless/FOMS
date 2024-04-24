@@ -5,60 +5,79 @@ public class AdminForStaff implements IAdminForStaff{
     private IDataManager<Account, String> accountDB;
     private IDataManager<Branch, String> branchDB;
     private IDisplayFilteredForAccount displayFormatter;
-    private QuotaChecker quotaChecker;
+
+
     public AdminForStaff(){
         this.accountDB=DataManagerForAccount.getInstance();
         this.branchDB=DataManagerForBranch.getInstance();
         this.displayFormatter=new DisplayFilteredForAccount();
-	this.quotaChecker=new QuotaChecker();
+	
     }
     public void editStaff(){
         Scanner sc=new Scanner(System.in);
         System.out.println("Enter the staffID");
         String staffID=sc.nextLine();
+       
         Account account=accountDB.find(staffID);
-	int choice;
-	do{
-		System.out.println("Select attribute to change");
-		System.out.println("1. Name");
-		System.out.println("2. Gender");
-		System.out.println("3. Age");
-		System.out.println("4. Password");
-		System.out.println("5. Exit loop");
-		choice=sc.nextInt();
-		switch(choice){
-			case 1:
-				System.out.println("Enter new name");
-				String name=sc.nextLine();
-				account.setName(name);
-				break;
-			case 2:
-				System.out.println("Enter new gender");
-				String gender=sc.nextLine();
-				account.setGender(gender);
-				break;
-			case 3:
-				System.out.println("Enter new age");
-				int age=sc.nextInt();
-				account.setAge(age);
-				break;
-			case 4:
-				System.out.println("Enter new password");
-				String password=sc.nextLine();
-				account.setPassword(password);
-				break;
-			default:
-				break;
-		}
-	}while(choice>=1 && choice<=4);
-	accountDB.update(account);
+        Boolean exit = false;
+        if (account != null){
+            String choice;
+            do{
+                System.out.println("Select the attributes to change");
+                System.out.println("1. Name");
+                System.out.println("2. Gender");
+                System.out.println("3. Age");
+                System.out.println("4. Password");
+                System.out.println("5. Exit");
+                choice=sc.nextLine();
+                switch(choice){
+                    case "1":
+                        System.out.println("Enter new name:");
+                        String name=sc.nextLine();
+                        account.setName(name);
+                        break;
+                    case "2":
+                        System.out.println("Enter new gender:");
+                        String gender=sc.nextLine();
+                        account.setGender(gender);
+                        break;
+                    case "3":
+                        System.out.println("Enter new age:");
+                        int age=sc.nextInt();
+                        account.setAge(age);
+                        break;
+                    case "4":
+                        System.out.println("Enter new password:");
+                        String password=sc.nextLine();
+                        account.setPassword(password);
+                        break;
+                    case "5":
+                        System.out.println("Updating details...");
+                        exit = true;
+                        break;
+                    default:
+                        System.out.println("Invalid option.");
+                        break;
+                }
+            }while(!exit);
+            accountDB.update(account);      
+        }else{
+            System.out.println("Account not found! Returning to user options...");
+        }
+        sc.close();
     }
+
     public void removeStaff(){
         Scanner sc=new Scanner(System.in);
         System.out.println("Enter the staffID");
         String staffID=sc.nextLine();
         Account staffAccount=accountDB.find(staffID);
-        accountDB.delete(staffAccount);
+        if (staffAccount != null){
+            accountDB.delete(staffAccount);
+
+        }
+        ;
+        sc.close;
     }
     public void addStaff(){
         Scanner sc=new Scanner(System.in);

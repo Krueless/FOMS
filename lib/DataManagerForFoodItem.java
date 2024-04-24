@@ -70,6 +70,7 @@ public class DataManagerForFoodItem implements IDataManager<FoodItem, Integer>, 
 	 */
 	public void add(FoodItem foodItem) {
 		foodItemList.add(foodItem);
+        System.out.println("Successfully added food item.");
         serializer.serialize(foodItemList);
 	}
 
@@ -80,18 +81,18 @@ public class DataManagerForFoodItem implements IDataManager<FoodItem, Integer>, 
 	public void delete(FoodItem foodItem) {
 		if (foodItemList.remove(foodItem)){
             System.out.println("Succesfully removed food item.");
+            serializer.serialize(foodItemList);
         }
         else{
             System.out.println("Failed to remove food item.");
         }
-        serializer.serialize(foodItemList);
 	}
 
 	public ArrayList<FoodItem> getAll() {
 		return foodItemList;
 	}
 
-            // Method to read CSV and initialize data
+    // Method to read CSV and initialize data
     private void initializeFromCSV() {
         File f = new File("../src/menu_list.csv");
         try (Scanner scanner = new Scanner(f)) {

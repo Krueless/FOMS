@@ -17,7 +17,7 @@ public class DataManagerForOrder implements IDataManager<Order, Integer> {
      * Private constructor to prevent instantiation outside of this class.
      */
     private DataManagerForOrder() {
-		serializer = new Serializer<Order>("../src/..");
+		serializer = new Serializer<Order>("../src/.."); // TODO update file
 		loadData();
     }
 
@@ -48,9 +48,6 @@ public class DataManagerForOrder implements IDataManager<Order, Integer> {
      *
      * @param newOrder The new order object to replace the existing order.
      */
-
-
-
     public void update(Order newOrder) {
 		if (newOrder == null)
 		{
@@ -59,7 +56,7 @@ public class DataManagerForOrder implements IDataManager<Order, Integer> {
         for (int i = 0; i < orderList.size(); i++) {
             if (orderList.get(i).getOrderID() == newOrder.getOrderID()) {
                 orderList.set(i, newOrder);
-                System.out.println("Order successfully updated!");
+                System.out.println("Successfully updated order.");
                 return;
             }
         }

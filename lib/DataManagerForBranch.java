@@ -39,6 +39,7 @@ public class DataManagerForBranch implements IDataManager<Branch,String>, Serial
 	 */
 	public void add(Branch branch) {
 		branchList.add(branch);
+        System.out.println("Successfully added branch.");
 		serializer.serialize(branchList);
 	}
 
@@ -48,13 +49,13 @@ public class DataManagerForBranch implements IDataManager<Branch,String>, Serial
 	 */
 	public void delete(Branch branch) {
 		if (branchList.remove(branch)){
-            		System.out.println("Successfully removed branch.");
+                System.out.println("Successfully removed branch.");
+                serializer.serialize(branchList);
         	}
         	else{
-            		System.out.println("Failed to remove branch.");
+                System.out.println("Failed to remove branch.");
         	}
-		serializer.serialize(branchList);
-	}
+	    }
 	/**
 	 * 
 	 * @param oldBranch
