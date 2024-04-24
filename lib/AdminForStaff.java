@@ -1,7 +1,7 @@
 import java.util.Scanner;
 public class AdminForStaff implements IAdminForStaff{
     private IDataManager<Account, String> accountDB;
-    private IDataManager< branchDB;
+    private IDataManager<Branch, String> branchDB;
     private IDisplayFilteredForAccount displayFormatter;
     private QuotaChecker quotaChecker;
     public AdminForStaff(){
@@ -18,10 +18,10 @@ public class AdminForStaff implements IAdminForStaff{
 	int choice;
 	do{
 		System.out.println("Select attribute to change");
-		System.out.println("1. name");
-		System.out.println("2. gender");
-		System.out.println("3. age");
-		System.out.println("4. password");
+		System.out.println("1. Name");
+		System.out.println("2. Gender");
+		System.out.println("3. Age");
+		System.out.println("4. Password");
 		System.out.println("5. Exit loop");
 		choice=sc.nextInt();
 		switch(choice){
@@ -85,10 +85,10 @@ public class AdminForStaff implements IAdminForStaff{
         Scanner sc=new Scanner(System.in);
         ArrayList<Staff> staffList=accountDB.getAll();
         System.out.println("Choose filter by")
-        System.out.println("1. branch");
-        System.out.println("2. role");
-        System.out.println("3. gender");
-        System.out.println("4. age");
+        System.out.println("1. Branch");
+        System.out.println("2. Role");
+        System.out.println("3. Gender");
+        System.out.println("4. Age");
         int choice=sc.nextInt();
         switch(choice){
             case 1:
