@@ -156,7 +156,13 @@ public class AdminForStaff implements IAdminForStaff{
             case 1:
                 System.out.println("Enter branch to display");
 		String branchName=sc.nextLine();
-		displayFormatter.displayFilteredByBranch(accountList,branchName);
+		//check if branch exists
+		Branch branch=branchDB.find(branchName);
+		if(branch!=null){
+			displayFormatter.displayFilteredByBranch(staffList,branchName);
+		}else{
+			System.out.println("Branch not found! Returning to user page...");
+		}
                 break;
             case 2:
 		System.out.println("Choose role to display");
@@ -274,7 +280,7 @@ public class AdminForStaff implements IAdminForStaff{
 					System.out.println("Returning to user page...");
 				}
 			}else{
-				System.out.println("Branch not found! Returning to user page...);
+				System.out.println("Branch not found! Returning to user page...");
 			}
 		}else{
 			System.out.println("Account is not a staff. Cannot be promoted to manager");
@@ -285,19 +291,68 @@ public class AdminForStaff implements IAdminForStaff{
 	}
 	sc.close();
     }
+	
     public void transferStaff(){
         Scanner sc=new Scanner(System.in);
-        //find the staff to be transferred
-        System.out.println("Enter staffID");
-        String staffID=sc.nextLine();
-        Account staffAccount=accountDB.find(staffID);
-        Staff staff=(Staff)staffAccount;
-        //which branch to transfer to
-        System.out.println("Enter branch to transfer staff to");
-        String branchName=sc.nextLine();
-        //change branchName of Staff object
-        staff.setBranchName(branchName);
-	//update in database
-	accountDB.update(staff);
+	//take in 2 branches and check if they both exist
+	System.out.println("Enter branch to transfer staff from");
+	String branchName1=sc.nextLine();
+	Branch branch1=branchDB.find(branchName1);
+	System.out.println("Enter branch to transfer staff to");
+	String branchName2=sc.nextLine();
+	Branch branch2=branchDB.find(branchName2);
+	if(branch1!=null && branch2!=null){
+		//check quota for both branches
+		//only if true, can transfer staff
+
+		//count number of staff and manager in branch1
+		int numStaff1=accountDB.countStaffInBranch(branchName1);
+		int numManager1=accountDB.countManagerInBranch(branchName1);
+		//count number of staff and manager in branch2
+		int numStaff2=accountDB.countStaffInBranch(branchName2);
+		int numManager2=accountDB.countManagerInBranch(branchName2);
+
+		System.out.println("Choose option"):
+		System.out.println("1. Transfer staff");
+		System.out.println("2. Transfer manager");
+		int option=sc.nextInt();
+		boolean validQuota=false;
+		switch(option){
+			case 1:
+				validQuota=QuotaChecker.checkQuota(numStaff1-1,numManager1) && QuotaChecker.checkQuota(numStaff2+1,numManager2);
+				break;
+			case 2:
+				validQuota=QuotaChecker.checkQuota(numStaff1,numManager1-1) && QuotaChecker.checkQuota(numStaff2,numManager2+1);
+				break;
+			default:
+				System.out.println("Invalid option! Returning to user page...");
+				break;
+		}
+		if(validQuota){
+			//ask for details of staff to retrieve
+			System.out.println("Enter staffID");
+			String staffID=sc.nextLine();
+			Account account=accountDB.find(staffID);
+			if(account!=null){
+				if(account instanceof Staff){
+					Staff staffAccount=(Staff)account;
+					//change branchName of staff object
+					staffAccount.setBranchName(branchName2);
+					//update in accountDB
+					accountDB.update(staffAccount);
+				}else{
+					System.out.println("Account is not a Staff or Manager! Account cannot be transferred");
+					System.out.println("Returning to user page");
+				}
+			}else{
+				System.out.println("Account not found! Returning to user page...");
+			}
+		}else{
+			System.out.println("Invalid Staff Manager ratio in branch! Returning to user page...");
+		}
+	}else{
+		System.out.println("Branch not found! Returning to user page...");
+	}
+	sc.close();
     }
 }
