@@ -1,6 +1,6 @@
 import java.util.Scanner;
 public class AdminForPayment extends Admin implements IAdminForPayment {
-	private IDataManager paymentDB;
+	private IDataManager<IPayment, String> paymentDB;
 	public AdminForPayment(){
 	    this.paymentDB=DataManagerForPayment.getInstance();
 	}
