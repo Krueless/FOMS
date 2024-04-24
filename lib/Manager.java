@@ -22,25 +22,28 @@ public class Manager extends Staff{
     }
     public void addItem(){
         //get details of food item
-        Scanner sc=new Scanner(System.in);
+        Scanner sc=GlobalResource.SCANNER;
         System.out.println("Enter the FoodID");
-        int FoodID=sc.nextInt();
-        while(foodItemDB.find(FoodID)!=null){
-            System.out.println("FoodID already exists for another food item");
-            System.out.println("Enter the FoodID");
-            FoodID=sc.nextInt();
+        try{
+            int FoodID=sc.nextInt();
+            while(foodItemDB.find(FoodID)!=null){
+                System.out.println("FoodID already exists for another food item");
+                System.out.println("Enter the FoodID");
+                FoodID=sc.nextInt();
+            }
+            System.out.println("Enter the name of the food item");
+            String name=sc.nextLine();
+            System.out.println("Enter the category of the food item");
+            String itemCategory=sc.nextLine();
+            System.out.println("Enter the price of the food item");
+            double price=sc.nextDouble();
+            //construct new food item
+            FoodItem fooditem=new FoodItem(FoodID,name,price,super.getBranchName(),itemCategory);
+            //add the new food item to menu
+            foodItemDB.add(fooditem);
+        }catch (Exception e){
+            System.out.println("Food ID must be number! Returning to user page...");
         }
-        System.out.println("Enter the name of the food item");
-        String name=sc.nextLine();
-        System.out.println("Enter the category of the food item");
-        String itemCategory=sc.nextLine();
-        System.out.println("Enter the price of the food item");
-        double price=sc.nextDouble();
-        //construct new food item
-        FoodItem fooditem=new FoodItem(FoodID,name,price,super.getBranchName(),itemCategory);
-        //add the new food item to menu
-        foodItemDB.add(fooditem);
-        sc.close();
     }
     public void editItem(){
         //get the foodID of the food item to edit
@@ -113,49 +116,47 @@ public class Manager extends Staff{
         }
         sc.close();
     }
-    public void selectOptions(int choice){
-        switch(choice){
-            case 1:
-            displayStaff();
-            break;
-            case 2:
-            addItem();
-            break;
-            case 3:
-            editItem();
-            break;
-            case 4:
-            removeItem();
-            break;
-            default:break;
+
+	public void selectOptions(){
+        Scanner sc = new Scanner(System.in);
+		boolean quit =false;
+		while(!quit){
+            showOptions();
+			String option=sc.nextLine();
+			switch(option){
+			    case "1":
+                    displayStaff();
+                    break;
+			    case "2":
+                    addItem();
+                    break;
+			    case "3":
+                    editItem();
+                    break;
+                case "4":
+                    removeItem();
+                    break;
+                case "5":
+                    quit = true;
+                    break;
+			    default:
+			        System.out.println("Invalid option. Please try again");
+			        break;
+			}
         }
-    }
-    public void displayOptions(){
-        Scanner sc=new Scanner(System.in);
-        boolean valid=false;
-        while(!valid){
-            try{
-                System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''");
-                System.out.println("Manager Page");
-                System.out.println("Please select one of the following options");
-                System.out.println("(1) Display staff in branch");
-                System.out.println("(2) Add item to menu");
-                System.out.println("(3) Edit item in menu");
-                System.out.println("(4) Remove item from menu");
-                System.out.println("(5) Log out");
-                System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''");
-                int choice=sc.nextInt();
-                if(choice>=1 && choice<=4){
-                    selectOptions(choice);
-                    valid=true;
-                }else{
-                    System.out.println("Invalid Option. Please try again");
-                }
-            }catch(Exception e){
-                System.out.println("An error occurred: "+e.getMessage());
-                System.out.println("Please try again");
-            }
-        }
+        System.out.println("Log out successfully.");
         sc.close();
+    }
+    
+    public void showOptions(){
+        System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''");
+        System.out.println("Manager Page");
+        System.out.println("Please select one of the following options");
+        System.out.println("(1) Display staff in branch");
+        System.out.println("(2) Add item to menu");
+        System.out.println("(3) Edit item in menu");
+        System.out.println("(4) Remove item from menu");
+        System.out.println("(5) Log out");
+        System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''");
     }
 }
