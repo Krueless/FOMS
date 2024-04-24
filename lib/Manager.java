@@ -25,6 +25,11 @@ public class Manager extends Staff{
         Scanner sc=new Scanner(System.in);
         System.out.println("Enter the FoodID");
         int FoodID=sc.nextInt();
+        while(foodItemDB.find(FoodID)!=null){
+            System.out.println("FoodID already exists for another food item");
+            System.out.println("Enter the FoodID");
+            FoodID=sc.nextInt();
+        }
         System.out.println("Enter the name of the food item");
         String name=sc.nextLine();
         System.out.println("Enter the category of the food item");
@@ -44,44 +49,49 @@ public class Manager extends Staff{
         int foodID=sc.nextInt();
         //search for the fooditem in foodItemDB
         FoodItem foodItem=foodItemDB.find(foodID);
-        if(foodItem.getBranchName().equals(super.getBranchName())==false){
-            System.out.println("FoodItem not in menu of this branch");
-            return;
-        }
-        //foodItem found
-        //select the attribute to edit
-        int choice;
-        do{
-            System.out.println("Select the attribute to edit:");
-            System.out.println("1. Availability of FoodItem");
-            System.out.println("2. Price of FoodItem");
-            System.out.println("3. Exit");
-            choice=sc.nextInt();
-            switch(choice){
-                case 1:
-                System.out.println("Select the availability of the food item");
-                System.out.println("1. Available");
-                System.out.println("2. Not Available");
-                int availability_choice = sc.nextInt();
-                switch (availability_choice){
+        if(foodItem!=null){
+            if(foodItem.getBranchName().equals(super.getBranchName())==false){
+                System.out.println("FoodItem not in menu of this branch! Returning to user page...");
+                return;
+            }
+            //foodItem found
+            //select the attribute to edit
+            int choice;
+            do{
+                System.out.println("Select the attribute to edit:");
+                System.out.println("1. Availability of FoodItem");
+                System.out.println("2. Price of FoodItem");
+                System.out.println("3. Exit");
+                choice=sc.nextInt();
+                switch(choice){
                     case 1:
-                    foodItem.setAvailability(true);
+                    System.out.println("Select the availability of the food item");
+                    System.out.println("1. Available");
+                    System.out.println("2. Not Available");
+                    int availability_choice = sc.nextInt();
+                    switch (availability_choice){
+                        case 1:
+                        foodItem.setAvailability(true);
+                        break;
+                        case 2:
+                        foodItem.setAvailability(false);
+                        break;
+                        default:
+                        System.out.println("Invalid option");
+                    }
                     break;
                     case 2:
-                    foodItem.setAvailability(false);
+                    System.out.println("Enter the new price of the food item");
+                    double price=sc.nextDouble();
+                    foodItem.setPrice(price);
                     break;
-                    default:
-                    System.out.println("Invalid option");
                 }
-                break;
-                case 2:
-                System.out.println("Enter the new price of the food item");
-                double price=sc.nextDouble();
-                foodItem.setPrice(price);
-                break;
-            }
-        }while(choice != 3);
-        foodItemDB.update(foodItem);
+            }while(choice != 3);
+            foodItemDB.update(foodItem);
+        }else{
+            System.out.println("Food item not found! Returning to user page...");
+        }
+        sc.close();
     }
     public void removeItem(){
         Scanner sc=new Scanner(System.in);
@@ -89,13 +99,17 @@ public class Manager extends Staff{
         int foodID=sc.nextInt();
         //search for the fooditem with the corresponding FoodID
         FoodItem foodItem=foodItemDB.find(foodID);
-        if(foodItem.getBranchName().equals(super.getBranchName())==false){
-            System.out.println("foodItem not in menu of this branch");
-        }
-        //foodItem found
-        //delete foodItem
-        else{
-            foodItemDB.delete(foodItem);
+        if(foodItem!=null){
+            if(foodItem.getBranchName().equals(super.getBranchName())==false){
+                System.out.println("foodItem not in menu of this branch! Returning to user page...");
+            }
+            //foodItem found
+            //delete foodItem
+            else{
+                foodItemDB.delete(foodItem);
+            }
+        }else{
+            System.out.println("Food item does not exist! Returning to user page...");
         }
         sc.close();
     }
