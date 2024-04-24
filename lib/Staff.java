@@ -12,15 +12,26 @@ public class Staff extends Account implements IGetBranchName {
 	protected String branchName;
 
     /**
-     * The database for managing orders.
+     * The data manager for orders.
      */
 	protected IDataManager<Order,Integer> orderDB;
 
     /**
-     * The display formatter for filtered orders.
+     * The display formatter for filtered orders by branch.
      */
 	protected IDisplayFilteredByBranch displayFormatter;
-    
+
+    /**
+     * Constructs a Staff object with the specified details.
+     * @param name The name of the staff member.
+     * @param staffID The staff ID.
+     * @param role The role of the staff member.
+     * @param gender The gender of the staff member.
+     * @param age The age of the staff member.
+     * @param branchName The branch name associated with the staff member.
+     * @param orderDB The data manager for managing orders.
+     * @param displayFormatter The display formatter for filtered orders.
+     */
 	public Staff(String name,String staffID,String role,String gender,int age,String branchName, IDataManager<Order, Integer> orderDB, IDisplayFilteredByBranch displayFormatter){
 		super.name=name;
 		super.staffID=staffID;
@@ -28,21 +39,28 @@ public class Staff extends Account implements IGetBranchName {
 		super.gender=gender;
 		super.age=age;
 		this.branchName=branchName;
-		this.orderDB=DataManagerForOrder.getInstance();
+		this.orderDB=orderDB;
 		this.displayFormatter=displayFormatter;
 	}
 
+    /**
+     * Retrieves the branch name associated with the staff member.
+     * @return The branch name.
+     */
 	public String getBranchName() {
 		return branchName;
 	}
 
+    /**
+     * Change the branch name associated with the staff member.
+     */
 	public void setBranchName(String branchName){
 		this.branchName=new String(branchName);
 	}
 	
 	/**
-	 * 
-	 */
+     * Displays new orders (status: PREPARING) filtered by branch.
+     */
 	public void displayNewOrders(){
 		ArrayList<Order> orderList=orderDB.getAll();
 		ArrayList<IGetBranchName> newOrders=new ArrayList<IGetBranchName>();
@@ -54,34 +72,41 @@ public class Staff extends Account implements IGetBranchName {
 		displayFormatter.displayFilteredByBranch(newOrders,branchName);
 	}
 	
+    /**
+     * Allows the staff member to view an order from his/her branch.
+     */
 	public void viewOrder(){
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the Order ID:");
         try{
             int orderID = sc.nextInt();
             Order order=orderDB.find(orderID);
-            if (order != null)
-		        System.out.println(order); // use toString() method in Order class to get all attributes (encapsulation)
-            else
-                System.out.println("Order ID keyed in not found! Returning to user page...");
+            if (order != null && order.getBranchName().equals(branchName)) {
+                System.out.println(order);
+            } else {
+                System.out.println("Order not found or does not belong to your branch. Returning to user page...");
+            }
         }catch (Exception e){
             System.out.println("Order ID must be number! Returning to user page...");
         }
         sc.close();
     }
 	
+    /**
+     * Allows the staff member to process a new order from his/her branch, changing its status to ready to pickup
+     */
 	public void processOrder(){
 		Scanner sc = new Scanner(System.in);
         System.out.println("Enter the Order ID to be processed:");
         try{
             int orderID = sc.nextInt();
             Order order=orderDB.find(orderID);
-            if (order != null){
-                order.setOrderStatus(OrderStatus.READY_TO_PICKUP); 
+            if (order != null && order.getBranchName().equals(branchName)) {
+                order.setOrderStatus(OrderStatus.READY_TO_PICKUP);
                 System.out.println("Order status updated to ready for collection. Returning to user page...");
-            }
-            else
-                System.out.println("Order ID keyed in not found! Returning to user page...");
+            } else {
+                System.out.println("Order not found or does not belong to your branch.");
+            }        
         }catch (Exception e){
             System.out.println("Order ID must be number! Returning to user page...");
         }
