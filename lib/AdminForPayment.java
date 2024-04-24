@@ -19,18 +19,23 @@ public class AdminForPayment implements IAdminForPayment {
 		    paymentMode=new Credit(name);
 	    }else{
 		    System.out.println("Invalid payment option");
-			sc.close();
+		    System.out.println("Returning to user page...");
+		    sc.close();
 		    return;
 	    }
 	    paymentDB.add(paymentMode);
-		sc.close();
+	    sc.close();
 	}
 	public void removePaymentMethod(){
-	    Scanner sc=new Scanner(System.in);
-	    System.out.println("Enter the payment method to remove");
-	    String paymentMethod=sc.nextLine();
-	    IPayment paymentMethodClass=paymentDB.find(paymentMethod);
-	    paymentDB.delete(paymentMethodClass);
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter the payment method to remove");
+		String paymentName=sc.nextLine();
+		IPayment paymentMethod=paymentDB.find(paymentName);
+		if(paymentMethod!=null){
+			paymentDB.delete(paymentMethod);
+		}else{
+			System.out.println("Payment method not found! Returning to user page...");
+		}
 		sc.close();
 	}
 }
