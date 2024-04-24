@@ -1,7 +1,7 @@
 import java.util.Scanner;
 public class AdminForStaff implements IAdminForStaff{
-    private IDataManager accountDB;
-    private IDataManager branchDB;
+    private IDataManager<Account, String> accountDB;
+    private IDataManager<Branch, String> branchDB;
     private IDisplayFilteredForAccount displayFormatter;
     private QuotaChecker quotaChecker;
     public AdminForStaff(){
@@ -18,10 +18,10 @@ public class AdminForStaff implements IAdminForStaff{
 	int choice;
 	do{
 		System.out.println("Select attribute to change");
-		System.out.println("1. name");
-		System.out.println("2. gender");
-		System.out.println("3. age");
-		System.out.println("4. password");
+		System.out.println("1. Name");
+		System.out.println("2. Gender");
+		System.out.println("3. Age");
+		System.out.println("4. Password");
 		System.out.println("5. Exit loop");
 		choice=sc.nextInt();
 		switch(choice){
@@ -85,24 +85,40 @@ public class AdminForStaff implements IAdminForStaff{
         Scanner sc=new Scanner(System.in);
         ArrayList<Staff> staffList=accountDB.getAll();
         System.out.println("Choose filter by")
-        System.out.println("1. branch");
-        System.out.println("2. role");
-        System.out.println("3. gender");
-        System.out.println("4. age");
+        System.out.println("1. Branch");
+        System.out.println("2. Role");
+        System.out.println("3. Gender");
+        System.out.println("4. Age");
         int choice=sc.nextInt();
         switch(choice){
             case 1:
-            displayFormatter.displaySortedByBranch(staffList);
-            break;
+		ArrayList<Branch> branchList=branchDB.getAll();
+		for(int i=0;i<branchList.size();i++){
+			Branch branch=branchList.get(i);
+			System.out.println(branch.getBranchName());
+			displayFormatter.displayFilteredByBranch(staffList,branch.getBranchName());
+		}
+		break;
             case 2:
-            displayFormatter.displaySortedByRole(staffList);
-            break;
+		System.out.println("Admin");
+		displayFormatter.displayFilteredByRole(staffList,"A");
+		System.out.println("Manager");
+		displayFormatter.displayFilteredByRole(staffList,"M");
+		System.out.println("Staff");
+		displayFormatter.displayFilteredByRole(staffList,"S");
+            	break;
             case 3:
-            displayFormatter.displaySortedByGender(staffList);
-            break;
+		System.out.println("Male");
+		displayFormatter.displayFilteredByGender(staffList,"M");
+		System.out.println("Female");
+		displayFormatter.displayFilteredByGender(staffList,"F");
+            	break;
             case 4:
-            displayFormatter.displaySortedByAge(staffList);
-            break;
+		for(int age=0;age<=100;age++){
+			displayFormatter.displayFilteredByAge(staffList,age):
+		}
+            	break;
+	    default:break;
         }
     }
     public void assignManager(){

@@ -46,12 +46,12 @@ public class Manager extends Staff{
         int choice;
         do{
             System.out.println("Select the attribute to edit:")
-            System.out.println("1. name of FoodItem");
-            System.out.println("2. description");
-            System.out.println("3. category of FoodItem");
-            System.out.println("4. price of FoodItem");
-            System.out.println("5. branch where FoodItem is in");
-            System.out.println("6. exit");
+            System.out.println("1. Name of FoodItem");
+            System.out.println("2. Description");
+            System.out.println("3. Category of FoodItem");
+            System.out.println("4. Price of FoodItem");
+            System.out.println("5. Branch where FoodItem is in");
+            System.out.println("6. Exit");
             choice=sc.nextInt();
             switch(choice){
                 case 1:
@@ -121,10 +121,10 @@ public class Manager extends Staff{
         while(!valid){
             try{
                 System.out.println("Please select one of the following options");
-                System.out.println("1. display staff in branch");
-                System.out.println("2. add item to menu");
-                System.out.println("3. edit item in menu");
-                System.out.println("4. remove item from menu");
+                System.out.println("1. Display staff in branch");
+                System.out.println("2. Add item to menu");
+                System.out.println("3. Edit item in menu");
+                System.out.println("4. Remove item from menu");
                 int choice=sc.nextInt();
                 if(choice>=1 && choice<=4){
                     selectOptions(choice);

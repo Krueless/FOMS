@@ -9,7 +9,37 @@ public class CustomerUI {
 		DataManagerForOrder orderDB = DataManagerForOrder.getInstance();
 		DataManagerForFoodItem foodItemDB = DataManagerForFoodItem.getInstance();
 		Display displayformatter = new Display();
-		new OrderControl(branchName, orderDB, foodItemDB, displayformatter);
+        Scanner sc = new Scanner(System.in);
+        boolean valid = false;
+        boolean takeaway;
+        while (!valid) {
+            try {
+                System.out.println("Please select an option. ");
+                System.out.println("1. Dine-in");
+                System.out.println("2. Takeaway");
+                String option = sc.nextLine();
+
+                switch (option) {
+                    case "1":
+                        valid = true;
+                        takeaway = false;
+                        break;
+                    case "2":
+                        valid = true;
+                        takeaway = true;
+                        break;
+                    default:
+                        System.out.println("Invalid option. Please try again.\n");
+                        break;
+                }
+            } catch (Exception e) {
+                System.out.println("An error occurred: " + e.getMessage());
+                System.out.println("Please try again.\n");
+            }
+        }
+        Order newOrder = new Order(orderDB.getAll().size() + 1, takeaway);
+		new OrderControl(orderDB, foodItemDB, displayformatter, newOrder, branchName);
+        sc.close();
 	}
 
 	/**
