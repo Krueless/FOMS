@@ -95,18 +95,30 @@ public class AdminForStaff implements IAdminForStaff{
 		ArrayList<Branch> branchList=branchDB.getAll();
 		for(int i=0;i<branchList.size();i++){
 			Branch branch=branchList.get(i);
+			System.out.println(branch.getBranchName());
 			displayFormatter.displayFilteredByBranch(staffList,branch.getBranchName());
 		}
 		break;
             case 2:
-            displayFormatter.displaySortedByRole(staffList);
-            break;
+		System.out.println("Admin");
+		displayFormatter.displayFilteredByRole(staffList,"A");
+		System.out.println("Manager");
+		displayFormatter.displayFilteredByRole(staffList,"M");
+		System.out.println("Staff");
+		displayFormatter.displayFilteredByRole(staffList,"S");
+            	break;
             case 3:
-            displayFormatter.displaySortedByGender(staffList);
-            break;
+		System.out.println("Male");
+		displayFormatter.displayFilteredByGender(staffList,"M");
+		System.out.println("Female");
+		displayFormatter.displayFilteredByGender(staffList,"F");
+            	break;
             case 4:
-            displayFormatter.displaySortedByAge(staffList);
-            break;
+		for(int age=0;age<=100;age++){
+			displayFormatter.displayFilteredByAge(staffList,age):
+		}
+            	break;
+	    default:break;
         }
     }
     public void assignManager(){
