@@ -1,5 +1,5 @@
 public interface IGetBranchName {
 
-	String getBranchName();
+	public String getBranchName();
 
 }

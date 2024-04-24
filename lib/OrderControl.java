@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 /**
  * The {@code OrderControl} class manages the order process within a restaurant management system.
@@ -41,7 +42,12 @@ public class OrderControl {
      */
     public void viewMenu() {
         DisplayFilteredByBranch branchDisplayFormatter = (DisplayFilteredByBranch) displayFormatter;
-        branchDisplayFormatter.displayFilteredByBranch(foodItemDB.getAll(), branchName);
+        ArrayList<FoodItem> foodItemList = foodItemDB.getAll();
+        ArrayList<IGetBranchName> branchNameList = new ArrayList<>(foodItemList.size());
+        for (FoodItem item : foodItemList) {
+            branchNameList.add(item); // This works because FoodItem implements IGetBranchName
+        }
+        branchDisplayFormatter.displayFilteredByBranch(branchNameList, branchName);
     }
 
     /**
@@ -109,7 +115,7 @@ public class OrderControl {
 				default:
 					System.out.println("Please choose a valid option");
             }
-	}
+	    }
         sc.close();
     }
 }
