@@ -280,7 +280,7 @@ public class AdminForStaff implements IAdminForStaff{
 					System.out.println("Returning to user page...");
 				}
 			}else{
-				System.out.println("Branch not found! Returning to user page...);
+				System.out.println("Branch not found! Returning to user page...");
 			}
 		}else{
 			System.out.println("Account is not a staff. Cannot be promoted to manager");
