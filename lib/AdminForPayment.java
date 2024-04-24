@@ -10,7 +10,7 @@ public class AdminForPayment extends Admin implements IAdminForPayment {
 	    System.out.println("1.Online");
 	    System.out.println("2.Credit");
 	    int choice=sc.nextInt();
-	    System.out.println("Enter name of new paymentMethod");
+	    System.out.println("Enter name of new payment method");
 	    String name=sc.nextLine();
 	    IPayment paymentMode;
 	    if(choice==1){
