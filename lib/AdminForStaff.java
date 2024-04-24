@@ -69,10 +69,29 @@ public class AdminForStaff implements IAdminForStaff{
 
     public void removeStaff(){
         Scanner sc=new Scanner(System.in);
+	    System.out.println("Enter branch to remove Staff:");
+        String branchName=sc.nextLine();
+        Branch branch = branchDB.find(branchName);
+        if (branch != null){
+            int numManager = accountDB.countManagerInBranch(branchName);
+            int numStaff = accountDB.countStaffInBranch(branchName)
+            if (QuotaChecker.checkQuota(numStaff-1, numManager)){
+
+            }else{
+                System.out.println("Too many Managers in branch! ");
+                System.out.println("Returning to user page..."); 
+            }
+
+
+        }else{
+            System.out.println("Branch not found! Returning to user page...");
+        }
+
         System.out.println("Enter the staffID");
         String staffID=sc.nextLine();
         Account staffAccount=accountDB.find(staffID);
         if (staffAccount != null)
+            int numManager = accountDB.countManagerInBranch(branchName)
             accountDB.delete(staffAccount);
         else
             System.out.println("Account not found! Returning to user page...");
@@ -86,26 +105,33 @@ public class AdminForStaff implements IAdminForStaff{
         Branch branch = branchDB.find(branchName);
         if (branch != null){
             int numStaff = accountDB.countStaffInBranch(branchName);
-            if (numStaff == branch.getStaffQuota()) {
-                System.out.println("Enter name:");
-		        String name = sc.nextLine();
-                System.out.println("Enter staffID:");
-                String staffID=sc.nextLine();
-                String role="S";
-                System.out.println("Enter gender:");
-                String gender=sc.nextLine();
-                System.out.println("Enter age:");
-                int age=sc.nextInt();
-                DataManagerForOrder orderDB = DataManagerForOrder.getInstance();
-                DisplayFilteredByBranch displayFormatter = new DisplayFilteredByBranch();
-                Staff staffAccount=new Staff(name,staffID,role,gender,age,branchName, orderDB, displayFormatter);
-                accountDB.add(staffAccount);
-               
+            if (numStaff < branch.getStaffQuota()) {
+                int numManager = accountDB.countManagerInBranch(branchName);
+                if (QuotaChecker.checkQuota(numStaff+1, numManager)){
+                    System.out.println("Enter name:");
+                    String name = sc.nextLine();
+                    System.out.println("Enter staffID:");
+                    String staffID=sc.nextLine();
+                    String role="S";
+                    System.out.println("Enter gender:");
+                    String gender=sc.nextLine();
+                    System.out.println("Enter age:");
+                    int age=sc.nextInt();
+                    DataManagerForOrder orderDB = DataManagerForOrder.getInstance();
+                    DisplayFilteredByBranch displayFormatter = new DisplayFilteredByBranch();
+                    Staff staffAccount=new Staff(name,staffID,role,gender,age,branchName, orderDB, displayFormatter);
+                    accountDB.add(staffAccount);
+                }else{
+                    System.out.println("Not enough Managers in branch. Failed to add staff! ");
+                    System.out.println("Returning to user page..."); 
+                }
             }
             else{
                 System.out.println("Branch has reached staff quota limit. Cannot add staff.");
                 System.out.println("Returning to user page..."); 
             }  
+        }else{
+            System.out.println("Branch not found! Returning to user page...");
         }
         sc.close();
     }
