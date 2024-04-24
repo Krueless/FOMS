@@ -160,12 +160,22 @@ public class AdminForStaff implements IAdminForStaff{
                 }
                 break;
             case 2:
-                System.out.println("Admin");
-                displayFormatter.displayFilteredByRole(accountList,"A");
-                System.out.println("Manager");
-                displayFormatter.displayFilteredByRole(accountList,"M");
-                System.out.println("Staff");
-                displayFormatter.displayFilteredByRole(accountList,"S");
+		System.out.println("Choose role to display");
+                System.out.println("1. Admin");
+                System.out.println("2. Manager");
+                System.out.println("3. Staff");
+		switch(role){
+			case 1:
+				displayFormatter.displayFilteredByRole(accountList,"A");
+				break;
+			case 2:
+				displayFormatter.displayFilteredByRole(accountList,"M");
+				break;
+			case 3:
+				displayFormatter.displayFilteredByRole(accountList,"S");
+				break;
+			default: break;
+		}
             	break;
             case 3:
                 System.out.println("Male");
