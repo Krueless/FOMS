@@ -30,11 +30,15 @@ public class Staff extends Account implements IGetBranchName {
 		//loop through orderList and add only the new orders to newOrders
 		for(int i=0;i<orderList.size();i++){
 			Order order=orderList.get(i);
-			if(order.getOrderStatus()==PREPARING){
+			if(order.getOrderStatus()==OrderStatus.PREPARING){
 				newOrders.add(order);
 			}
 		}
-		displayFormatter.displayFilteredByBranch(newOrders,branchName);
+		ArrayList<IGetBranchName> branchNameList = new ArrayList<>(newOrders.size());
+        for (Order item : newOrders) {
+            branchNameList.add(item);
+        }
+		displayFormatter.displayFilteredByBranch(branchNameList,branchName);
 	}
 	
 	public void viewOrder(int orderID){
@@ -45,23 +49,24 @@ public class Staff extends Account implements IGetBranchName {
 	
 	public void processOrder(int orderID){
 		Order order=orderDB.find(orderID);
-		order.setOrderStatus(3);
+		order.setOrderStatus(OrderStatus.READY_TO_PICKUP);
 	}
 	
 	public void selectOptions(int choice){
 		Scanner sc=new Scanner(System.in);
+		int orderID;
 		switch(choice){
 		    case 1:
 		    displayNewOrders();
 		    break;
 		    case 2:
 		    System.out.println("Enter the orderID:");
-		    int orderID=sc.nextInt();
+		    orderID=sc.nextInt();
 		    viewOrder(orderID);
 		    break;
 		    case 3:
 		    System.out.println("Enter the orderID:");
-		    int orderID=sc.nextInt();
+		    orderID=sc.nextInt();
 		    processOrder(orderID);
 		    break;
 		    default:break;
@@ -89,7 +94,7 @@ public class Staff extends Account implements IGetBranchName {
 			    valid=true;
 			    break;
 			    case 3:
-			    selectOption(3);
+			    selectOptions(3);
 			    valid=true;
 			    break;
 			    default:

@@ -11,13 +11,15 @@ public class AdminForBranch extends Admin implements IAdminForBranch {
 		int staffQuota=sc.nextInt();
 		System.out.println("Enter the branch name");
 		String branchName=sc.nextLine();
-		Sytem.out.println("Enter the location");
+		System.out.println("Enter the location");
 		String location=sc.nextLine();
 		//create a new branch object
 		Branch branch=new Branch(branchName,location,staffQuota);
 		//add the new Branch object to branchList in DataManagerForBranch
-	        branchDB.add(branch);
-	    }
+		branchDB.add(branch);
+		sc.close();
+	}
+
 	public void closeBranch(){
 		Scanner sc=new Scanner(System.in);
 		System.out.println("Enter the branch to be closed");

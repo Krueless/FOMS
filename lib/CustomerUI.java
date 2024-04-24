@@ -21,11 +21,11 @@ public class CustomerUI {
                 switch (option) {
                     case "1": //Dine-in
                         valid = true;
-                        new OrderControl(orderDB, foodItemDB, displayformatter, new Order(orderDB.getAll().size() + 1, false), branchName);
+                        new OrderControl(orderDB, foodItemDB, displayformatter, new Order(orderDB.getAll().size() + 1, false, branchName), branchName);
                         break;
                     case "2": //Takeaway
                         valid = true;
-                        new OrderControl(orderDB, foodItemDB, displayformatter, new Order(orderDB.getAll().size() + 1, true), branchName);
+                        new OrderControl(orderDB, foodItemDB, displayformatter, new Order(orderDB.getAll().size() + 1, true, branchName), branchName);
                         break;
                     default:
                         System.out.println("Invalid option. Please try again.\n");

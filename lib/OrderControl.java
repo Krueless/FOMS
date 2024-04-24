@@ -45,7 +45,7 @@ public class OrderControl {
         ArrayList<FoodItem> foodItemList = foodItemDB.getAll();
         ArrayList<IGetBranchName> branchNameList = new ArrayList<>(foodItemList.size());
         for (FoodItem item : foodItemList) {
-            branchNameList.add(item); // This works because FoodItem implements IGetBranchName
+            branchNameList.add(item);
         }
         branchDisplayFormatter.displayFilteredByBranch(branchNameList, branchName);
     }

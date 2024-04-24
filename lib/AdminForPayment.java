@@ -1,5 +1,5 @@
 import java.util.Scanner;
-public class AdminForPayment extends Admin implements IAdminForPayment {
+public class AdminForPayment implements IAdminForPayment {
 	private IDataManager<IPayment, String> paymentDB;
 	public AdminForPayment(){
 	    this.paymentDB=DataManagerForPayment.getInstance();
@@ -19,9 +19,11 @@ public class AdminForPayment extends Admin implements IAdminForPayment {
 		    paymentMode=new Credit(name);
 	    }else{
 		    System.out.println("Invalid payment option");
+			sc.close();
 		    return;
 	    }
 	    paymentDB.add(paymentMode);
+		sc.close();
 	}
 	public void removePaymentMethod(){
 	    Scanner sc=new Scanner(System.in);
@@ -29,5 +31,6 @@ public class AdminForPayment extends Admin implements IAdminForPayment {
 	    String paymentMethod=sc.nextLine();
 	    IPayment paymentMethodClass=paymentDB.find(paymentMethod);
 	    paymentDB.delete(paymentMethodClass);
+		sc.close();
 	}
 }

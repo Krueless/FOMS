@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 public class Manager extends Staff{
     private IDataManager<FoodItem, Integer> foodItemDB;
@@ -10,7 +11,14 @@ public class Manager extends Staff{
     }
     public void displayStaff(){
         String branchName=super.getBranchName();
-        displayFormatter.displayFilteredByBranch(accountDB.getAll(),branchName);
+        ArrayList<Account> accountList = accountDB.getAll();
+        ArrayList<IGetBranchName> branchNameList = new ArrayList<>(accountList.size());
+        for (Account item : accountList) {
+            if (item instanceof Staff){
+                branchNameList.add((IGetBranchName)item);
+            }
+        }
+        displayFormatter.displayFilteredByBranch(branchNameList,branchName);
     }
     public void addItem(){
         //get details of food item
@@ -35,8 +43,7 @@ public class Manager extends Staff{
         System.out.println("Enter the FoodID");
         int foodID=sc.nextInt();
         //search for the fooditem in foodItemDB
-        Integer foodIDInteger=new Integer(foodID);
-        FoodItem foodItem=foodItemDB.find(foodIDInteger);
+        FoodItem foodItem=foodItemDB.find(foodID);
         if(foodItem.getBranchName().equals(super.getBranchName())==false){
             System.out.println("FoodItem not in menu of this branch");
             return;
@@ -45,42 +52,35 @@ public class Manager extends Staff{
         //select the attribute to edit
         int choice;
         do{
-            System.out.println("Select the attribute to edit:")
-            System.out.println("1. Name of FoodItem");
-            System.out.println("2. Description");
-            System.out.println("3. Category of FoodItem");
-            System.out.println("4. Price of FoodItem");
-            System.out.println("5. Branch where FoodItem is in");
-            System.out.println("6. Exit");
+            System.out.println("Select the attribute to edit:");
+            System.out.println("1. Availability of FoodItem");
+            System.out.println("2. Price of FoodItem");
+            System.out.println("3. Exit");
             choice=sc.nextInt();
             switch(choice){
                 case 1:
-                System.out.println("Enter the new name of the food item");
-                String name=sc.nextLine();
-                foodItem.setName(name);
+                System.out.println("Select the availability of the food item");
+                System.out.println("1. Available");
+                System.out.println("2. Not Available");
+                int availability_choice = sc.nextInt();
+                switch (availability_choice){
+                    case 1:
+                    foodItem.setAvailability(true);
+                    break;
+                    case 2:
+                    foodItem.setAvailability(false);
+                    break;
+                    default:
+                    System.out.println("Invalid option");
+                }
                 break;
                 case 2:
-                System.out.println("Enter the new description of the food item");
-                String description=sc.nextLine();
-                foodItem.setDescription(description);
-                break;
-                case 3:
-                System.out.println("Enter the new category of the food item");
-                String itemCategory=sc.nextLine();
-                foodItem.setItemCategory(itemCategory);
-                break;
-                case 4:
                 System.out.println("Enter the new price of the food item");
                 double price=sc.nextDouble();
                 foodItem.setPrice(price);
                 break;
-                case 5:
-                System.out.println("Enter the new branch containing food item");
-                String branchName=sc.nextLine();
-                foodItem.setBranchName(branchName);
-                break;
             }
-        }while(choice>=1 && choice<=5);
+        }while(choice != 3);
         foodItemDB.update(foodItem);
     }
     public void removeItem(){
@@ -88,15 +88,16 @@ public class Manager extends Staff{
         System.out.println("Enter the FoodID");
         int foodID=sc.nextInt();
         //search for the fooditem with the corresponding FoodID
-        Integer foodIDInteger=new Integer(foodID);
-        FoodItem foodItem=foodItemDB.find(foodIDInteger);
+        FoodItem foodItem=foodItemDB.find(foodID);
         if(foodItem.getBranchName().equals(super.getBranchName())==false){
             System.out.println("foodItem not in menu of this branch");
-            return;
         }
         //foodItem found
         //delete foodItem
-        fooItemDB.delete(foodItem);
+        else{
+            foodItemDB.delete(foodItem);
+        }
+        sc.close();
     }
     public void selectOptions(int choice){
         switch(choice){
@@ -137,5 +138,6 @@ public class Manager extends Staff{
                 System.out.println("Please try again");
             }
         }
+        sc.close();
     }
 }

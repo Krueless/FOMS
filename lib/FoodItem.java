@@ -6,6 +6,7 @@ public class FoodItem implements IGetBranchName, Serializable {
 	private String itemCategory;
 	private double price;
 	private String branchName;
+	private boolean available;
 
 	public String getBranchName() {
 		return this.branchName;
@@ -17,6 +18,14 @@ public class FoodItem implements IGetBranchName, Serializable {
 	 */
 	public void setBranchName(String branchName) {
 		this.branchName = branchName;
+	}
+
+	public void setPrice(double price){
+		this.price = price;
+	}
+
+	public void setAvailability(boolean available){
+		this.available = available;
 	}
 
 	public String getName(){
