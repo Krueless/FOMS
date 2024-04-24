@@ -1,22 +1,29 @@
 import java.util.Scanner;
 
+/**
+ * Manages the login process for staff in a system.
+ * This class handles authentication and first-time login processes.
+ */
 public class LoginSystem {
 
 	private IPasswordControl pwControl;
-
-	/**
-	 * 
-	 * @param pwControl
-	 */
+    /**
+     * Constructs a LoginSystem with a specified password control mechanism.
+     * 
+     * @param pwControl An implementation of IPasswordControl for validating user credentials and managing passwords.
+     */
 	public LoginSystem(IPasswordControl pwControl) {
 		this.pwControl = pwControl; 
 	}
 
 	/**
-	 * 
-	 * @param staffID
-	 * @param password
-	 */
+     * Attempts to login with provided staff ID and password.
+     * If successful and it's the user's first login, prompts the user to change their password.
+     * If unsuccessful, redirects to the login page.
+     * 
+     * @param staffID The staff ID as a String.
+     * @param password The password associated with the staff ID as a String.
+     */
 	public void login(String staffID, String password) {
 		Account acc = pwControl.validate(staffID, password);
 		if (acc != null){
@@ -35,29 +42,29 @@ public class LoginSystem {
 		throw new UnsupportedOperationException();
 	}
 
+    /**
+     * Displays the login page and prompts the user to enter their login information.
+     */
 	public void showLoginPage() {
-		// TODO - implement LoginSystem.showLoginPage
-		Scanner sc = new Scanner(System.in);
+		Scanner sc = GlobalResource.SCANNER;
 		System.out.println("Login Page");
 		System.out.println("Enter StaffID: ");
 		String staffID = sc.nextLine();
 		System.out.println("Enter password: ");
 		String pwd = sc.nextLine();
-		sc.close();
 		login(staffID, pwd);
 	}
 
 	/**
-	 * 
-	 * @param account
-	 */
+     * Prompts the user to change their password. Continues prompting until the password meets requirements.
+     * 
+     * @param account The account for which the password needs to be changed.
+     */
 	public void promptPasswordChange(Account account) {
-		// TODO - implement LoginSystem.promptPasswordChange
-		Scanner sc = new Scanner(System.in);
+		Scanner sc = GlobalResource.SCANNER;
 		System.out.println("New password must be at least 8 characters long and different from default password.");
 		System.out.println("Enter new password: ");
 		String pwd = sc.nextLine();
-		sc.close();
 		if (pwControl.resetPassword(account, pwd))
 			System.out.println("Password changed.");
 		else

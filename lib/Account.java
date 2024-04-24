@@ -14,7 +14,7 @@ public abstract class Account implements Serializable {
 	 * 
 	 * @param choice
 	 */
-	public abstract void selectOptions(int choice);
+	public abstract void selectOptions();
 
 	/**
 	 * 
