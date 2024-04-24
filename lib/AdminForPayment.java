@@ -4,6 +4,9 @@ public class AdminForPayment implements IAdminForPayment {
 	public AdminForPayment(){
 	    this.paymentDB=DataManagerForPayment.getInstance();
 	}
+    /**
+     * Allows admin to add a new payment method
+     */
 	public void addPaymentMethod(){
 	    Scanner sc=new Scanner(System.in);
 	    System.out.println("Select option");
@@ -30,6 +33,10 @@ public class AdminForPayment implements IAdminForPayment {
 	    }
 	    sc.close();
 	}
+	
+    /**
+     * Allows admin to remove an existing payment method
+     */
 	public void removePaymentMethod(){
 		Scanner sc=new Scanner(System.in);
 		System.out.println("Enter the payment method to remove");
