@@ -1,7 +1,7 @@
 import java.util.Scanner;
 public class AdminForStaff implements IAdminForStaff{
-    private IDataManager accountDB;
-    private IDataManager branchDB;
+    private IDataManager<Account, String> accountDB;
+    private IDataManager< branchDB;
     private IDisplayFilteredForAccount displayFormatter;
     private QuotaChecker quotaChecker;
     public AdminForStaff(){
@@ -92,8 +92,12 @@ public class AdminForStaff implements IAdminForStaff{
         int choice=sc.nextInt();
         switch(choice){
             case 1:
-            displayFormatter.displaySortedByBranch(staffList);
-            break;
+		ArrayList<Branch> branchList=branchDB.getAll();
+		for(int i=0;i<branchList.size();i++){
+			Branch branch=branchList.get(i);
+			displayFormatter.displayFilteredByBranch(staffList,branch.getBranchName());
+		}
+		break;
             case 2:
             displayFormatter.displaySortedByRole(staffList);
             break;
