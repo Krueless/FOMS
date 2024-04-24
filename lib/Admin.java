@@ -26,7 +26,6 @@ public class Admin extends Account {
 		adminForStaff=new AdminForStaff();
 		adminForBranch=new AdminForBranch();
 		adminForPayment=new AdminForPayment();
-        selectOptions();
 	}
 	
      /**
@@ -79,27 +78,30 @@ public class Admin extends Account {
 			        System.out.println("Invalid option. Please try again");
 			    break;
 			}
-        } 
+        }
+        System.out.println("Log out successfully."); 
 	}
 
     /**
      * Prints the available options that the admin can do
      */
 	public void showOptions() {
+        System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''");
         System.out.println("Admin Page");
         System.out.println("Please select one of the following options");
-        System.out.println("1. Add staff");
-        System.out.println("2. Edit staff");
-        System.out.println("3. Remove staff");
-        System.out.println("4. Display staff");
-        System.out.println("5. Assign manager");
-        System.out.println("6. Transfer staff/Manager");
-        System.out.println("7. Promote staff");
-        System.out.println("8. Add payment");
-        System.out.println("9. Remove payment");
-        System.out.println("10. Open branch");
-        System.out.println("11. Close branch");
-        System.out.println("12. Log out");
+        System.out.println("(1) Add staff");
+        System.out.println("(2) Edit staff");
+        System.out.println("(3) Remove staff");
+        System.out.println("(4) Display staff");
+        System.out.println("(5) Assign manager");
+        System.out.println("(6) Transfer staff/Manager");
+        System.out.println("(7) Promote staff");
+        System.out.println("(8) Add payment");
+        System.out.println("(9) Remove payment");
+        System.out.println("(10) Open branch");
+        System.out.println("(11) Close branch");
+        System.out.println("(12) Log out");
+        System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''");
 
 	}
 
