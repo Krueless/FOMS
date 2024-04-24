@@ -1,7 +1,9 @@
 import java.time.ZonedDateTime;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.time.Duration;
 
 /**
  * Represents an order within a restaurant management system. This class' only responsibility is to hold the details of an order,
@@ -22,10 +24,10 @@ public class Order implements Serializable{
      * @param price The total price of the order.
      * @param takeaway Indicates whether the order is for takeaway (true) or dine-in (false).
      */
-    public Order(int orderID, double price, boolean takeaway) {
+    public Order(int orderID, boolean takeaway) {
         this.orderID = orderID;
         this.orderStatus = OrderStatus.ORDERING;
-        this.price = price;
+        this.price = 0.0;
         this.takeaway = takeaway;
         this.cartItems = new ArrayList<>();
         this.timestamp = ZonedDateTime.now(ZoneId.of("Asia/Singapore"));
@@ -130,6 +132,17 @@ public class Order implements Serializable{
         this.timestamp = ZonedDateTime.now(ZoneId.of("Asia/Singapore"));
     }
 
+
+    public void updateCancelled(){
+        if (orderStatus == OrderStatus.READY_TO_PICKUP)
+        {
+            Duration duration = Duration.between(timestamp, LocalDateTime.now());
+            if (duration.toMinutes() >= 2){
+                this.setOrderStatus(OrderStatus.CANCELLED);
+            }
+        }
+    }
+
     /**
      * Generates a detailed string representation of the order, including all attributes and their values,
      * formatted for easy reading. This is particularly useful for logging and debugging purposes.
@@ -138,6 +151,26 @@ public class Order implements Serializable{
      */
     @Override
     public String toString() {
+        updateCancelled();
+        String returnString = String.format("OrderID: %d\nOrderStatus: %s\nPrice: %.2f\n",
+                                            this.orderID, this.orderStatus, this.price);
+        if (this.takeaway) {
+            returnString += "Takeaway\n";
+        } else {
+            returnString += "Not Takeaway\n";
+        }
+        returnString += "CartItems:\n";
+        for (OrderedFoodItem item : this.cartItems) {
+            returnString += String.format("\tName: %s\tQuantity: %d\tPrice: %.2f\n",
+                                          item.getName(), item.getQuantity(), item.calculatePrice());
+        }
+        returnString += String.format("Timestamp: %s\n", this.getTimestamp());
+        return returnString;
+    }
+
+
+    public String viewOrderStatus() {
+        updateCancelled();
         String returnString = null;
         switch(orderStatus){
             case OrderStatus.ORDERING:
@@ -153,7 +186,7 @@ public class Order implements Serializable{
             returnString = "Order was completed and has been picked up.";
             break;
             case OrderStatus.CANCELLED:
-            returnString = "Order was cancelled";
+            returnString = "Order was cancelled.";
             break;
         }
         return returnString;

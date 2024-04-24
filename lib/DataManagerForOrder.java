@@ -129,5 +129,11 @@ public class DataManagerForOrder implements IDataManager<Order, Integer> {
     public ArrayList <Order> getAll(){
         return this.orderList;
     }
+
+    public void updateCancelledOrders(){
+        for (int i = 0; i < orderList.size(); i++){
+            orderList.get(i).updateCancelled();
+        }
+    }
 }
 // DONE
