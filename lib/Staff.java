@@ -75,9 +75,9 @@ public class Staff extends Account implements IGetBranchName {
 		while(!valid){
 		    try{
 			System.out.println("Please select one of the following options");
-			System.out.println("1. display new orders");
-			System.out.println("2. view order");
-			System.out.println("3. process order");
+			System.out.println("1. Display new orders");
+			System.out.println("2. View order");
+			System.out.println("3. Process order");
 			int option=sc.nextInt();
 			switch(option){
 			    case 1:
