@@ -172,13 +172,13 @@ public class AdminForStaff implements IAdminForStaff{
 		int role=sc.nextInt();
 		switch(role){
 			case 1:
-				displayFormatter.displayFilteredByRole(staffList,"A");
+				displayFormatter.displayFilteredByRole(accountList,"A");
 				break;
 			case 2:
-				displayFormatter.displayFilteredByRole(staffList,"M");
+				displayFormatter.displayFilteredByRole(accountList,"M");
 				break;
 			case 3:
-				displayFormatter.displayFilteredByRole(staffList,"S");
+				displayFormatter.displayFilteredByRole(accountList,"S");
 				break;
 			default: break;
 		}
@@ -190,10 +190,10 @@ public class AdminForStaff implements IAdminForStaff{
 		int gender=sc.nextInt();
 		switch(gender){
 			case 1:
-				displayFormatter.displayFilteredByGender(staffList,"M");
+				displayFormatter.displayFilteredByGender(accountList,"M");
 				break;
 			case 2:
-				displayFormatter.displayFilteredByGender(staffList,"F");
+				displayFormatter.displayFilteredByGender(accountList,"F");
 				break;
 			default: break;
 		}
@@ -201,7 +201,7 @@ public class AdminForStaff implements IAdminForStaff{
             case 4:
 		System.out.println("Choose age to display");
 		int age=sc.nextInt();
-                displayFormatter.displayFilteredByAge(staffList,age);
+                displayFormatter.displayFilteredByAge(accountList,age);
             	break;
 	    default:
                 System.out.println("Invalid Option. Returning to user page...");
