@@ -69,32 +69,29 @@ public class AdminForStaff implements IAdminForStaff{
 
     public void removeStaff(){
         Scanner sc=new Scanner(System.in);
-	    System.out.println("Enter branch to remove Staff:");
+	System.out.println("Enter branch to remove Staff:");
         String branchName=sc.nextLine();
         Branch branch = branchDB.find(branchName);
         if (branch != null){
             int numManager = accountDB.countManagerInBranch(branchName);
-            int numStaff = accountDB.countStaffInBranch(branchName)
+            int numStaff = accountDB.countStaffInBranch(branchName);
             if (QuotaChecker.checkQuota(numStaff-1, numManager)){
-
+	        System.out.println("Enter the staffID");
+	        String staffID=sc.nextLine();
+	        Account staffAccount=accountDB.find(staffID);
+	        if (staffAccount != null){
+	            int numManager = accountDB.countManagerInBranch(branchName);
+	            accountDB.delete(staffAccount);
+		}else{
+	            System.out.println("Account not found! Returning to user page...");
+		}
             }else{
                 System.out.println("Too many Managers in branch! ");
                 System.out.println("Returning to user page..."); 
             }
-
-
         }else{
             System.out.println("Branch not found! Returning to user page...");
         }
-
-        System.out.println("Enter the staffID");
-        String staffID=sc.nextLine();
-        Account staffAccount=accountDB.find(staffID);
-        if (staffAccount != null)
-            int numManager = accountDB.countManagerInBranch(branchName)
-            accountDB.delete(staffAccount);
-        else
-            System.out.println("Account not found! Returning to user page...");
         sc.close();
     }
 
@@ -112,6 +109,11 @@ public class AdminForStaff implements IAdminForStaff{
                     String name = sc.nextLine();
                     System.out.println("Enter staffID:");
                     String staffID=sc.nextLine();
+		    while(accountDB.find(staffID)!=null){
+			    System.out.println("Staff ID already exists");
+			    System.out.println("Enter staffID");
+			    staffID=sc.nextLine();
+		    }
                     String role="S";
                     System.out.println("Enter gender:");
                     String gender=sc.nextLine();
@@ -203,45 +205,85 @@ public class AdminForStaff implements IAdminForStaff{
     }
 
     public void assignManager(){
-        //checkquota
-	//TODO
         Scanner sc=new Scanner(System.in);
         System.out.println("Enter the branch to assign Manager");
         String branchName=sc.nextLine();
-        if(quotaChecker.checkManagerQuota(branchName)){
-            //add manager
-            System.out.println("Enter name");
-            String name = sc.nextLine();
-                System.out.println("Enter staffID");
-                String staffID=sc.nextLine();
-                String role="M";
-                System.out.println("Enter gender");
-                String gender=sc.nextLine();
-                System.out.println("Enter age");
-                int age=sc.nextInt();
-                DataManagerForOrder orderDB = DataManagerForOrder.getInstance();
-                DisplayFilteredByBranch displayFilteredByBranch = new DisplayFilteredByBranch();
-                DataManagerForFoodItem foodItemDB = DataManagerForFoodItem.getInstance();
-                DataManagerForAccount accountDB = DataManagerForAccount.getInstance();
-                Manager managerAccount=new Manager(name,staffID,role,gender,age,branchName, orderDB, displayFilteredByBranch, foodItemDB, accountDB);
-                accountDB.add(managerAccount);
-        }else{
-            System.out.printf("Manager quota is reached. Cannot add manager");
-        }
-        }
+	Branch branch=branchDB.find(branchName);
+	if(branch!=null){
+		int numStaff=accountDB.countStaffInBranch(branchName);
+		int numManager=accountDB.countManagerInBranch(branchName);
+		if(QuotaChecker.checkQuota(numStaff,numManager+1)){
+			//add manager
+		        System.out.println("Enter name");
+		        String name = sc.nextLine();
+	                System.out.println("Enter staffID");
+	                String staffID=sc.nextLine();
+			while(accountDB.find(staffID)!=null){
+				System.out.println("Staff ID already exists");
+				System.out.println("Enter staffID");
+				staffID=sc.nextLine();
+			}
+	                String role="M";
+	                System.out.println("Enter gender");
+	                String gender=sc.nextLine();
+	                System.out.println("Enter age");
+	                int age=sc.nextInt();
+	                DataManagerForOrder orderDB = DataManagerForOrder.getInstance();
+	                DisplayFilteredByBranch displayFilteredByBranch = new DisplayFilteredByBranch();
+	                DataManagerForFoodItem foodItemDB = DataManagerForFoodItem.getInstance();
+	                DataManagerForAccount accountDB = DataManagerForAccount.getInstance();
+	                Manager managerAccount=new Manager(name,staffID,role,gender,age,branchName, orderDB, displayFilteredByBranch, foodItemDB, accountDB);
+	                accountDB.add(managerAccount);
+		}else{
+			System.out.println("Too many Managers in branch! ");
+                	System.out.println("Returning to user page..."); 
+		}
+	}else{
+		System.out.println("Branch not found! Returning to user page...");
+	}
+	sc.close();
+    }
         
     public void promoteStaff(){
         Scanner sc=new Scanner(System.in);
         //find the staff to be promoted
         System.out.println("Enter staffID");
         String staffID=sc.nextLine();
-        Account staffAccount=accountDB.find(staffID);
-        //create a new Manager object and copy all attributes of staff
-		Manager managerAccount = (Manager) staffAccount;
-        //delete the Staff object to the accountList in DataManagerForAccount
-	accountDB.delete(staffAccount);
-        //add the Manager object to the accountList in Data ManagerForAccount
-	accountDB.add(managerAccount);
+        Account account=accountDB.find(staffID);
+	if(staffAccount!=null){
+		if(account instanceof Staff){
+			Staff staffAccount=(Staff)account;//downcast to Staff
+			String branchName=staffAccount.getBranchName();
+			Branch branch=branchDB.find(branchName);
+			if(branch!=null){
+				int numStaff=accountDB.countStaffInBranch(branchName);
+				int numManager=accountDB.countManagerInBranch(branchName);
+				if(QuotaChecker.checkQuota(numStaff-1,numManager+1)){
+					//create a new Manager object and copy all attributes of staff
+					DataManagerForOrder orderDB = DataManagerForOrder.getInstance();
+			                DisplayFilteredByBranch displayFilteredByBranch = new DisplayFilteredByBranch();
+			                DataManagerForFoodItem foodItemDB = DataManagerForFoodItem.getInstance();
+			                DataManagerForAccount accountDB = DataManagerForAccount.getInstance();
+					Manager managerAccount=new Manager(account.getName(),account.getStaffID(),"M",account.getGender(),account.getAge(),staffAccount.getBranchName(),orderDB,displayFilteredByBranch, foodItemDB, accountDB);
+				        //delete the Staff object to the accountList in DataManagerForAccount
+					accountDB.delete(staffAccount);
+				        //add the Manager object to the accountList in Data ManagerForAccount
+					accountDB.add(managerAccount);
+				}else{
+					System.out.println("Too many Managers in branch!");
+					System.out.println("Returning to user page...");
+				}
+			}else{
+				System.out.println("Branch not found! Returning to user page...);
+			}
+		}else{
+			System.out.println("Account is not a staff. Cannot be promoted to manager");
+			System.out.println("Returning to user page...");
+		}
+	}else{
+		System.out.println("Account not found! Returning to user page...");
+	}
+	sc.close();
     }
     public void transferStaff(){
         Scanner sc=new Scanner(System.in);
