@@ -152,18 +152,16 @@ public class AdminForStaff implements IAdminForStaff{
         int choice=sc.nextInt();
         switch(choice){
             case 1:
-                ArrayList<Branch> branchList=branchDB.getAll();
-                for(int i=0;i<branchList.size();i++){
-                    Branch branch=branchList.get(i);
-                    System.out.println(branch.getBranchName());
-                    displayFormatter.displayFilteredByBranch(staffList,branch.getBranchName());
-                }
+                System.out.println("Enter branch to display");
+		String branchName=sc.nextLine();
+		displayFormatter.displayFilteredByBranch(accountList,branchName);
                 break;
             case 2:
 		System.out.println("Choose role to display");
                 System.out.println("1. Admin");
                 System.out.println("2. Manager");
                 System.out.println("3. Staff");
+		int role=sc.nextInt();
 		switch(role){
 			case 1:
 				displayFormatter.displayFilteredByRole(accountList,"A");
@@ -178,17 +176,26 @@ public class AdminForStaff implements IAdminForStaff{
 		}
             	break;
             case 3:
-                System.out.println("Male");
-                displayFormatter.displayFilteredByGender(accountList,"M");
-                System.out.println("Female");
-                displayFormatter.displayFilteredByGender(accountList,"F");
+		System.out.println("Choose gender to display");
+                System.out.println("1. Male");
+                System.out.println("2. Female");
+		int gender=sc.nextInt();
+		switch(gender){
+			case 1:
+				displayFormatter.displayFilteredByGender(accountList,"M");
+				break;
+			case 2:
+				displayFormatter.displayFilteredByGender(accountList,"F");
+				break;
+			default: break;
+		}
             	break;
             case 4:
-                for(int age=0;age<=100;age++){
-                    displayFormatter.displayFilteredByAge(accountList,age);
-                }
+		System.out.println("Choose age to display");
+		int age=sc.nextInt();
+                displayFormatter.displayFilteredByAge(accountList,age);
             	break;
-	        default:
+	    default:
                 System.out.println("Invalid Option. Returning to user page...");
                 break;
         }
