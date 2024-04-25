@@ -17,7 +17,7 @@ public class CustomerUI {
                 System.out.println("1. Dine-in");
                 System.out.println("2. Takeaway");
                 String option = sc.nextLine();
-
+                
                 switch (option) {
                     case "1": //Dine-in
                         valid = true;
