@@ -31,19 +31,18 @@ public class BranchUI {
 	 */
 	public BranchUI(IDataManager<Branch, String> branchDB, IDisplay displayFormatter) {
 		this.branchDB = branchDB;
-        	this.displayFormatter = displayFormatter;
-        	boolean keep_asking = true;
-        	Scanner sc = GlobalResource.SCANNER;
-        	while (keep_asking){
-				showBranches();
-				String branchName = sc.nextLine();
-				if (chooseBranch(branchName)){
-					keep_asking = false;
-					DataManagerForOrder orderDB = DataManagerForOrder.getInstance();
-					new CustomerUI(branchName, orderDB);
-				}
+		this.displayFormatter = displayFormatter;
+		boolean keep_asking = true;
+		Scanner sc = GlobalResource.SCANNER;
+		while (keep_asking){
+			showBranches();
+			String branchName = sc.nextLine();
+			if (chooseBranch(branchName)){
+				keep_asking = false;
+				DataManagerForOrder orderDB = DataManagerForOrder.getInstance();
+				new CustomerUI(branchName, orderDB);
 			}
-		sc.close();
+		}
 	}
 
 }
