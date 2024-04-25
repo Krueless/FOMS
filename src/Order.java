@@ -146,7 +146,6 @@ public class Order implements IGetBranchName{
     
             if (duration.toMinutes() >= 2) {
                 this.setOrderStatus(OrderStatus.CANCELLED);
-                System.out.println("Order has been cancelled due to no pickup within the allowed timeframe.");
             }
         }
     }

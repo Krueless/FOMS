@@ -91,7 +91,7 @@ public class OrderControl {
 			switch (choice) {
 				case 1:
 					viewMenu();
-					Order newOrder = cart.addToCart(order, foodItemDB);
+					Order newOrder = cart.addToCart(order, foodItemDB,branchName);
 					if(newOrder != null) 
 					    orderDB.update(newOrder);
 					break;
