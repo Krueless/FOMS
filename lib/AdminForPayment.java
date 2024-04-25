@@ -1,5 +1,6 @@
+import java.io.Serializable;
 import java.util.Scanner;
-public class AdminForPayment implements IAdminForPayment {
+public class AdminForPayment implements IAdminForPayment, Serializable {
 	private IDataManager<IPayment, String> paymentDB;
 	public AdminForPayment(){
 	    this.paymentDB=DataManagerForPayment.getInstance();

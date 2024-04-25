@@ -1,8 +1,9 @@
 import java.util.Scanner;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 
-public class AdminForStaff implements IAdminForStaff{
+public class AdminForStaff implements IAdminForStaff, Serializable{
     private IDataManagerWithCount accountDB;
     private IDataManager<Branch, String> branchDB;
     private IDisplayFilteredForAccount displayFormatter;
