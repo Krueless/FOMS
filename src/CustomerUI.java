@@ -61,10 +61,10 @@ public class CustomerUI {
 	}
 
 	public void showCustomerOptions() {
-		Scanner sc = new Scanner(System.in);
-        boolean valid = false;
+		Scanner sc = GlobalResource.SCANNER;
+        boolean quit = false;
 
-        while (!valid) {
+        while (!quit) {
             try {
                 System.out.println("Welcome to " + branchName);
                 System.out.println("Please select one of the following options.");
@@ -75,7 +75,6 @@ public class CustomerUI {
 
                 switch (option) {
                     case "1":
-                        valid = true;
                         createOrder();
                         break;
                     case "2":
@@ -83,7 +82,9 @@ public class CustomerUI {
                         int id = sc.nextInt();
                         sc.nextLine();
                         checkOrder(id);;
-                        valid = true;
+                        break;
+                    case "3":
+                        quit = true;
                         break;
                     default:
                         System.out.println("Invalid option. Please try again.\n");
@@ -94,8 +95,7 @@ public class CustomerUI {
                 System.out.println("Please try again.\n");
             }
         }
-
-        sc.close();
+        System.out.println("Quit successfully.");
         
 	}
 
