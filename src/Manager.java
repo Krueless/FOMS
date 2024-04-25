@@ -8,7 +8,6 @@ import java.util.Scanner;
 public class Manager extends Staff{
     private IDataManager<FoodItem, Integer> foodItemDB;
     private IDataManager<Account, String> accountDB;
-    private IDisplayFilteredByBranch displayFormatter;
     public Manager(String name,String staffID,String role,String gender,int age,String branchName, IDataManager<Order, Integer> orderDB, IDisplayFilteredByBranch displayFormatter, IDataManager<FoodItem,Integer> foodItemDB, IDataManager<Account, String> accountDB){
         super(name,staffID,role,gender,age,branchName,orderDB,displayFormatter);
         this.foodItemDB=foodItemDB;
