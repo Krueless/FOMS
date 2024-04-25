@@ -1,14 +1,11 @@
-import java.io.Serializable;
 import java.util.Scanner;
-public class AdminForPayment implements IAdminForPayment, Serializable {
+public class AdminForPayment implements IAdminForPayment{
 	private IDataManager<IPayment, String> paymentDB;
-	public AdminForPayment(){
-	    this.paymentDB=DataManagerForPayment.getInstance();
-	}
     /**
      * Allows admin to add a new payment method
      */
 	public void addPaymentMethod(){
+        this.paymentDB=DataManagerForPayment.getInstance();
 	    Scanner sc = GlobalResource.SCANNER;
 		String choice;
 		String name;
@@ -42,6 +39,7 @@ public class AdminForPayment implements IAdminForPayment, Serializable {
      * Allows admin to remove an existing payment method
      */
 	public void removePaymentMethod(){
+        this.paymentDB=DataManagerForPayment.getInstance();
 		Scanner sc = GlobalResource.SCANNER;
 		System.out.println("Enter the payment method to remove");
 		String paymentName = sc.nextLine();

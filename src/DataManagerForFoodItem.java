@@ -9,7 +9,7 @@ public class DataManagerForFoodItem implements IDataManager<FoodItem, Integer>{
 	private final Serializer<FoodItem> serializer;
 
 	private DataManagerForFoodItem() {
-        serializer = new Serializer<FoodItem>("../data/foodItemData.ser");
+        serializer = new Serializer<FoodItem>("data/foodItemData.ser");
         loadData();
 	}
 
@@ -92,7 +92,7 @@ public class DataManagerForFoodItem implements IDataManager<FoodItem, Integer>{
 
     // Method to read CSV and initialize data
     private void initializeFromCSV() {
-        File f = new File("../data/menu_list.csv");
+        File f = new File("data/menu_list.csv");
         try (Scanner scanner = new Scanner(f)) {
             scanner.nextLine();
             while (scanner.hasNextLine()) {
@@ -103,8 +103,9 @@ public class DataManagerForFoodItem implements IDataManager<FoodItem, Integer>{
                 FoodItem foodItem = new FoodItem(Integer.parseInt(data[0]), data[1], Double.parseDouble(data[2]), data[3], data[4]); // Adapt constructor call as necessary
                 foodItemList.add(foodItem);
             }
+            System.out.println("FoodItem CSV data initialised.");
         } catch (FileNotFoundException e) {
-            System.out.println("Error: CSV File not found");;
+            System.out.println("Error: FoodItem CSV File not found");;
         }
 	}
 }

@@ -20,7 +20,7 @@ public class DataManagerForPayment implements IDataManager<IPayment, String>
     private DataManagerForPayment() 
 	{
 		paymentList = new ArrayList<>();
-	    serializer = new Serializer<IPayment>("../data/paymentMethods.ser");
+	    serializer = new Serializer<IPayment>("data/paymentMethods.ser");
 		loadData();
     }
 
@@ -55,7 +55,7 @@ public class DataManagerForPayment implements IDataManager<IPayment, String>
 	private void initializeFromCSV() 
 	{
 	
-		File f = new File("../data/payment_list.csv");
+		File f = new File("data/payment_list.csv");
 		try{
 			Scanner sc = new Scanner(f);
 			while (sc.hasNextLine()) {
@@ -74,10 +74,10 @@ public class DataManagerForPayment implements IDataManager<IPayment, String>
 				}
 			}
 			serializer.serialize(paymentList);
-			System.out.println("CSV data initialised.");
+			System.out.println("Payment CSV data initialised.");
 			sc.close();
 		}catch (FileNotFoundException e){
-			System.out.println("Error: CSV File not found");
+			System.out.println("Error: Payment CSV File not found");
 		}
        
     }

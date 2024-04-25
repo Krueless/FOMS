@@ -9,7 +9,7 @@ public class DataManagerForAccount implements IDataManagerWithCount{
 	private final Serializer<Account> serializer;
 
 	private DataManagerForAccount() {
-		serializer = new Serializer<Account>("../data/accountData.ser");
+		serializer = new Serializer<Account>("data/accountData.ser");
 		loadData();
 	}
 
@@ -24,6 +24,7 @@ public class DataManagerForAccount implements IDataManagerWithCount{
 		try{
 			accountList = serializer.deserialize();
 		}catch (IOException | ClassNotFoundException e){
+            e.printStackTrace();;
 			System.out.println("Account: Serialized file not found or invalid, initialising from CSV.");
 			accountList = new ArrayList<Account>();
 			initializeFromCSV();
@@ -35,7 +36,7 @@ public class DataManagerForAccount implements IDataManagerWithCount{
 		DataManagerForFoodItem foodItemDB = DataManagerForFoodItem.getInstance();
 		DisplayFilteredByBranch staffDisplay = new DisplayFilteredByBranch();
 	
-		File f = new File("../data/staff_list.csv");
+		File f = new File("data/staff_list.csv");
 		try{
 			Scanner sc = new Scanner(f);
 			while (sc.hasNextLine()) {
@@ -45,25 +46,22 @@ public class DataManagerForAccount implements IDataManagerWithCount{
 				switch (role){
 					case "A":
 						accountList.add(new Admin(data[0], data[1], data[2], data[3], Integer.parseInt(data[4])));
-                        System.out.println("added");
                         break;
 					case "M":
 						accountList.add(new Manager(data[0], data[1], data[2], data[3],Integer.parseInt(data[4]), data[5], orderDB,staffDisplay, foodItemDB, instance));
-                        System.out.println("added");
                         break;
 					case "S":
 						accountList.add(new Staff(data[0], data[1], data[2], data[3],Integer.parseInt(data[4]), data[5], orderDB,staffDisplay));
-                        System.out.println("added");
                         break;
                     default:
                         break;
 				}
 			}
 			serializer.serialize(accountList);
-			System.out.println("CSV data initialised.");
+			System.out.println("Account CSV data initialised.");
 			sc.close();
 		}catch (FileNotFoundException e){
-			System.out.println("Error: CSV File not found");
+			System.out.println("Error: Account CSV File not found");
 		}
        
     }

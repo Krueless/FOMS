@@ -1,4 +1,6 @@
-public interface IAdminForStaff {
+import java.io.Serializable;
+
+public interface IAdminForStaff extends Serializable{
 
 	public abstract void editStaff();
 

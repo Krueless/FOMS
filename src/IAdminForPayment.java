@@ -1,4 +1,6 @@
-public interface IAdminForPayment {
+import java.io.Serializable;
+
+public interface IAdminForPayment extends Serializable {
 
 	public abstract void addPaymentMethod();
 

@@ -9,7 +9,7 @@ public class DataManagerForBranch implements IDataManager<Branch,String>{
 	private final Serializer<Branch> serializer;
 
 	private DataManagerForBranch() {
-	        serializer = new Serializer<Branch>("../data/branchData.ser");
+	        serializer = new Serializer<Branch>("data/branchData.ser");
 	        loadData();
 	}
 
@@ -90,7 +90,7 @@ public class DataManagerForBranch implements IDataManager<Branch,String>{
 
             // Method to read CSV and initialize data
     private void initializeFromCSV() {
-		File f = new File("../data/branch_list.csv");
+		File f = new File("data/branch_list.csv");
         try (Scanner scanner = new Scanner(f)) {
             scanner.nextLine();
             while (scanner.hasNextLine()) {
@@ -101,8 +101,9 @@ public class DataManagerForBranch implements IDataManager<Branch,String>{
                 Branch branch = new Branch(data[0], data[1], Integer.parseInt(data[2])); // Adapt constructor call as necessary
                 branchList.add(branch);
             }
+            System.out.println("Branch CSV data initialised.");
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("Error: Branch CSV File not found");
         }
     }
 }

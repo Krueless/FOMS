@@ -1,6 +1,5 @@
-import java.io.Serializable;
 import java.util.Scanner;
-public class AdminForBranch implements IAdminForBranch, Serializable{
+public class AdminForBranch implements IAdminForBranch{
 	private IDataManager<Branch, String> branchDB;
 	public AdminForBranch(){
 		this.branchDB=DataManagerForBranch.getInstance();
