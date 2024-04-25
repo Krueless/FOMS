@@ -8,7 +8,7 @@ public class CustomerUI {
 	public void createOrder() {
 		DataManagerForOrder orderDB = DataManagerForOrder.getInstance();
 		DataManagerForFoodItem foodItemDB = DataManagerForFoodItem.getInstance();
-		Display displayformatter = new Display();
+		DisplayFilteredByBranch displayformatter = new DisplayFilteredByBranch();
         Scanner sc = new Scanner(System.in);
         boolean valid = false;
         while (!valid) {

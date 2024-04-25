@@ -24,7 +24,7 @@ public class DataManagerForFoodItem implements IDataManager<FoodItem, Integer>, 
         try{
 			foodItemList = serializer.deserialize();
 		}catch (IOException | ClassNotFoundException e){
-			System.out.println("Serialized file not found or invalid, initializing from CSV.");
+			System.out.println("Serialized file not found or invalid, initialising from CSV.");
 			foodItemList = new ArrayList<FoodItem>();
 			initializeFromCSV();
 		}
@@ -66,8 +66,8 @@ public class DataManagerForFoodItem implements IDataManager<FoodItem, Integer>, 
 	 * 
 	 * @param foodItem
 	 */
-	public void add(FoodItem foodItem) {
-		foodItemList.add(foodItem);
+	public void add(FoodItem newFoodItem) {
+		foodItemList.add(newFoodItem);
         System.out.println("Successfully added food item.");
         serializer.serialize(foodItemList);
 	}

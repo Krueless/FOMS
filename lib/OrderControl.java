@@ -10,7 +10,7 @@ public class OrderControl {
 
     private IDataManager<Order, Integer> orderDB;           // Interface to interact with order data
     private IDataManager<FoodItem, Integer> foodItemDB;        // Interface to interact with food item data
-    private IDisplay displayFormatter;      // Interface for displaying data
+    private IDisplayFilteredByBranch displayFormatter;      // Interface for displaying data
     private OrderControlForCheckout checkout; // Controls the checkout process
     private OrderControlForCart cart;       // Controls the cart management process
     private Order order;                    // Current order being managed
@@ -27,7 +27,7 @@ public class OrderControl {
      * @param order The current order to be managed.
      * @param branchName The branch name where the order is being placed.
      */
-    public OrderControl(IDataManager<Order, Integer> orderDB, IDataManager<FoodItem, Integer> foodItemDB, IDisplay displayFormatter, Order order, String branchName) {
+    public OrderControl(IDataManager<Order, Integer> orderDB, IDataManager<FoodItem, Integer> foodItemDB, IDisplayFilteredByBranch displayFormatter, Order order, String branchName) {
         this.orderDB = orderDB;
         this.foodItemDB = foodItemDB;
         this.displayFormatter = displayFormatter;
@@ -41,13 +41,12 @@ public class OrderControl {
      * Displays the menu filtered by the branch using the display formatter.
      */
     public void viewMenu() {
-        DisplayFilteredByBranch branchDisplayFormatter = (DisplayFilteredByBranch) displayFormatter;
         ArrayList<FoodItem> foodItemList = foodItemDB.getAll();
         ArrayList<IGetBranchName> branchNameList = new ArrayList<>(foodItemList.size());
         for (FoodItem item : foodItemList) {
             branchNameList.add(item);
         }
-        branchDisplayFormatter.displayFilteredByBranch(branchNameList, branchName);
+        displayFormatter.displayFilteredByBranch(branchNameList, branchName);
     }
 
     /**
@@ -87,18 +86,18 @@ public class OrderControl {
 				case 1:
 					viewMenu();
 					Order newOrder = cart.addToCart(order, foodItemDB);
-					if(newOrder == null) break;
-					orderDB.update(newOrder);
+					if(newOrder != null) 
+					    orderDB.update(newOrder);
 					break;
 				case 2:
 					newOrder = cart.removeFromCart(order, displayFormatter);
-					if(newOrder == null) break;
-					orderDB.update(newOrder);
+					if(newOrder != null)
+					    orderDB.update(newOrder);
 					break;
 				case 3:
 					newOrder = cart.editCart(order, displayFormatter);
-					if(newOrder == null) break;
-					orderDB.update(newOrder);
+					if(newOrder != null) 
+					    orderDB.update(newOrder);
 					break;
 				case 4:
 					newOrder = checkout.changeDineInOption(order);

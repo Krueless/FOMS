@@ -32,8 +32,7 @@ public class OrderControlForCart {
      */
     public Order removeFromCart(Order order, IDisplayFilteredByBranch displayFormatter) {
         Scanner sc = new Scanner(System.in);
-
-        displayFormatter.displayFilteredByBranch(order.getCartItems());
+        displayFormatter.displayAll(order.getCartItems());
         System.out.println((order.getCartItems().size() + 1) + " Quit");
         System.out.println("Please choose which item number you wish to remove");
 

@@ -17,7 +17,7 @@ public class DataManagerForOrder implements IDataManager<Order, Integer> {
      * Private constructor to prevent instantiation outside of this class.
      */
     private DataManagerForOrder() {
-		serializer = new Serializer<Order>("../src/.."); //TODO update file
+		serializer = new Serializer<Order>("../src/orderData.ser"); //TODO update file
 		loadData();
     }
 
@@ -38,7 +38,9 @@ public class DataManagerForOrder implements IDataManager<Order, Integer> {
 		try{
 			orderList = serializer.deserialize();
 		}catch (IOException | ClassNotFoundException e){
+            System.out.println("Serialized file not found or invalid, initialising new order list");
 			orderList = new ArrayList<Order>();
+            serializer.serialize(orderList);
 		}
 	}
 
@@ -70,10 +72,6 @@ public class DataManagerForOrder implements IDataManager<Order, Integer> {
      * @param order The new order to add to the list.
      */
     public void add(Order order) {
-		if (order == null)
-		{
-			System.out.println("Invalid order placed, please try again");
-		}
         for (int i = 0; i < orderList.size(); i++) {
             if (orderList.get(i).getOrderID() == order.getOrderID()) {
                 System.out.println("Order is already inside");
@@ -81,6 +79,7 @@ public class DataManagerForOrder implements IDataManager<Order, Integer> {
             }
         }
         orderList.add(order);
+        serializer.serialize(orderList);
 		System.out.println("Order is successfully added!");
     }
 
