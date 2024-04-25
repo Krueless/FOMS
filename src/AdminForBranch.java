@@ -14,6 +14,7 @@ public class AdminForBranch implements IAdminForBranch{
 		System.out.println("Enter the staff quota");
 		try{
 			int staffQuota = sc.nextInt();
+            sc.nextLine();
 			System.out.println("Enter the branch name");
 			String branchName = sc.nextLine();
 			while(branchDB.find(branchName)!=null){
@@ -29,6 +30,7 @@ public class AdminForBranch implements IAdminForBranch{
 			branchDB.add(branch);
 		}catch(Exception e){
 			System.out.println("Staff quota must be number! Returning to user page...");
+            sc.nextLine();
 		}
 	}
 	
@@ -37,6 +39,8 @@ public class AdminForBranch implements IAdminForBranch{
      */
 	public void closeBranch(){
 		Scanner sc = GlobalResource.SCANNER;
+        IDisplay displayFormatter = new Display();
+        displayFormatter.displayAll(branchDB.getAll());;
 		System.out.println("Enter the branch to be closed");
 		String branchName = sc.nextLine();
 		Branch branch = branchDB.find(branchName);//find the branch

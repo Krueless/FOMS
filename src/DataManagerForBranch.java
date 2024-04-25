@@ -60,16 +60,15 @@ public class DataManagerForBranch implements IDataManager<Branch,String>{
 	 */
 	public void update( Branch newBranch) {
 		String name = newBranch.getBranchName();
-	        for (int i = 0; i < branchList.size(); i++){
-	            	if (branchList.get(i).getBranchName().compareTo(name) == 0){
-		                branchList.set(i, newBranch);
-		                System.out.println("Successfully updated branch. ");
-		                break;
-	        	}
-        	}
-        serializer.serialize(branchList);
-        return;
-	}
+        for (int i = 0; i < branchList.size(); i++){
+                if (branchList.get(i).getBranchName().compareTo(name) == 0){
+                    branchList.set(i, newBranch);
+                    serializer.serialize(branchList);
+                    System.out.println("Successfully updated branch. ");
+                    break;
+            }
+        }
+    }
 
 	/**
 	 * 
@@ -101,6 +100,7 @@ public class DataManagerForBranch implements IDataManager<Branch,String>{
                 Branch branch = new Branch(data[0], data[1], Integer.parseInt(data[2])); // Adapt constructor call as necessary
                 branchList.add(branch);
             }
+            serializer.serialize(branchList);
             System.out.println("Branch CSV data initialised.");
         } catch (FileNotFoundException e) {
             System.out.println("Error: Branch CSV File not found");

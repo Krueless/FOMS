@@ -54,12 +54,11 @@ public class DataManagerForFoodItem implements IDataManager<FoodItem, Integer>{
 		for (int i = 0; i < foodItemList.size(); i++){
             if (foodItemList.get(i).getID() == id){
                 foodItemList.set(i, newFoodItem);
+                serializer.serialize(foodItemList);
                 System.out.println("Successfully updated food item. ");
                 break;
             }
         }
-        serializer.serialize(foodItemList);
-        return;
 	}
 
 	/**
@@ -103,6 +102,7 @@ public class DataManagerForFoodItem implements IDataManager<FoodItem, Integer>{
                 FoodItem foodItem = new FoodItem(Integer.parseInt(data[0]), data[1], Double.parseDouble(data[2]), data[3], data[4]); // Adapt constructor call as necessary
                 foodItemList.add(foodItem);
             }
+            serializer.serialize(foodItemList);
             System.out.println("FoodItem CSV data initialised.");
         } catch (FileNotFoundException e) {
             System.out.println("Error: FoodItem CSV File not found");;
