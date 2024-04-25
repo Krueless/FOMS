@@ -25,14 +25,14 @@ public class CustomerUI {
                         Order newOrderDineIn = new Order(orderDB.getAll().size() + 1, false, branchName);
                         orderDB.add(newOrderDineIn);
                         control = new OrderControl(orderDB, foodItemDB, displayformatter, newOrderDineIn, branchName);
-                        control.showOptions();
+                        control.chooseOptions();
                         break;
                     case "2": //Takeaway
                         valid = true;
                         Order newOrderTakeaway = new Order(orderDB.getAll().size() + 1, true, branchName);
                         orderDB.add(newOrderTakeaway);
                         control = new OrderControl(orderDB, foodItemDB, displayformatter, newOrderTakeaway, branchName);
-                        control.showOptions();
+                        control.chooseOptions();
                         break;
                     default:
                         System.out.println("Invalid option. Please try again.\n");

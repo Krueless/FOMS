@@ -62,7 +62,6 @@ public class OrderControl {
         System.out.println("(5) Checkout");
         System.out.println("(6) Quit");
         System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''");
-        chooseOptions();
     }
 
     /**
@@ -72,7 +71,8 @@ public class OrderControl {
         Scanner sc = GlobalResource.SCANNER;
 		boolean quit = false;
 		while (!quit)
-		{
+		{   
+            showOptions();
             int choice = -1;
 			try {
 				choice = sc.nextInt();
