@@ -56,14 +56,14 @@ public class Online implements IPayment {
     public boolean processPayment(Order order) {
         Scanner sc = GlobalResource.SCANNER;
         var cartItems = order.getCartItems();
-        int totalCost = 0;
+        float totalCost = 0;
 		        
 		// Calculate total cost by iterating over each item in the cart
 		
         for (int i = 0; i < cartItems.size(); i++) {
             System.out.println(cartItems.get(i).getName() + " x " + 
                 cartItems.get(i).getQuantity() + " : " + 
-                cartItems.get(i).getPrice() * cartItems.get(i).getQuantity());
+                String.format("%.2f",cartItems.get(i).getPrice() * cartItems.get(i).getQuantity()));
             totalCost += cartItems.get(i).getPrice() * cartItems.get(i).getQuantity();
         }
         System.out.println("Total: $" + String.format("%.2f", totalCost));
@@ -95,11 +95,11 @@ public class Online implements IPayment {
         String formattedDateTime = now.format(formatter);
 
         var cartItems = order.getCartItems();
-        int totalCost = 0;
+        float totalCost = 0;
 
         for (int i = 0; i < cartItems.size(); i++) {
             System.out.println(cartItems.get(i).getName() + " x " + cartItems.get(i).getQuantity() + " : " +
-                cartItems.get(i).getPrice() * cartItems.get(i).getQuantity());
+            String.format("%.2f",cartItems.get(i).getPrice() * cartItems.get(i).getQuantity()));
             totalCost += cartItems.get(i).getPrice() * cartItems.get(i).getQuantity();
         }
         System.out.println("Total: $" + String.format("%.2f", totalCost));

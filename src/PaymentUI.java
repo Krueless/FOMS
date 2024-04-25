@@ -27,6 +27,7 @@ public class PaymentUI {
      */
     public void showPaymentOptions(Order order) {
         displayFormatter.displayAll(paymentDB.getAll()); //TIDO error checking
+        System.out.println("Please choose which payment option you want.");
         int choice = getValidNumber(order.getCartItems().size());
 		choosePaymentOption(order, choice);
     }
@@ -53,23 +54,22 @@ public class PaymentUI {
 		
     }
 
-	private int getValidNumber(int max)
-	{
-		System.out.println("Please input how many you want");
+	private int getValidNumber(int max) {
         Scanner sc = GlobalResource.SCANNER;
-        int quantity = -1;
-		try {
-            quantity = sc.nextInt();
-        } catch (Exception e) {
-            System.out.println("Please input a valid integer");
-			return getValidNumber(max);
+        while (true) {
+            try {
+                int quantity = sc.nextInt();
+                if (quantity > 0 && quantity <= max) {
+                    return quantity;
+                } else {
+                    sc.nextLine();
+                    System.out.println("Please input a number between 1 and " + max + "!");
+                }
+            } catch (Exception e) {
+                sc.nextLine();
+                System.out.println("Please input a valid integer");
+            }
         }
-		if (quantity<=0 || quantity > max)
-		{
-			System.out.println("Please input a valid number!");
-			return getValidNumber(max);
-		}
-		return quantity;
-	}
+    }
 
 }

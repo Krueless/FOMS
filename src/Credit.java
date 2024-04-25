@@ -45,9 +45,6 @@ public class Credit implements IPayment
         this.name = name;
     }
 
-    public String toString(){
-        return getClass().getSimpleName() + " " + name;
-    }
 
     /**
      * Processes the payment for an order by asking the user to enter their credit card details.
@@ -63,7 +60,7 @@ public class Credit implements IPayment
 		// Retrieve items in the order
         ArrayList<OrderedFoodItem> cartItems = order.getCartItems(); 
 		// Initialize total cost
-        int totalCost = 0; 
+        double totalCost = 0; 
 
         // Calculate total cost by iterating over each item in the cart
 
@@ -71,7 +68,7 @@ public class Credit implements IPayment
 		{
             System.out.println(cartItems.get(i).getName() + " x " +
                 cartItems.get(i).getQuantity() + " : " +
-                cartItems.get(i).getPrice() * cartItems.get(i).getQuantity());
+                String.format("%.2f",cartItems.get(i).getPrice() * cartItems.get(i).getQuantity()));
             totalCost += cartItems.get(i).getPrice() * cartItems.get(i).getQuantity();
         }
         System.out.println("Total: $" + String.format("%.2f", totalCost));
@@ -106,14 +103,25 @@ public class Credit implements IPayment
         String formattedDateTime = now.format(formatter);
 
         ArrayList<OrderedFoodItem> cartItems = order.getCartItems();
-        int totalCost = 0;
+        float totalCost = 0;
 		// Maybe look into error checking here?
         for (int i = 0; i < cartItems.size(); i++) {
             System.out.println(cartItems.get(i).getName() + " x " + cartItems.get(i).getQuantity() + " : " +
-                cartItems.get(i).getPrice() * cartItems.get(i).getQuantity());
+            String.format("%.2f",cartItems.get(i).getPrice() * cartItems.get(i).getQuantity()));
             totalCost += cartItems.get(i).getPrice() * cartItems.get(i).getQuantity();
         }
         System.out.println("Total: $" + String.format("%.2f", totalCost));
         System.out.println("Order " + order.getOrderID() + " paid on " + formattedDateTime);
+    }
+
+    /**
+     * Returns a string representation of the {@code Credit} object, including the class name and payment method name.
+     *
+     * @return A string representing the {@code Credit} object, which includes the class name and the name of the payment method.
+     */
+    @Override
+    public String toString() 
+	{
+        return this.name + " (" + getClass().getSimpleName() +")";
     }
 }

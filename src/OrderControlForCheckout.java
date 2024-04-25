@@ -54,22 +54,21 @@ public class OrderControlForCheckout {
         return order;
     }
 
-	private int getValidNumber()
-	{
-        Scanner sc =  GlobalResource.SCANNER;
-		System.out.println("Please input how many you want");
-        int number = -1;
-		try {
-            number = sc.nextInt();
-        } catch (Exception e) {
-            System.out.println("Please input a valid number!");
-			return getValidNumber();
+	private int getValidNumber() {
+        Scanner sc = GlobalResource.SCANNER;
+        while (true) {
+            try {
+                int number = sc.nextInt();
+                if (number > 0) {
+                    return number;
+                } else {
+                    sc.nextLine();
+                    System.out.println("Please input a positive number!");
+                }
+            } catch (Exception e) {
+                sc.nextLine(); 
+                System.out.println("Please input a valid integer");
+            }
         }
-		if (number != 0 || number != 1)
-		{
-			System.out.println("Please input a valid number!");
-			return getValidNumber();
-		}
-		return number;
-	}
+    }
 }
