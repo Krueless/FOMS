@@ -78,7 +78,7 @@ public class DataManagerForAccount implements IDataManagerWithCount{
 			if (accountList.get(i).getStaffID().equals(staffID)){
 				accountList.set(i, newAccount);
                 serializer.serialize(accountList);
-				System.out.println("Successfully updated staff.");
+				System.out.println("Successfully updated account.");
 				break;
 			}
 		}
