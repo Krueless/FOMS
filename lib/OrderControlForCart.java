@@ -15,7 +15,8 @@ public class OrderControlForCart {
      */
     public Order addToCart(Order order, IDataManager<FoodItem, Integer> foodItemDB) 
 	{
-		FoodItem foodItem = getFoodItem(foodItemDB);
+        FoodItem foodItem = getFoodItem(foodItemDB);
+        System.out.println("Please input the number of food item you want");
         int quantity = getValidNumber();
         OrderedFoodItem orderedFoodItem = new OrderedFoodItem(foodItem, quantity);
         order.getCartItems().add(orderedFoodItem);
@@ -93,23 +94,19 @@ public class OrderControlForCart {
 	}
 	private int getValidNumber()
 	{
-        Scanner sc = new Scanner(System.in);
-		System.out.println("Please input how many you want");
+        Scanner sc = GlobalResource.SCANNER;
         int quantity = -1;
 		try {
             quantity = sc.nextInt();
         } catch (Exception e) {
             System.out.println("Please input a valid integer");
-            sc.close();
 			return getValidNumber();
         }
 		if (quantity<=0)
 		{
 			System.out.println("Please input a positive number!");
-            sc.close();
 			return getValidNumber();
 		}
-        sc.close();
 		return quantity;
 	}
 

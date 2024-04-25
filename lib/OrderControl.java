@@ -69,7 +69,7 @@ public class OrderControl {
      * Processes user input to choose an option and perform the corresponding action.
      */
     public void chooseOptions() {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = GlobalResource.SCANNER;
 		boolean quit = false;
 		while (!quit)
 		{
@@ -116,7 +116,6 @@ public class OrderControl {
 					System.out.println("Please choose a valid option");
             }
 	    }
-        sc.close();
     }
 }
 

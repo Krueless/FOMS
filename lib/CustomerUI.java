@@ -9,7 +9,7 @@ public class CustomerUI {
 		DataManagerForOrder orderDB = DataManagerForOrder.getInstance();
 		DataManagerForFoodItem foodItemDB = DataManagerForFoodItem.getInstance();
 		DisplayFilteredByBranch displayformatter = new DisplayFilteredByBranch();
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = GlobalResource.SCANNER;
         boolean valid = false;
         OrderControl control;
         while (!valid) {
@@ -18,16 +18,20 @@ public class CustomerUI {
                 System.out.println("1. Dine-in");
                 System.out.println("2. Takeaway");
                 String option = sc.nextLine();
-                
+                Order newOrder;
                 switch (option) {
                     case "1": //Dine-in
                         valid = true;
-                        control = new OrderControl(orderDB, foodItemDB, displayformatter, new Order(orderDB.getAll().size() + 1, false, branchName), branchName);
+                        newOrder = new Order(orderDB.getAll().size() + 1, false, branchName);
+                        orderDB.add(newOrder);
+                        control = new OrderControl(orderDB, foodItemDB, displayformatter, newOrder, branchName);
                         control.showOptions();
                         break;
                     case "2": //Takeaway
                         valid = true;
-                        control = new OrderControl(orderDB, foodItemDB, displayformatter, new Order(orderDB.getAll().size() + 1, true, branchName), branchName);
+                        newOrder = new Order(orderDB.getAll().size() + 1, true, branchName);
+                        orderDB.add(newOrder);
+                        control = new OrderControl(orderDB, foodItemDB, displayformatter, newOrder, branchName);
                         control.showOptions();
                         break;
                     default:
@@ -39,7 +43,6 @@ public class CustomerUI {
                 System.out.println("Please try again.\n");
             }
         }
-        sc.close();
 	}
 
 	/**
