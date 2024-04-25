@@ -1,6 +1,7 @@
 import java.io.Serializable;
 
 public class FoodItem implements IGetBranchName, Serializable {
+    private static final long serialVersionUID = 1L;
 	private int foodItemID;
 	private String name;
 	private String itemCategory;

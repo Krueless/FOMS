@@ -10,6 +10,7 @@ import java.time.Duration;
  * including identification, status, pricing, takeaway or dine-in option, list of ordered items, and timestamp.
  */
 public class Order implements Serializable, IGetBranchName{
+    private static final long serialVersionUID = 1L;
     private int orderID;
     private OrderStatus orderStatus;
     private double price;

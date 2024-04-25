@@ -1,6 +1,6 @@
 import java.io.Serializable;
 public abstract class Account implements Serializable {
-
+    private static final long serialVersionUID = 1L;
 	protected String staffID;
 	protected String password = "password";
 	protected String role;

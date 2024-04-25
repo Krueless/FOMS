@@ -25,7 +25,6 @@ public class DataManagerForAccount implements IDataManagerWithCount{
 			accountList = serializer.deserialize();
 		}catch (IOException | ClassNotFoundException e){
 			System.out.println("Serialized file not found or invalid, initializing from CSV.");
-			e.printStackTrace();
 			accountList = new ArrayList<Account>();
 			initializeFromCSV();
 		}
@@ -60,7 +59,6 @@ public class DataManagerForAccount implements IDataManagerWithCount{
 			sc.close();
 		}catch (FileNotFoundException e){
 			System.out.println("Error: CSV File not found");
-			e.printStackTrace();
 		}
        
     }
@@ -72,7 +70,6 @@ public class DataManagerForAccount implements IDataManagerWithCount{
 	 * @param newAccount
 	 */
 	public void update(Account newAccount) {
-		// TODO - implement DataManagerForAccount.update
 		String staffID = newAccount.getStaffID();
 		for (int i = 0; i < accountList.size(); i++) {
 			if (accountList.get(i).getStaffID().equals(staffID)){
@@ -89,7 +86,6 @@ public class DataManagerForAccount implements IDataManagerWithCount{
 	 * @param account
 	 */
 	public void add(Account account) {
-		// TODO - implement DataManagerForAccount.add
 		accountList.add(account);
         System.out.println("Successfully added account.");
 		serializer.serialize(accountList);
@@ -100,7 +96,6 @@ public class DataManagerForAccount implements IDataManagerWithCount{
 	 * @param account
 	 */
 	public void delete(Account account) {
-		// TODO - implement DataManagerForAccount.delete
 		if (accountList.remove(account)){
             System.out.println("Successfully removed account.");
 		    serializer.serialize(accountList);

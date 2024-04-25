@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
  * It includes methods to process the payment and print a receipt for the transaction.
  */
 public class Online implements IPayment {
+    private static final long serialVersionUID = 1L;
     private String name;  // Name of the online payment system
 
     /**

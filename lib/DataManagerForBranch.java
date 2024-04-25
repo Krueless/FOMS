@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class DataManagerForBranch implements IDataManager<Branch,String>, Serializable {
-
-	private static final long serialVersionUID = 1L;
 	private ArrayList<Branch> branchList;
 	private static DataManagerForBranch instance;
 	private final Serializer<Branch> serializer;

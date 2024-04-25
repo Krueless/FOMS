@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class Credit implements IPayment 
 {
+    private static final long serialVersionUID = 1L;
     private String name;  // Name of the payment method, default is "Mastercard"
 
     /**

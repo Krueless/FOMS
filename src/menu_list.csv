@@ -1,9 +1,9 @@
-Name,Price,Branch,Category
-FRIES,3.2,NTU,side
-3PC set meal,9.9,NTU,set meal
-CAJUN FISH,5.6,JP,burger
-COLE SLAW,2.7,JE,side
-3PC set meal,10.4,JE,set meal
-chicken nugget,6.9,JP,side
-chicken nugget,6.6,NTU,side
-pepsi,2.1,JE,drink
+FoodItemID,Name,Price,Branch,Category
+1,FRIES,3.2,NTU,side
+2,3PC set meal,9.9,NTU,set meal
+3,CAJUN FISH,5.6,JP,burger
+4,COLE SLAW,2.7,JE,side
+5,3PC set meal,10.4,JE,set meal
+6,chicken nugget,6.9,JP,side
+7,chicken nugget,6.6,NTU,side
+8,pepsi,2.1,JE,drink

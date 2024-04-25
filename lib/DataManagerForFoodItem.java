@@ -6,7 +6,6 @@ public class DataManagerForFoodItem implements IDataManager<FoodItem, Integer>, 
 
 	private ArrayList<FoodItem> foodItemList;
 	private static DataManagerForFoodItem instance;
-	private static final long serialVersionUID = 1L;
 	private final Serializer<FoodItem> serializer;
 
 	private DataManagerForFoodItem() {
@@ -26,7 +25,6 @@ public class DataManagerForFoodItem implements IDataManager<FoodItem, Integer>, 
 			foodItemList = serializer.deserialize();
 		}catch (IOException | ClassNotFoundException e){
 			System.out.println("Serialized file not found or invalid, initializing from CSV.");
-			e.printStackTrace();
 			foodItemList = new ArrayList<FoodItem>();
 			initializeFromCSV();
 		}
@@ -106,7 +104,7 @@ public class DataManagerForFoodItem implements IDataManager<FoodItem, Integer>, 
                 foodItemList.add(foodItem);
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("Error: CSV File not found");;
         }
 	}
 }
