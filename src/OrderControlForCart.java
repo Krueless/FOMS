@@ -13,10 +13,10 @@ public class OrderControlForCart {
      * @param branchName The name of the branch to fetch menu items from.
      * @return The updated order after adding the new item.
      */
-    public Order addToCart(Order order, IDataManager<FoodItem, Integer> foodItemDB) 
+    public Order addToCart(Order order, IDataManager<FoodItem, Integer> foodItemDB, String branchName) 
 	{
-        FoodItem foodItem = getFoodItem(foodItemDB);
-        System.out.println("Please input the number of food item you want");
+        FoodItem foodItem = getFoodItem(foodItemDB, branchName);
+        System.out.println("Please input the number of food item(s) you want");
         int quantity = getValidNumber();
         OrderedFoodItem orderedFoodItem = new OrderedFoodItem(foodItem, quantity);
         order.getCartItems().add(orderedFoodItem);
@@ -71,16 +71,21 @@ public class OrderControlForCart {
         return order;
     }
 
-	private FoodItem getFoodItem(IDataManager<FoodItem, Integer> foodItemDB)
+	private FoodItem getFoodItem(IDataManager<FoodItem, Integer> foodItemDB, String branchName)
 	{
         System.out.println("Please input the ID of the food item you want");
         int foodItemID = getValidNumber();
         FoodItem foodItem = foodItemDB.find(foodItemID);
 		if (foodItem == null)
 		{
-			System.out.println("Please choose a valid food item");
-			return getFoodItem(foodItemDB);
+			System.out.println("Please input a valid ID!");
+			return getFoodItem(foodItemDB, branchName);
 		}
+        if (!foodItem.getBranchName().equals(branchName))
+        {
+            System.out.println("Please input a valid ID!");
+            return getFoodItem(foodItemDB, branchName);
+        }
         return foodItem;
 	}
 	private int getValidNumber() {
