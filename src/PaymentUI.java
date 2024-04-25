@@ -28,7 +28,7 @@ public class PaymentUI {
     public void showPaymentOptions(Order order) {
         displayFormatter.displayAll(paymentDB.getAll()); //TIDO error checking
         System.out.println("Please choose which payment option you want.");
-        int choice = getValidNumber(order.getCartItems().size());
+        int choice = getValidNumber(paymentDB.getAll().size());
 		choosePaymentOption(order, choice);
     }
 

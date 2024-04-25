@@ -290,11 +290,11 @@ public class AdminForStaff implements IAdminForStaff{
         String branchName = sc.nextLine();
         Branch branch = branchDB.find(branchName);
 
-        if(branch != null){
+        if (branch != null){
             int numStaff = accountDB.countStaffInBranch(branchName);
             int numManager = accountDB.countManagerInBranch(branchName);
 
-            if (QuotaChecker.checkQuota(numStaff,numManager+1)){
+            if (QuotaChecker.checkQuota(numStaff, numManager+1)){
                 //add manager
                 accountDB.add(createStaff(branchName, "M"));
             }
@@ -316,7 +316,7 @@ public class AdminForStaff implements IAdminForStaff{
         accountDB = DataManagerForAccount.getInstance();
         Account account = getStaffFromUser();
         if(account != null){
-            if (account instanceof Staff){
+            if (!(account instanceof Manager || account instanceof Admin)){
                 Staff staffAccount = (Staff) account;//downcast to Staff
                 String branchName = staffAccount.getBranchName();
                 Branch branch = branchDB.find(branchName);
@@ -328,28 +328,32 @@ public class AdminForStaff implements IAdminForStaff{
                     if (QuotaChecker.checkQuota(numStaff-1,numManager+1)){
                         //create a new Manager object and copy all attributes of staff
                         DataManagerForOrder orderDB = DataManagerForOrder.getInstance();
-                                DisplayFilteredByBranch displayFilteredByBranch = new DisplayFilteredByBranch();
-                                DataManagerForFoodItem foodItemDB = DataManagerForFoodItem.getInstance();
-                                DataManagerForAccount accountDB = DataManagerForAccount.getInstance();
+                        DisplayFilteredByBranch displayFilteredByBranch = new DisplayFilteredByBranch();
+                        DataManagerForFoodItem foodItemDB = DataManagerForFoodItem.getInstance();
                         Manager managerAccount=new Manager(account.getName(),account.getStaffID(),"M",account.getGender(),account.getAge(),staffAccount.getBranchName(),orderDB,displayFilteredByBranch, foodItemDB, accountDB);
+                        managerAccount.setPassword(staffAccount.getPassword());
                             //delete the Staff object to the accountList in DataManagerForAccount
                         accountDB.delete(staffAccount);
                             //add the Manager object to the accountList in Data ManagerForAccount
                         accountDB.add(managerAccount);
-                    }else{
+                    }
+                    else{
                         System.out.println("Too many Managers in branch!");
                         System.out.println("Returning to user page...");
                     }
-                }else{
+                }
+                else {
                     System.out.println("Branch not found! Returning to user page...");
                 }
-            }else{
+            }
+            else {
                 System.out.println("Account is not a staff. Cannot be promoted to manager");
                 System.out.println("Returning to user page...");
             }
-	}else{
-		System.out.println("Account not found! Returning to user page...");
-	}
+        }
+        else {
+            System.out.println("Account not found! Returning to user page...");
+        }
     }
 
     /**
@@ -358,12 +362,15 @@ public class AdminForStaff implements IAdminForStaff{
     public void transferStaff(){
         accountDB = DataManagerForAccount.getInstance();
         //take in 2 branches and check if they both exist
-        System.out.println("Enter branch to transfer staff from");
+
+        System.out.println("Enter branch to transfer staff from:");
         String branchName1 = sc.nextLine();
         Branch branch1 = branchDB.find(branchName1);
-        System.out.println("Enter branch to transfer staff to");
+
+        System.out.println("Enter branch to transfer staff to:");
         String branchName2 = sc.nextLine();
         Branch branch2 = branchDB.find(branchName2);
+
         if(branch1 != null && branch2 != null){
             //check quota for both branches
             //only if true, can transfer staff
@@ -380,6 +387,7 @@ public class AdminForStaff implements IAdminForStaff{
             System.out.println("2. Transfer manager");
             String option = sc.nextLine();
             boolean validQuota = false;
+
             switch(option){
                 case "1":
                     validQuota = QuotaChecker.checkQuota(numStaff1-1,numManager1) && QuotaChecker.checkQuota(numStaff2+1,numManager2);
@@ -389,10 +397,9 @@ public class AdminForStaff implements IAdminForStaff{
                     break;
                 default:
                     System.out.println("Invalid option! Returning to user page...");
-                    sc.close();
                     return;
             }
-            if(validQuota){
+            if (validQuota){
                 //ask for details of staff to retrieve
                 System.out.println("Enter staffID");
                 String staffID = sc.nextLine();
