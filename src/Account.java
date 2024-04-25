@@ -98,4 +98,13 @@ public abstract class Account implements Serializable {
 		this.password = newPassword;
 	}
 
+	public String toString(){
+		String out = "Staff ID: " + staffID + ", Role: " + role + ", Gender: " + gender + ", Age: " + age + ", Name: " + name;
+		if (this instanceof Staff){
+			Staff staffAccount = (Staff) this;
+			out += ", Branch: " + staffAccount.getBranchName();
+		}
+		return out;
+	}
+
 }

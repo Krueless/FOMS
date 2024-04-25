@@ -1,6 +1,6 @@
 import java.io.Serializable;
 
-public class Branch implements Serializable{
+public class Branch implements Serializable {
     private static final long serialVersionUID = 1L;
 	private int staffQuota;
 	private String branchName;
@@ -14,7 +14,7 @@ public class Branch implements Serializable{
 	 */
 	public Branch(String branchName, String location, int staffQuota) {
 		this.branchName = branchName;
-        this.location = location;
+		this.location = location;
 		this.staffQuota = staffQuota;
 	}
 	
@@ -56,7 +56,7 @@ public class Branch implements Serializable{
 
 	public String toString(){
         String out;
-        out = "Branch Name: " + branchName + ", Location: " + location + ", Staff Quota: " + staffQuota;
+        out = "Branch Name: " + branchName + ", Location: " + location;
         return out;
     }
 	

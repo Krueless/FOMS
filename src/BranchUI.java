@@ -20,12 +20,7 @@ public class BranchUI {
 	}
 
 	public void showBranches() {
-		ArrayList<Branch> branchList = branchDB.getAll();
-		ArrayList<BranchForDisplay> displayBranchList = new ArrayList<>(branchList.size());
-		for (Branch item : branchList){
-			displayBranchList.add((BranchForDisplay) item);
-		}
-		displayFormatter.displayAll(displayBranchList);
+		displayFormatter.displayAll(branchDB.getAll());
 		System.out.println("Please key in the branch name which you would like to visit.");
 	}
 
