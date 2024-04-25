@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public interface IDisplayFilteredForAccount extends IDisplayFilteredByBranch {
+public interface IDisplayFilteredForAccount extends IDisplayFilteredByBranch{
 
 	/**
 	 * 

@@ -40,7 +40,6 @@ public class DataManagerForOrder implements IDataManager<Order, Integer> {
 		}catch (IOException | ClassNotFoundException e){
             System.out.println("Order: Serialized file not found or invalid, initialising new order list");
 			orderList = new ArrayList<Order>();
-            serializer.serialize(orderList);
 		}
 	}
 

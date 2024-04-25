@@ -21,6 +21,8 @@ public abstract class Account implements Serializable {
 	 * @param password
 	 */
 	public boolean validatePassword(String password) {
+        System.out.println(this.password);
+        System.out.println(password);
 		return this.password.equals(password);
 	}
 
