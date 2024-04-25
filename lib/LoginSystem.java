@@ -32,7 +32,7 @@ public class LoginSystem {
 				System.out.println("First login detected, please change your password.");
 				promptPasswordChange(acc);
 			} 
-			acc.showOptions();
+			acc.selectOptions();
 
 		}else{
 			System.out.println("The StaffID/password keyed in is incorrect.");
@@ -65,11 +65,13 @@ public class LoginSystem {
 		System.out.println("New password must be at least 8 characters long and different from default password.");
 		System.out.println("Enter new password: ");
 		String pwd = sc.nextLine();
-		if (pwControl.resetPassword(account, pwd))
+		if (pwControl.resetPassword(account, pwd)){
 			System.out.println("Password changed.");
-		else
-			System.out.println("Password requirement not met. Please try again.");
-			promptPasswordChange(account);
-	}
+        }
 
+		else{
+            System.out.println("Password requirement not met. Please try again.");
+			promptPasswordChange(account);
+        }
+	}
 }

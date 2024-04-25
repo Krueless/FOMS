@@ -1,4 +1,6 @@
-public interface IDisplay {
+import java.io.Serializable;
+
+public interface IDisplay extends Serializable{
 
 	/**
 	 * 

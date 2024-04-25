@@ -37,7 +37,7 @@ public class PasswordControl implements IPasswordControl {
      * @return True if the password was successfully reset, false otherwise.
      */
 	public Boolean resetPassword(Account account, String newPassword) {
-		if (newPassword.length() >= 8 && newPassword != "password"){
+		if (newPassword.length() >= 8 && !newPassword.equals("password")){
 			account.setPassword(newPassword);
 			accountDB.update(account);
 			return true;

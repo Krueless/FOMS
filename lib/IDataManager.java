@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.io.Serializable;
-public interface IDataManager<T1 extends Serializable, T2> {
+public interface IDataManager<T1 extends Serializable, T2> extends Serializable {
 
 	void update(T1 newT1);
 	void add(T1 t1);
