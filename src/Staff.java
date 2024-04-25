@@ -111,6 +111,15 @@ public class Staff extends Account implements IGetBranchName {
             System.out.println("Order ID must be number! Returning to user page...");
         }
 	}
+
+	/**
+	* Return attributes of Staff as String format
+ 	*/
+	public String toString(){
+        String out;
+        out = "Name: " + super.getName() + ", StaffID: " + super.getStaffID() + ", Role: " + super.getRole() + ", Gender: " + super.getGender() + ", Age: " + super.getAge() + ", Branch name: " + branchName;
+        return out;
+    }
 	/**
      * Allows the staff member to select options from menu.
      */
