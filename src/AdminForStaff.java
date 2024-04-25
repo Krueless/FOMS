@@ -6,14 +6,12 @@ public class AdminForStaff implements IAdminForStaff{
     private IDataManagerWithCount accountDB;
     private IDataManager<Branch, String> branchDB;
     private IDisplayFilteredForAccount displayFormatter;
-    private Scanner sc = GlobalResource.SCANNER;
+    private transient Scanner sc = GlobalResource.SCANNER;
 
 
     public AdminForStaff(){
         this.displayFormatter=new DisplayFilteredForAccount();
-        this.accountDB=DataManagerForAccount.getInstance();
         this.branchDB=DataManagerForBranch.getInstance();
-	
     }
     /**
      * Helper function to find the staff account based on user input for Staff ID
@@ -29,6 +27,7 @@ public class AdminForStaff implements IAdminForStaff{
      * Allows admin to edit the attributes in a staff account
      */
     public void editStaff(){
+        accountDB=DataManagerForAccount.getInstance();
         Account account = getStaffFromUser();
         Boolean exit = false;
         if (account != null){
@@ -82,6 +81,7 @@ public class AdminForStaff implements IAdminForStaff{
      * Allows admin to remove an existing staff account from the staff list
      */
     public void removeStaff(){
+        accountDB=DataManagerForAccount.getInstance();
 	    System.out.println("Enter branch to remove Staff from:");
         String branchName = sc.nextLine();
         Branch branch = branchDB.find(branchName);
@@ -144,6 +144,7 @@ public class AdminForStaff implements IAdminForStaff{
      * Allows admin to add a new staff account to the staff list
      */
     public void addStaff(){
+        accountDB = DataManagerForAccount.getInstance();
         displayFormatter.displayAll(branchDB.getAll());
 	    System.out.println("Enter the name of branch to assign Staff:");
     
@@ -177,6 +178,7 @@ public class AdminForStaff implements IAdminForStaff{
      * Allows admin to display the staff list with filters
      */
     public void displayStaff(){
+        accountDB = DataManagerForAccount.getInstance();
 		ArrayList<Account> accountList = accountDB.getAll();
         ArrayList<IGetBranchName> staffList = new ArrayList<>();
 
@@ -282,6 +284,7 @@ public class AdminForStaff implements IAdminForStaff{
      * Allows admin to assign Managers to a branch within the quota constraint
      */
     public void assignManager(){
+        accountDB = DataManagerForAccount.getInstance();
         displayFormatter.displayAll(branchDB.getAll());
         System.out.println("Enter the name of branch to assign Manager:");
         String branchName = sc.nextLine();
@@ -310,16 +313,19 @@ public class AdminForStaff implements IAdminForStaff{
      */
     public void promoteStaff(){
         //find the staff to be promoted
-       Account account = getStaffFromUser();
+        accountDB = DataManagerForAccount.getInstance();
+        Account account = getStaffFromUser();
         if(account != null){
-            if(account instanceof Staff){
-                Staff staffAccount = (Staff)account;//downcast to Staff
+            if (account instanceof Staff){
+                Staff staffAccount = (Staff) account;//downcast to Staff
                 String branchName = staffAccount.getBranchName();
                 Branch branch = branchDB.find(branchName);
+                
                 if(branch != null){
                     int numStaff = accountDB.countStaffInBranch(branchName);
                     int numManager = accountDB.countManagerInBranch(branchName);
-                    if(QuotaChecker.checkQuota(numStaff-1,numManager+1)){
+
+                    if (QuotaChecker.checkQuota(numStaff-1,numManager+1)){
                         //create a new Manager object and copy all attributes of staff
                         DataManagerForOrder orderDB = DataManagerForOrder.getInstance();
                                 DisplayFilteredByBranch displayFilteredByBranch = new DisplayFilteredByBranch();
@@ -350,7 +356,7 @@ public class AdminForStaff implements IAdminForStaff{
      * Allows admin to transfer a Staff/Manager between branches
      */
     public void transferStaff(){
-        Scanner sc = GlobalResource.SCANNER;
+        accountDB = DataManagerForAccount.getInstance();
         //take in 2 branches and check if they both exist
         System.out.println("Enter branch to transfer staff from");
         String branchName1 = sc.nextLine();
