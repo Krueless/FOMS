@@ -41,6 +41,9 @@ public class Online implements IPayment {
         this.name = name;
     }
 
+    public String toString(){
+        return getClass().getSimpleName() + " " + name;
+    }
     /**
      * Processes the payment for an order by simulating a PayNow QR code scan.
      * It displays the total cost and simulates a payment confirmation after a delay.
@@ -65,7 +68,7 @@ public class Online implements IPayment {
         }
         System.out.println("Total: $" + String.format("%.2f", totalCost));
 
-        System.out.println("Please scan the PayNow QR Code below for payment");
+        System.out.println("Please scan the QR Code below for payment");
         System.out.println("Simulating payment...");
         try {
             Thread.sleep(3000);

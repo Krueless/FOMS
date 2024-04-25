@@ -45,6 +45,10 @@ public class Credit implements IPayment
         this.name = name;
     }
 
+    public String toString(){
+        return getClass().getSimpleName() + " " + name;
+    }
+
     /**
      * Processes the payment for an order by asking the user to enter their credit card details.
      * This method simulates the process of a credit card transaction by taking input from the user
@@ -111,16 +115,5 @@ public class Credit implements IPayment
         }
         System.out.println("Total: $" + String.format("%.2f", totalCost));
         System.out.println("Order " + order.getOrderID() + " paid on " + formattedDateTime);
-    }
-
-    /**
-     * Returns a string representation of the {@code Credit} object, including the class name and payment method name.
-     *
-     * @return A string representing the {@code Credit} object, which includes the class name and the name of the payment method.
-     */
-    @Override
-    public String toString() 
-	{
-        return this.name + " " + getClass().getSimpleName();
     }
 }

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 public class AdminForPayment implements IAdminForPayment{
 	private IDataManager<IPayment, String> paymentDB;
@@ -5,49 +6,58 @@ public class AdminForPayment implements IAdminForPayment{
      * Allows admin to add a new payment method
      */
 	public void addPaymentMethod(){
-        this.paymentDB=DataManagerForPayment.getInstance();
+        paymentDB=DataManagerForPayment.getInstance();
 	    Scanner sc = GlobalResource.SCANNER;
-		String choice;
-		String name;
-		IPayment paymentMode;
-	    try{
-			System.out.println("Select option");
-	    	System.out.println("1.Online");
-	    	System.out.println("2.Credit");
+		String choice = "-1";
+
+        while (!choice.equals("1") && !choice.equals("2")) {
+            System.out.println("Select option");
+	    	System.out.println("(1) Online");
+	    	System.out.println("(2) Credit");
 		    choice = sc.nextLine();
-		    System.out.println("Enter name of new payment method");
-		    name = sc.nextLine();
-			switch (choice){
-				case "1":
-				paymentMode = new Online(name);
-				break;
-				case "2":
-				paymentMode = new Credit(name);
-				break;
-				default:
-				System.out.println("Invalid payment option");
-			    System.out.println("Returning to user page...");
-				return;
-			}
-		    paymentDB.add(paymentMode);
-	    }catch (Exception e){
-	            System.out.println("Choice of payment type must be number! Returning to user page...");
-	    }
+            if (!choice.equals("1") && !choice.equals("2"))
+                System.out.println("Invalid option. Try again!");
+        }
+        System.out.println("Enter the name of new payment method:");
+        String name = sc.nextLine();
+        IPayment payment = paymentDB.find(name);
+        if (payment == null){
+            switch (choice){
+                case "1":
+                    paymentDB.add(new Online(name));
+                    break;
+                case "2":
+                    paymentDB.add(new Credit(name));
+                    break;
+                default:
+                    break;
+            }
+        }else{
+            System.out.println("Payment already exist!");
+        }
+        System.out.println("Returning to user page...");
 	}
 	
     /**
      * Allows admin to remove an existing payment method
      */
 	public void removePaymentMethod(){
-        this.paymentDB=DataManagerForPayment.getInstance();
+        paymentDB=DataManagerForPayment.getInstance();
 		Scanner sc = GlobalResource.SCANNER;
-		System.out.println("Enter the payment method to remove");
-		String paymentName = sc.nextLine();
-		IPayment paymentMethod=paymentDB.find(paymentName);
-		if(paymentMethod != null){
-			paymentDB.delete(paymentMethod);
-		}else{
-			System.out.println("Payment method not found! Returning to user page...");
-		}
+        Display displayFormatter = new Display();
+        ArrayList<IPayment> paymentList = paymentDB.getAll();
+        if (paymentList.size() > 0){
+            displayFormatter.displayAll(paymentList);
+            System.out.println("Enter the name of payment method to be removed (case-senstive):");
+            String paymentName = sc.nextLine();
+            IPayment paymentMethod = paymentDB.find(paymentName);
+            if(paymentMethod != null){
+                paymentDB.delete(paymentMethod);
+            }else{
+                System.out.println("Payment method not found! Returning to user page...");
+            }
+        }else{
+            System.out.println("No payment methods to remove! Returning to user page...");
+        }
 	}
 }

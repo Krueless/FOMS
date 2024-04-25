@@ -20,5 +20,8 @@ public interface IPayment extends Serializable {
      * such as items purchased and total cost.
      */
     void printReceipt(Order order);
+
     String getName();
+
+    public void setName(String name);
 }
