@@ -39,7 +39,6 @@ public class LoginSystem {
 			System.out.println("Directing to login page.");
 			showLoginPage();
 		}
-		throw new UnsupportedOperationException();
 	}
 
     /**

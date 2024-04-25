@@ -11,27 +11,33 @@ public class AdminForBranch implements IAdminForBranch{
 	public void openBranch(){
 		//obtain the attributes for the new branch
 		Scanner sc = GlobalResource.SCANNER;
-		System.out.println("Enter the staff quota");
-		try{
-			int staffQuota = sc.nextInt();
-            sc.nextLine();
-			System.out.println("Enter the branch name");
-			String branchName = sc.nextLine();
-			while(branchDB.find(branchName)!=null){
-				System.out.println("A branch with this name already exists");
-				System.out.println("Enter a new branch name");
-				branchName = sc.nextLine();
-			}
-			System.out.println("Enter the location");
-			String location = sc.nextLine();
-			//create a new branch object
-			Branch branch = new Branch(branchName,location,staffQuota);
-			//add the new Branch object to branchList in DataManagerForBranch
-			branchDB.add(branch);
-		}catch(Exception e){
-			System.out.println("Staff quota must be number! Returning to user page...");
-            sc.nextLine();
-		}
+        int staffQuota = -1;
+        while (staffQuota < 1 || staffQuota > 15) {
+            System.out.println("Enter the staff quota (Between 1-15):");
+            if (sc.hasNextInt()) {  // Check if the next token is an integer
+                staffQuota = sc.nextInt();  // Read the integer
+                if (staffQuota < 1 || staffQuota > 15) {
+                    System.out.println("Invalid input: Quota must be between 1 and 15.");
+                }
+            } else {
+                System.out.println("Invalid input: Please enter a number.");
+                sc.nextLine();  
+            }
+        }
+        sc.nextLine();
+        System.out.println("Enter the branch name:");
+        String branchName = sc.nextLine();
+        while(branchDB.find(branchName)!=null){
+            System.out.println("A branch with this name already exists");
+            System.out.println("Enter a new branch name:");
+            branchName = sc.nextLine();
+        }
+        System.out.println("Enter the location:");
+        String location = sc.nextLine();
+        //create a new branch object
+        Branch branch = new Branch(branchName,location,staffQuota);
+        //add the new Branch object to branchList in DataManagerForBranch
+        branchDB.add(branch);
 	}
 	
     /**
@@ -41,7 +47,7 @@ public class AdminForBranch implements IAdminForBranch{
 		Scanner sc = GlobalResource.SCANNER;
         IDisplay displayFormatter = new Display();
         displayFormatter.displayAll(branchDB.getAll());;
-		System.out.println("Enter the branch to be closed");
+		System.out.println("Enter the name of the branch to be closed:");
 		String branchName = sc.nextLine();
 		Branch branch = branchDB.find(branchName);//find the branch
 		if(branch != null){
@@ -49,6 +55,5 @@ public class AdminForBranch implements IAdminForBranch{
 		}else{
 			System.out.println("Branch not found! Returning to user page...");
 		}
-		sc.close();
 	}
 }
