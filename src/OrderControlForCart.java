@@ -31,7 +31,7 @@ public class OrderControlForCart {
      * @return The updated order after removing the selected item.
      */
     public Order removeFromCart(Order order, IDisplayFilteredByBranch displayFormatter) {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc =  GlobalResource.SCANNER;
         displayFormatter.displayAll(order.getCartItems());
         System.out.println((order.getCartItems().size() + 1) + " Quit");
         System.out.println("Please choose which item number you wish to remove");
@@ -40,13 +40,11 @@ public class OrderControlForCart {
 
         if (index == order.getCartItems().size() + 1) {
             System.out.println("Going back to Customer Interface");
-            sc.close();
 			return null;
         } else {
             order.getCartItems().remove(index);
         }
 		System.out.println("Item successfully removed from cart!");
-        sc.close();
         return order;
     }
 
@@ -58,7 +56,7 @@ public class OrderControlForCart {
      * @return The updated order after changing the quantity of the selected item.
      */
     public Order editCart(Order order, IDisplay displayFormatter) {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc =  GlobalResource.SCANNER;
         displayFormatter.displayAll(order.getCartItems());
 
         System.out.println((order.getCartItems().size() + 1) + " Quit");
@@ -66,7 +64,6 @@ public class OrderControlForCart {
         int index = getValidNumber(order.getCartItems().size() + 1);
         if (index == order.getCartItems().size() + 1) {
             System.out.println("Going back to Customer Interface");
-            sc.close();
 			return null;
         } else {
             System.out.println("Please input what quantity you want to change it to");
@@ -75,7 +72,6 @@ public class OrderControlForCart {
             item.setQuantity(newQuantity);
 			order.getCartItems().set(index,item);
         }
-        sc.close();
         return order;
     }
 
@@ -93,45 +89,39 @@ public class OrderControlForCart {
 	}
 	private int getValidNumber()
 	{
-        Scanner sc = new Scanner(System.in);
+        Scanner sc =  GlobalResource.SCANNER;
 		System.out.println("Please input how many you want");
         int quantity = -1;
 		try {
             quantity = sc.nextInt();
         } catch (Exception e) {
             System.out.println("Please input a valid integer");
-            sc.close();
 			return getValidNumber();
         }
 		if (quantity<=0)
 		{
 			System.out.println("Please input a positive number!");
-            sc.close();
 			return getValidNumber();
 		}
-        sc.close();
 		return quantity;
 	}
 
 	private int getValidNumber(int max)
 	{
-        Scanner sc = new Scanner(System.in);
+        Scanner sc =  GlobalResource.SCANNER;
 		System.out.println("Please input how many you want");
         int quantity = -1;
 		try {
             quantity = sc.nextInt();
         } catch (Exception e) {
             System.out.println("Please input a valid integer");
-            sc.close();
 			return getValidNumber();
         }
 		if (quantity<=0 || quantity > max)
 		{
 			System.out.println("Please input a valid number!");
-            sc.close();
 			return getValidNumber(max);
 		}
-        sc.close();
 		return quantity;
 	}
 }

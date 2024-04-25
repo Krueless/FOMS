@@ -56,23 +56,20 @@ public class OrderControlForCheckout {
 
 	private int getValidNumber()
 	{
-        Scanner sc = new Scanner(System.in);
+        Scanner sc =  GlobalResource.SCANNER;
 		System.out.println("Please input how many you want");
         int number = -1;
 		try {
             number = sc.nextInt();
         } catch (Exception e) {
             System.out.println("Please input a valid number!");
-            sc.close();
 			return getValidNumber();
         }
 		if (number != 0 || number != 1)
 		{
 			System.out.println("Please input a valid number!");
-            sc.close();
 			return getValidNumber();
 		}
-        sc.close();
 		return number;
 	}
 }

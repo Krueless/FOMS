@@ -55,7 +55,7 @@ public class Credit implements IPayment
      * @return {@code true} if the payment was processed successfully, {@code false} otherwise.
      */
     public boolean processPayment(Order order) {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = GlobalResource.SCANNER;
 		// Retrieve items in the order
         ArrayList<OrderedFoodItem> cartItems = order.getCartItems(); 
 		// Initialize total cost
@@ -86,7 +86,6 @@ public class Credit implements IPayment
 			return processPayment(order);
 		}
 
-        sc.close();
 		printReceipt(order);    
         return true; 
     }
