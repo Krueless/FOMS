@@ -11,7 +11,7 @@ public class DisplayFilteredForAccount implements IDisplayFilteredForAccount {
             @SuppressWarnings("unchecked")
             ArrayList<Object> array = (ArrayList<Object>) data;
             for (int i = 0; i < array.size(); i++){
-                System.out.println(i+1 +": " + array.get(i).toString());
+                System.out.println(i+1 +") " + array.get(i).toString());
             }
         }
 	}
@@ -26,7 +26,7 @@ public class DisplayFilteredForAccount implements IDisplayFilteredForAccount {
 		for (int i = 0; i < data.size(); i++){
 			if (!(data.get(i) instanceof Admin)){
 				if (data.get(i).getBranchName().compareTo(branchName) == 0){
-					System.out.println(j +": " + data.get(i).toString());
+					System.out.println(j +") " + data.get(i).toString());
 					j++ ;
 				}
 			}
@@ -44,7 +44,7 @@ public class DisplayFilteredForAccount implements IDisplayFilteredForAccount {
 		int j = 1 ;
         for (Account account: data){
             if (account.getRole().compareTo(role) == 0){
-                System.out.println(j + ": " + account.toString());
+                System.out.println(j + ") " + account.toString());
                 j++ ;
             }
         }
@@ -59,7 +59,7 @@ public class DisplayFilteredForAccount implements IDisplayFilteredForAccount {
 		int j = 1 ;
         for (Account account: data){
             if (account.getGender().compareTo(gender) == 0){
-                System.out.println(j + ": " + account.toString());
+                System.out.println(j + ") " + account.toString());
                 j++ ;
             }
         }
@@ -74,7 +74,7 @@ public class DisplayFilteredForAccount implements IDisplayFilteredForAccount {
 		int j = 1 ;
         for (Account account: data){
             if (account.getAge() == age){
-                System.out.println(j + ": " + account.toString());
+                System.out.println(j + ") " + account.toString());
                 j++ ;
             }
         }

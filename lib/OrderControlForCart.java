@@ -82,7 +82,7 @@ public class OrderControlForCart {
 
 	private FoodItem getFoodItem(IDataManager<FoodItem, Integer> foodItemDB)
 	{
-        System.out.println("Please input the name of the food item you want");
+        System.out.println("Please input the ID of the food item you want");
         int foodItemID = getValidNumber();
         FoodItem foodItem = foodItemDB.find(foodItemID);
 		if (foodItem == null)
