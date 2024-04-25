@@ -24,7 +24,7 @@ public class DataManagerForBranch implements IDataManager<Branch,String>{
 		try{
 			branchList = serializer.deserialize();
 		}catch (IOException | ClassNotFoundException e){
-			System.out.println("Serialized file not found or invalid, initialising from CSV.");
+			System.out.println("Branch: Serialized file not found or invalid, initialising from CSV.");
 			branchList = new ArrayList<Branch>();
 			initializeFromCSV();
 		}

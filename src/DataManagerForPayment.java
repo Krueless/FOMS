@@ -20,7 +20,7 @@ public class DataManagerForPayment implements IDataManager<IPayment, String>
     private DataManagerForPayment() 
 	{
 		paymentList = new ArrayList<>();
-	    serializer = new Serializer<IPayment>("../src/paymentMethods.ser");
+	    serializer = new Serializer<IPayment>("../data/paymentMethods.ser");
 		loadData();
     }
 
@@ -46,8 +46,7 @@ public class DataManagerForPayment implements IDataManager<IPayment, String>
 		}
 		catch (IOException | ClassNotFoundException e)
 		{
-			System.out.println("Serialized file not found or invalid, initializing from CSV.");
-			e.printStackTrace();
+			System.out.println("Payment: Serialized file not found or invalid, initializing from CSV.");
 			paymentList = new ArrayList<IPayment>();
 			initializeFromCSV();
 		}
@@ -56,7 +55,7 @@ public class DataManagerForPayment implements IDataManager<IPayment, String>
 	private void initializeFromCSV() 
 	{
 	
-		File f = new File("../src/payment_list.csv");
+		File f = new File("../data/payment_list.csv");
 		try{
 			Scanner sc = new Scanner(f);
 			while (sc.hasNextLine()) {
@@ -79,7 +78,6 @@ public class DataManagerForPayment implements IDataManager<IPayment, String>
 			sc.close();
 		}catch (FileNotFoundException e){
 			System.out.println("Error: CSV File not found");
-			e.printStackTrace();
 		}
        
     }

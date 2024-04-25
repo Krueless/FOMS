@@ -2,14 +2,14 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class DataManagerForFoodItem implements IDataManager<FoodItem, Integer>, Serializable {
+public class DataManagerForFoodItem implements IDataManager<FoodItem, Integer>{
 
 	private ArrayList<FoodItem> foodItemList;
 	private static DataManagerForFoodItem instance;
 	private final Serializer<FoodItem> serializer;
 
 	private DataManagerForFoodItem() {
-        serializer = new Serializer<FoodItem>("../src/foodItemData.ser");
+        serializer = new Serializer<FoodItem>("../data/foodItemData.ser");
         loadData();
 	}
 
@@ -24,7 +24,7 @@ public class DataManagerForFoodItem implements IDataManager<FoodItem, Integer>, 
         try{
 			foodItemList = serializer.deserialize();
 		}catch (IOException | ClassNotFoundException e){
-			System.out.println("Serialized file not found or invalid, initialising from CSV.");
+			System.out.println("FoodItem: Serialized file not found or invalid, initialising from CSV.");
 			foodItemList = new ArrayList<FoodItem>();
 			initializeFromCSV();
 		}
@@ -92,7 +92,7 @@ public class DataManagerForFoodItem implements IDataManager<FoodItem, Integer>, 
 
     // Method to read CSV and initialize data
     private void initializeFromCSV() {
-        File f = new File("../src/menu_list.csv");
+        File f = new File("../data/menu_list.csv");
         try (Scanner scanner = new Scanner(f)) {
             scanner.nextLine();
             while (scanner.hasNextLine()) {
