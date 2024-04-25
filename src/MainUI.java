@@ -10,10 +10,12 @@ public class MainUI {
      * Displays options to the user and handles user input to navigate system as customer or staff.
      */
     public void showOptions() {
+        System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''");
         System.out.println("Fastfood Ordering and Management System (FOMS)");
         System.out.println("Please select one of the following options.");
-        System.out.println("1. Customer");
-        System.out.println("2. Sign in as Staff");
+        System.out.println("(1) Customer");
+        System.out.println("(2) Sign in as Staff");
+        System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''");
     }
 
     /**
