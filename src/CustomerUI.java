@@ -9,7 +9,7 @@ public class CustomerUI {
 		DataManagerForOrder orderDB = DataManagerForOrder.getInstance();
 		DataManagerForFoodItem foodItemDB = DataManagerForFoodItem.getInstance();
 		DisplayFilteredByBranch displayformatter = new DisplayFilteredByBranch();
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = GlobalResource.SCANNER;
         boolean valid = false;
         OrderControl control;
         while (!valid) {
@@ -18,7 +18,7 @@ public class CustomerUI {
                 System.out.println("1. Dine-in");
                 System.out.println("2. Takeaway");
                 String option = sc.nextLine();
-                
+                Order newOrder;
                 switch (option) {
                     case "1": //Dine-in
                         valid = true;
@@ -43,7 +43,6 @@ public class CustomerUI {
                 System.out.println("Please try again.\n");
             }
         }
-        sc.close();
 	}
 
 	/**

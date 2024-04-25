@@ -15,8 +15,8 @@ public class OrderControlForCart {
      */
     public Order addToCart(Order order, IDataManager<FoodItem, Integer> foodItemDB) 
 	{
-		FoodItem foodItem = getFoodItem(foodItemDB);
-        System.out.println("Please input how many you want to add.");
+        FoodItem foodItem = getFoodItem(foodItemDB);
+        System.out.println("Please input the number of food item you want");
         int quantity = getValidNumber();
         OrderedFoodItem orderedFoodItem = new OrderedFoodItem(foodItem, quantity);
         order.getCartItems().add(orderedFoodItem);
@@ -32,7 +32,7 @@ public class OrderControlForCart {
      * @return The updated order after removing the selected item.
      */
     public Order removeFromCart(Order order, IDisplayFilteredByBranch displayFormatter) {
-        Scanner sc =  GlobalResource.SCANNER;
+        Scanner sc = new Scanner(System.in);
         displayFormatter.displayAll(order.getCartItems());
         System.out.println((order.getCartItems().size() + 1) + " Quit");
         System.out.println("Please choose which item number you wish to remove");
@@ -41,11 +41,13 @@ public class OrderControlForCart {
 
         if (index == order.getCartItems().size() + 1) {
             System.out.println("Going back to Customer Interface");
+            sc.close();
 			return null;
         } else {
             order.getCartItems().remove(index);
         }
 		System.out.println("Item successfully removed from cart!");
+        sc.close();
         return order;
     }
 
@@ -57,7 +59,7 @@ public class OrderControlForCart {
      * @return The updated order after changing the quantity of the selected item.
      */
     public Order editCart(Order order, IDisplay displayFormatter) {
-        Scanner sc =  GlobalResource.SCANNER;
+        Scanner sc = new Scanner(System.in);
         displayFormatter.displayAll(order.getCartItems());
 
         System.out.println((order.getCartItems().size() + 1) + " Quit");
@@ -65,6 +67,7 @@ public class OrderControlForCart {
         int index = getValidNumber(order.getCartItems().size() + 1);
         if (index == order.getCartItems().size() + 1) {
             System.out.println("Going back to Customer Interface");
+            sc.close();
 			return null;
         } else {
             System.out.println("Please input what quantity you want to change it to");
@@ -73,6 +76,7 @@ public class OrderControlForCart {
             item.setQuantity(newQuantity);
 			order.getCartItems().set(index,item);
         }
+        sc.close();
         return order;
     }
 
@@ -99,7 +103,7 @@ public class OrderControlForCart {
                     System.out.println("Please input a positive number!");
                 }
             } catch (Exception e) {
-                sc.nextLine(); // consume the invalid input to avoid infinite loop
+                sc.nextLine(); 
                 System.out.println("Please input a valid integer");
             }
         }
@@ -117,7 +121,7 @@ public class OrderControlForCart {
                     System.out.println("Please input a number between 1 and " + max + "!");
                 }
             } catch (Exception e) {
-                sc.nextLine(); // consume the invalid input
+                sc.nextLine(); // 
                 System.out.println("Please input a valid integer");
             }
         }

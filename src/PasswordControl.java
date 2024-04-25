@@ -23,6 +23,7 @@ public class PasswordControl implements IPasswordControl {
      */
 	public Account validate(String staffID, String inputPassword) {
 		Account acc = accountDB.find(staffID);
+        acc.getAge();
 		if (acc != null && acc.validatePassword(inputPassword)) 
 			return acc;
 		else 
@@ -53,7 +54,7 @@ public class PasswordControl implements IPasswordControl {
      * @return True if it's the first login and password change is required, otherwise false.
      */
 	public Boolean checkFirstLogin(Account account) {
-		return account.getPassword() == "password";
+		return account.getPassword().equals("password");
 	}
 
 }

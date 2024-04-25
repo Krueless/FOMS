@@ -69,7 +69,7 @@ public class OrderControl {
      * Processes user input to choose an option and perform the corresponding action.
      */
     public void chooseOptions() {
-        Scanner sc =  GlobalResource.SCANNER;
+        Scanner sc = GlobalResource.SCANNER;
 		boolean quit = false;
 		while (!quit)
 		{
@@ -78,6 +78,7 @@ public class OrderControl {
 				choice = sc.nextInt();
 			} catch (Exception e) {
 				System.out.println("You did not enter a valid number");
+                sc.close();
 				chooseOptions();
                 return;
 			}
