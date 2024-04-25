@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class BranchUI {
 
@@ -19,7 +20,12 @@ public class BranchUI {
 	}
 
 	public void showBranches() {
-		displayFormatter.displayAll(branchDB.getAll());
+		ArrayList<Branch> branchList = branchDB.getAll();
+		ArrayList<BranchForDisplay> displayBranchList = new ArrayList<>(branchList.size());
+		for (Branch item : branchList){
+			displayBranchList.add((BranchForDisplay) item);
+		}
+		displayFormatter.displayAll(displayBranchList);
 		System.out.println("Please key in the branch name which you would like to visit.");
 	}
 
@@ -32,7 +38,7 @@ public class BranchUI {
 		this.branchDB = branchDB;
         	this.displayFormatter = displayFormatter;
         	boolean keep_asking = true;
-        	Scanner sc = new Scanner(System.in);
+        	Scanner sc = GlobalResource.SCANNER;
         	while (keep_asking){
 				showBranches();
 				String branchName = sc.nextLine();
