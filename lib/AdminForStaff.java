@@ -9,20 +9,20 @@ public class AdminForStaff implements IAdminForStaff{
 
 
     public AdminForStaff(){
-        this.accountDB=DataManagerForAccount.getInstance();
-        this.branchDB=DataManagerForBranch.getInstance();
-        this.displayFormatter=new DisplayFilteredForAccount();
+        this.accountDB = DataManagerForAccount.getInstance();
+        this.branchDB = DataManagerForBranch.getInstance();
+        this.displayFormatter = new DisplayFilteredForAccount();
 	
     }
     /**
      * Allows admin to edit the attributes in a staff account
      */
     public void editStaff(){
-        Scanner sc=new Scanner(System.in);
+        Scanner sc = GlobalResource.SCANNER;
         System.out.println("Enter the staffID");
-        String staffID=sc.nextLine();
+        String staffID = sc.nextLine();
        
-        Account account=accountDB.find(staffID);
+        Account account = accountDB.find(staffID);
         Boolean exit = false;
         if (account != null){
             String choice;
@@ -33,26 +33,26 @@ public class AdminForStaff implements IAdminForStaff{
                 System.out.println("3. Age");
                 System.out.println("4. Password");
                 System.out.println("5. Exit");
-                choice=sc.nextLine();
+                choice = sc.nextLine();
                 switch(choice){
                     case "1":
                         System.out.println("Enter new name:");
-                        String name=sc.nextLine();
+                        String name = sc.nextLine();
                         account.setName(name);
                         break;
                     case "2":
                         System.out.println("Enter new gender:");
-                        String gender=sc.nextLine();
+                        String gender = sc.nextLine();
                         account.setGender(gender);
                         break;
                     case "3":
                         System.out.println("Enter new age:");
-                        int age=sc.nextInt();
+                        int age = sc.nextInt();
                         account.setAge(age);
                         break;
                     case "4":
                         System.out.println("Enter new password:");
-                        String password=sc.nextLine();
+                        String password = sc.nextLine();
                         account.setPassword(password);
                         break;
                     case "5":
@@ -68,23 +68,22 @@ public class AdminForStaff implements IAdminForStaff{
         }else{
             System.out.println("Account not found! Returning to user page...");
         }
-        sc.close();
     }
 	
     /**
      * Allows admin to remove an existing staff account from the staff list
      */
     public void removeStaff(){
-        Scanner sc=new Scanner(System.in);
+        Scanner sc = GlobalResource.SCANNER;
 	System.out.println("Enter branch to remove Staff:");
-        String branchName=sc.nextLine();
+        String branchName = sc.nextLine();
         Branch branch = branchDB.find(branchName);
         if (branch != null){
             int numManager = accountDB.countManagerInBranch(branchName);
             int numStaff = accountDB.countStaffInBranch(branchName);
             if (QuotaChecker.checkQuota(numStaff-1, numManager)){
 	        System.out.println("Enter the staffID");
-	        String staffID=sc.nextLine();
+	        String staffID = sc.nextLine();
 	        Account staffAccount=accountDB.find(staffID);
 	        if (staffAccount != null){
 	            accountDB.delete(staffAccount);
@@ -98,16 +97,15 @@ public class AdminForStaff implements IAdminForStaff{
         }else{
             System.out.println("Branch not found! Returning to user page...");
         }
-        sc.close();
     }
 
      /**
      * Allows admin to add a new staff account to the staff list
      */
     public void addStaff(){
-        Scanner sc=new Scanner(System.in);
+        Scanner sc = GlobalResource.SCANNER;
 	    System.out.println("Enter branch to assign Staff:");
-        String branchName=sc.nextLine();
+        String branchName = sc.nextLine();
         Branch branch = branchDB.find(branchName);
         if (branch != null){
             int numStaff = accountDB.countStaffInBranch(branchName);
@@ -118,19 +116,19 @@ public class AdminForStaff implements IAdminForStaff{
                     String name = sc.nextLine();
                     System.out.println("Enter staffID:");
                     String staffID=sc.nextLine();
-		    while(accountDB.find(staffID)!=null){
+		    while(accountDB.find(staffID)!= null){
 			    System.out.println("Staff ID already exists");
 			    System.out.println("Enter staffID");
 			    staffID=sc.nextLine();
 		    }
-                    String role="S";
+                    String role = "S";
                     System.out.println("Enter gender:");
-                    String gender=sc.nextLine();
+                    String gender = sc.nextLine();
                     System.out.println("Enter age:");
-                    int age=sc.nextInt();
+                    int age = sc.nextInt();
                     DataManagerForOrder orderDB = DataManagerForOrder.getInstance();
                     DisplayFilteredByBranch displayFormatter = new DisplayFilteredByBranch();
-                    Staff staffAccount=new Staff(name,staffID,role,gender,age,branchName, orderDB, displayFormatter);
+                    Staff staffAccount = new Staff(name,staffID,role,gender,age,branchName, orderDB, displayFormatter);
                     accountDB.add(staffAccount);
                 }else{
                     System.out.println("Not enough Managers in branch. Failed to add staff! ");
@@ -144,14 +142,13 @@ public class AdminForStaff implements IAdminForStaff{
         }else{
             System.out.println("Branch not found! Returning to user page...");
         }
-        sc.close();
     }
 
     /**
      * Allows admin to display the staff list with filters
      */
     public void displayStaff(){
-        Scanner sc=new Scanner(System.in);
+        Scanner sc = GlobalResource.SCANNER;
 		ArrayList<Account> accountList = accountDB.getAll();
         ArrayList<IGetBranchName> staffList = new ArrayList<>();
 		for (Account item: accountList){
@@ -186,7 +183,7 @@ public class AdminForStaff implements IAdminForStaff{
 		                System.out.println("1. Admin");
 		                System.out.println("2. Manager");
 		                System.out.println("3. Staff");
-				String role=sc.nextLine();
+				String role = sc.nextLine();
 				switch(role){
 					case "1":
 						displayFormatter.displayFilteredByRole(accountList,"A");
@@ -206,7 +203,7 @@ public class AdminForStaff implements IAdminForStaff{
 				System.out.println("Choose gender to display");
 		                System.out.println("1. Male");
 		                System.out.println("2. Female");
-				String gender=sc.nextLine();
+				String gender = sc.nextLine();
 				switch(gender){
 					case "1":
 						displayFormatter.displayFilteredByGender(accountList,"M");
@@ -222,7 +219,7 @@ public class AdminForStaff implements IAdminForStaff{
 		            case "4":
 				System.out.println("Choose age to display");
 				try{
-					int age=sc.nextInt();
+					int age = sc.nextInt();
 			                displayFormatter.displayFilteredByAge(accountList,age);
 				}catch(InputMismatchException e){
 					System.out.println("Age must be a number.");
@@ -238,41 +235,40 @@ public class AdminForStaff implements IAdminForStaff{
 		                break;
 		        }
 		}while(!exit);
-        sc.close();
     }
 
     /**
      * Allows admin to assign Managers to a branch within the quota constraint
      */
     public void assignManager(){
-        Scanner sc=new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
         System.out.println("Enter the branch to assign Manager");
-        String branchName=sc.nextLine();
-	Branch branch=branchDB.find(branchName);
-	if(branch!=null){
-		int numStaff=accountDB.countStaffInBranch(branchName);
-		int numManager=accountDB.countManagerInBranch(branchName);
+        String branchName = sc.nextLine();
+	Branch branch = branchDB.find(branchName);
+	if(branch != null){
+		int numStaff = accountDB.countStaffInBranch(branchName);
+		int numManager = accountDB.countManagerInBranch(branchName);
 		if(QuotaChecker.checkQuota(numStaff,numManager+1)){
 			//add manager
 		        System.out.println("Enter name");
 		        String name = sc.nextLine();
 	                System.out.println("Enter staffID");
-	                String staffID=sc.nextLine();
-			while(accountDB.find(staffID)!=null){
+	                String staffID = sc.nextLine();
+			while(accountDB.find(staffID) != null){
 				System.out.println("Staff ID already exists");
 				System.out.println("Enter staffID");
-				staffID=sc.nextLine();
+				staffID = sc.nextLine();
 			}
-	                String role="M";
+	                String role = "M";
 	                System.out.println("Enter gender");
-	                String gender=sc.nextLine();
+	                String gender = sc.nextLine();
 	                System.out.println("Enter age");
-	                int age=sc.nextInt();
+	                int age = sc.nextInt();
 	                DataManagerForOrder orderDB = DataManagerForOrder.getInstance();
 	                DisplayFilteredByBranch displayFilteredByBranch = new DisplayFilteredByBranch();
 	                DataManagerForFoodItem foodItemDB = DataManagerForFoodItem.getInstance();
 	                DataManagerForAccount accountDB = DataManagerForAccount.getInstance();
-	                Manager managerAccount=new Manager(name,staffID,role,gender,age,branchName, orderDB, displayFilteredByBranch, foodItemDB, accountDB);
+	                Manager managerAccount = new Manager(name,staffID,role,gender,age,branchName, orderDB, displayFilteredByBranch, foodItemDB, accountDB);
 	                accountDB.add(managerAccount);
 		}else{
 			System.out.println("Too many Managers in branch! ");
@@ -288,19 +284,19 @@ public class AdminForStaff implements IAdminForStaff{
      * Allows admin to promote a staff to branch manager
      */
     public void promoteStaff(){
-        Scanner sc=new Scanner(System.in);
+        Scanner sc = GlobalResource.SCANNER;
         //find the staff to be promoted
         System.out.println("Enter staffID");
-        String staffID=sc.nextLine();
-        Account account=accountDB.find(staffID);
-	if(account!=null){
+        String staffID = sc.nextLine();
+        Account account = accountDB.find(staffID);
+	if(account != null){
 		if(account instanceof Staff){
-			Staff staffAccount=(Staff)account;//downcast to Staff
-			String branchName=staffAccount.getBranchName();
-			Branch branch=branchDB.find(branchName);
-			if(branch!=null){
-				int numStaff=accountDB.countStaffInBranch(branchName);
-				int numManager=accountDB.countManagerInBranch(branchName);
+			Staff staffAccount = (Staff)account;//downcast to Staff
+			String branchName = staffAccount.getBranchName();
+			Branch branch = branchDB.find(branchName);
+			if(branch != null){
+				int numStaff = accountDB.countStaffInBranch(branchName);
+				int numManager = accountDB.countManagerInBranch(branchName);
 				if(QuotaChecker.checkQuota(numStaff-1,numManager+1)){
 					//create a new Manager object and copy all attributes of staff
 					DataManagerForOrder orderDB = DataManagerForOrder.getInstance();
@@ -326,43 +322,42 @@ public class AdminForStaff implements IAdminForStaff{
 	}else{
 		System.out.println("Account not found! Returning to user page...");
 	}
-	sc.close();
     }
 
     /**
      * Allows admin to transfer a Staff/Manager between branches
      */
     public void transferStaff(){
-        Scanner sc=new Scanner(System.in);
+        Scanner sc = GlobalResource.SCANNER;
 	//take in 2 branches and check if they both exist
 	System.out.println("Enter branch to transfer staff from");
-	String branchName1=sc.nextLine();
-	Branch branch1=branchDB.find(branchName1);
+	String branchName1 = sc.nextLine();
+	Branch branch1 = branchDB.find(branchName1);
 	System.out.println("Enter branch to transfer staff to");
-	String branchName2=sc.nextLine();
-	Branch branch2=branchDB.find(branchName2);
-	if(branch1!=null && branch2!=null){
+	String branchName2 = sc.nextLine();
+	Branch branch2 = branchDB.find(branchName2);
+	if(branch1 != null && branch2 != null){
 		//check quota for both branches
 		//only if true, can transfer staff
 
 		//count number of staff and manager in branch1
-		int numStaff1=accountDB.countStaffInBranch(branchName1);
-		int numManager1=accountDB.countManagerInBranch(branchName1);
+		int numStaff1 = accountDB.countStaffInBranch(branchName1);
+		int numManager1 = accountDB.countManagerInBranch(branchName1);
 		//count number of staff and manager in branch2
-		int numStaff2=accountDB.countStaffInBranch(branchName2);
-		int numManager2=accountDB.countManagerInBranch(branchName2);
+		int numStaff2 = accountDB.countStaffInBranch(branchName2);
+		int numManager2 = accountDB.countManagerInBranch(branchName2);
 
 		System.out.println("Choose option");
 		System.out.println("1. Transfer staff");
 		System.out.println("2. Transfer manager");
-		String option=sc.nextLine();
-		boolean validQuota=false;
+		String option = sc.nextLine();
+		boolean validQuota = false;
 		switch(option){
 			case "1":
-				validQuota=QuotaChecker.checkQuota(numStaff1-1,numManager1) && QuotaChecker.checkQuota(numStaff2+1,numManager2);
+				validQuota = QuotaChecker.checkQuota(numStaff1-1,numManager1) && QuotaChecker.checkQuota(numStaff2+1,numManager2);
 				break;
 			case "2":
-				validQuota=QuotaChecker.checkQuota(numStaff1,numManager1-1) && QuotaChecker.checkQuota(numStaff2,numManager2+1);
+				validQuota = QuotaChecker.checkQuota(numStaff1,numManager1-1) && QuotaChecker.checkQuota(numStaff2,numManager2+1);
 				break;
 			default:
 				System.out.println("Invalid option! Returning to user page...");
@@ -372,11 +367,11 @@ public class AdminForStaff implements IAdminForStaff{
 		if(validQuota){
 			//ask for details of staff to retrieve
 			System.out.println("Enter staffID");
-			String staffID=sc.nextLine();
-			Account account=accountDB.find(staffID);
-			if(account!=null){
+			String staffID = sc.nextLine();
+			Account account = accountDB.find(staffID);
+			if(account != null){
 				if(account instanceof Staff){
-					Staff staffAccount=(Staff)account;
+					Staff staffAccount = (Staff) account;
 					//change branchName of staff object
 					staffAccount.setBranchName(branchName2);
 					//update in accountDB
@@ -394,6 +389,5 @@ public class AdminForStaff implements IAdminForStaff{
 	}else{
 		System.out.println("Branch not found! Returning to user page...");
 	}
-	sc.close();
     }
 }
