@@ -30,10 +30,10 @@ public class OrderControlForCart {
      * @param displayFormatter The display formatter used to show items in the cart.
      * @return The updated order after removing the selected item.
      */
-    public Order removeFromCart(Order order, IDisplay displayFormatter) {
+    public Order removeFromCart(Order order, IDisplayFilteredByBranch displayFormatter) {
         Scanner sc = new Scanner(System.in);
 
-        displayFormatter.displayAll(order.getCartItems());
+        displayFormatter.displayFilteredByBranch(order.getCartItems());
         System.out.println((order.getCartItems().size() + 1) + " Quit");
         System.out.println("Please choose which item number you wish to remove");
 
