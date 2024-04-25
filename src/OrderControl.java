@@ -74,14 +74,20 @@ public class OrderControl {
 		{   
             showOptions();
             int choice = -1;
-			try {
-				choice = sc.nextInt();
-			} catch (Exception e) {
-				System.out.println("You did not enter a valid number");
-                sc.close();
-				chooseOptions();
-                return;
-			}
+
+            while (true)
+            {
+                try {
+                    choice = sc.nextInt();
+                    if (choice >= 1 && choice <= 6)
+                    {
+                        break;
+                    }
+                    System.out.println("Please input a valid choice.");
+                } catch (Exception e) {
+                    System.out.println("You did not enter a valid number");
+                }
+            }
 			switch (choice) {
 				case 1:
 					viewMenu();
@@ -110,8 +116,28 @@ public class OrderControl {
 					quit = true;
 					break;
 				case 6:
-					quit = true;
-					break;
+                    System.out.println("Are you sure you want to quit? Your order will be removed. Press 1 if you're sure.");
+                    int choiceToQuit = -1;
+                    while (true)
+                    {
+                        try{
+                            choiceToQuit = sc.nextInt();
+                            if (choiceToQuit == 1 || choiceToQuit == 0)
+                            {
+                                break;
+                            }
+                            System.out.println("Please input a 1 or 0");
+                        }catch(Exception e){
+                            System.out.println("Please input 1 or 0");
+                        }
+                    }
+                    if (choiceToQuit == 1)
+                    {
+                        System.out.println("Exiting...");
+                        orderDB.delete(order);
+                        quit = true;
+					    break;
+                    }
 				default:
 					System.out.println("Please choose a valid option");
             }
