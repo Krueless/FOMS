@@ -139,12 +139,14 @@ public class Order implements IGetBranchName{
     }
 
 
-    public void updateCancelled(){
-        if (orderStatus == OrderStatus.READY_TO_PICKUP)
-        {
-            Duration duration = Duration.between(timestamp, LocalDateTime.now());
-            if (duration.toMinutes() >= 2){
+    public void updateCancelled() {
+        if (orderStatus == OrderStatus.READY_TO_PICKUP) {
+            ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Asia/Singapore"));
+            Duration duration = Duration.between(timestamp, now);
+    
+            if (duration.toMinutes() >= 2) {
                 this.setOrderStatus(OrderStatus.CANCELLED);
+                System.out.println("Order has been cancelled due to no pickup within the allowed timeframe.");
             }
         }
     }
