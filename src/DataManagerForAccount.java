@@ -9,7 +9,7 @@ public class DataManagerForAccount implements IDataManagerWithCount{
 	private final Serializer<Account> serializer;
 
 	private DataManagerForAccount() {
-		serializer = new Serializer<Account>("../src/accountData.ser");
+		serializer = new Serializer<Account>("../data/accountData.ser");
 		loadData();
 	}
 
@@ -24,7 +24,7 @@ public class DataManagerForAccount implements IDataManagerWithCount{
 		try{
 			accountList = serializer.deserialize();
 		}catch (IOException | ClassNotFoundException e){
-			System.out.println("Serialized file not found or invalid, initialising from CSV.");
+			System.out.println("Account: Serialized file not found or invalid, initialising from CSV.");
 			accountList = new ArrayList<Account>();
 			initializeFromCSV();
 		}
@@ -35,7 +35,7 @@ public class DataManagerForAccount implements IDataManagerWithCount{
 		DataManagerForFoodItem foodItemDB = DataManagerForFoodItem.getInstance();
 		DisplayFilteredByBranch staffDisplay = new DisplayFilteredByBranch();
 	
-		File f = new File("../src/staff_list.csv");
+		File f = new File("../data/staff_list.csv");
 		try{
 			Scanner sc = new Scanner(f);
 			while (sc.hasNextLine()) {
