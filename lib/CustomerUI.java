@@ -44,7 +44,13 @@ public class CustomerUI {
 	 * @param orderID
 	 */
 	public void checkOrder(int orderID) {
-		System.out.println(orderDB.find(orderID).toString());
+        Order order = orderDB.find(orderID);
+        if (order != null){
+		    System.out.println(order.viewOrderStatus());
+            System.out.println("Returning to customer page...");
+        }
+        else
+            System.out.println("Invalid orderID! Returning to customer page...");
 	}
 
 	public void showCustomerOptions() {
@@ -57,6 +63,7 @@ public class CustomerUI {
                 System.out.println("Please select one of the following options.");
                 System.out.println("1. Create Order");
                 System.out.println("2. Check Order Status");
+                System.out.println("3. Quit"); //TODO implement quit suggest refer to admin to see how to continuously show this menu
                 String option = sc.nextLine();
 
                 switch (option) {

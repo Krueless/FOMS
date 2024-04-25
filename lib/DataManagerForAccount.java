@@ -45,13 +45,16 @@ public class DataManagerForAccount implements IDataManagerWithCount{
 				switch (role){
 					case "A":
 						accountList.add(new Admin(data[0], data[1], data[2], data[3], Integer.parseInt(data[4])));
-						break;
+						System.out.println("added");
+                        break;
 					case "M":
 						accountList.add(new Manager(data[0], data[1], data[2], data[3],Integer.parseInt(data[4]), data[5], orderDB,staffDisplay, foodItemDB, instance));
-						break;
+						System.out.println("added");
+                        break;
 					case "S":
 						accountList.add(new Staff(data[0], data[1], data[2], data[3],Integer.parseInt(data[4]), data[5], orderDB,staffDisplay));
-						break;
+						System.out.println("added");
+                        break;
 				}
 			}
 			serializer.serialize(accountList);

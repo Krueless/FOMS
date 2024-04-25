@@ -159,12 +159,12 @@ public class Order implements Serializable, IGetBranchName{
     @Override
     public String toString() {
         updateCancelled();
-        String returnString = String.format("OrderID: %d\nOrderStatus: %s\nPrice: %.2f\n",
+        String returnString = String.format("OrderID: %d\t OrderStatus: %s\t Price: %.2f",
                                             this.orderID, this.orderStatus, this.price);
         if (this.takeaway) {
-            returnString += "Takeaway\n";
+            returnString += " (Takeaway)\n";
         } else {
-            returnString += "Not Takeaway\n";
+            returnString += " (Dine-in)\n";
         }
         returnString += "CartItems:\n";
         for (OrderedFoodItem item : this.cartItems) {
@@ -196,7 +196,7 @@ public class Order implements Serializable, IGetBranchName{
             returnString = "Order was completed and has been picked up.";
             break;
             case CANCELLED:
-            returnString = "Order was cancelled.";
+            returnString = "Order was cancelled as it was not picked up within the specified timeframe.";
             break;
         }
         return returnString;

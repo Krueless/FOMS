@@ -16,11 +16,6 @@ public class Online implements IPayment {
      *
      * @param name The name of the online payment type
      */
-
-	public Online()
-	{
-		this.name = "PayNow";
-	}
     public Online(String name) 
 	{
         this.name = name;

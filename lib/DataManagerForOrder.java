@@ -71,14 +71,8 @@ public class DataManagerForOrder implements IDataManager<Order, Integer> {
      *
      * @param order The new order to add to the list.
      */
-    public void add(Order order) {
-        for (int i = 0; i < orderList.size(); i++) {
-            if (orderList.get(i).getOrderID() == order.getOrderID()) {
-                System.out.println("Order is already inside");
-                return;
-            }
-        }
-        orderList.add(order);
+    public void add(Order newOrder) {
+        orderList.add(newOrder);
         serializer.serialize(orderList);
 		System.out.println("Order is successfully added!");
     }

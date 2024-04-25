@@ -56,7 +56,7 @@ public class DataManagerForPayment implements IDataManager<IPayment, String>
 	private void initializeFromCSV() 
 	{
 	
-		File f = new File("../src/paymentMethods.csv");
+		File f = new File("../src/payment_list.csv");
 		try{
 			Scanner sc = new Scanner(f);
 			while (sc.hasNextLine()) {

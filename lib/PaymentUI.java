@@ -6,7 +6,7 @@ import java.util.Scanner;
  * processes the payment, and prints a receipt if the payment is successful.
  */
 public class PaymentUI {
-    private IDataManager paymentDB;          
+    private IDataManager<IPayment,String> paymentDB;          
     private IDisplay displayFormatter;                   
     /**
      * Constructs a PaymentUI with necessary data management and display components.
@@ -14,7 +14,7 @@ public class PaymentUI {
      * @param paymentDB The data manager for accessing payment methods.
      * @param displayFormatter The display component for formatting the display of payment options.
      */
-    public PaymentUI(IDataManager paymentDB, IDisplay displayFormatter) {
+    public PaymentUI(IDataManager<IPayment,String> paymentDB, IDisplay displayFormatter) {
         this.paymentDB = paymentDB;
         this.displayFormatter = displayFormatter;
     }
@@ -26,7 +26,7 @@ public class PaymentUI {
      * @param order The order for which payment is being processed.
      */
     public void showPaymentOptions(Order order) {
-        displayFormatter.displayAll(paymentDB.getAll());
+        displayFormatter.displayAll(paymentDB.getAll()); //TIDO error checking
         int choice = getValidNumber(order.getCartItems().size());
 		choosePaymentOption(order, choice);
     }

@@ -16,14 +16,6 @@ public class Credit implements IPayment
     private String name;  // Name of the payment method, default is "Mastercard"
 
     /**
-     * Default constructor which sets the payment method name to "Mastercard".
-     */
-    public Credit() 
-	{
-        this.name = "Mastercard";
-    }
-
-    /**
      * Constructs a new {@code Credit} object with a specified payment method name.
      *
      * @param name The name of the payment method as a {@code String}.
