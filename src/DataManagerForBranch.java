@@ -3,13 +3,13 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class DataManagerForBranch implements IDataManager<Branch,String>, Serializable {
+public class DataManagerForBranch implements IDataManager<Branch,String>{
 	private ArrayList<Branch> branchList;
 	private static DataManagerForBranch instance;
 	private final Serializer<Branch> serializer;
 
 	private DataManagerForBranch() {
-	        serializer = new Serializer<Branch>("../src/branchData.ser");
+	        serializer = new Serializer<Branch>("../data/branchData.ser");
 	        loadData();
 	}
 
@@ -90,7 +90,7 @@ public class DataManagerForBranch implements IDataManager<Branch,String>, Serial
 
             // Method to read CSV and initialize data
     private void initializeFromCSV() {
-		File f = new File("../src/branch_list.csv");
+		File f = new File("../data/branch_list.csv");
         try (Scanner scanner = new Scanner(f)) {
             scanner.nextLine();
             while (scanner.hasNextLine()) {

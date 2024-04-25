@@ -10,7 +10,6 @@ public class AdminForStaff implements IAdminForStaff, Serializable{
 
 
     public AdminForStaff(){
-        this.accountDB=DataManagerForAccount.getInstance(); //TODO recursive here
         this.branchDB=DataManagerForBranch.getInstance();
         this.displayFormatter=new DisplayFilteredForAccount();
 	
@@ -19,6 +18,7 @@ public class AdminForStaff implements IAdminForStaff, Serializable{
      * Allows admin to edit the attributes in a staff account
      */
     public void editStaff(){
+        accountDB=DataManagerForAccount.getInstance();
         Scanner sc = GlobalResource.SCANNER;
         System.out.println("Enter the staffID");
         String staffID = sc.nextLine();
@@ -75,6 +75,7 @@ public class AdminForStaff implements IAdminForStaff, Serializable{
      * Allows admin to remove an existing staff account from the staff list
      */
     public void removeStaff(){
+        accountDB=DataManagerForAccount.getInstance();
         Scanner sc = GlobalResource.SCANNER;
 	System.out.println("Enter branch to remove Staff:");
         String branchName = sc.nextLine();
@@ -104,6 +105,7 @@ public class AdminForStaff implements IAdminForStaff, Serializable{
      * Allows admin to add a new staff account to the staff list
      */
     public void addStaff(){
+        accountDB=DataManagerForAccount.getInstance();
         Scanner sc = GlobalResource.SCANNER;
 	    System.out.println("Enter branch to assign Staff:");
         String branchName = sc.nextLine();
@@ -149,6 +151,7 @@ public class AdminForStaff implements IAdminForStaff, Serializable{
      * Allows admin to display the staff list with filters
      */
     public void displayStaff(){
+        accountDB=DataManagerForAccount.getInstance();
         Scanner sc = GlobalResource.SCANNER;
 		ArrayList<Account> accountList = accountDB.getAll();
         ArrayList<IGetBranchName> staffList = new ArrayList<>();
@@ -242,6 +245,7 @@ public class AdminForStaff implements IAdminForStaff, Serializable{
      * Allows admin to assign Managers to a branch within the quota constraint
      */
     public void assignManager(){
+        accountDB=DataManagerForAccount.getInstance();
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the branch to assign Manager");
         String branchName = sc.nextLine();
@@ -285,6 +289,7 @@ public class AdminForStaff implements IAdminForStaff, Serializable{
      * Allows admin to promote a staff to branch manager
      */
     public void promoteStaff(){
+        accountDB=DataManagerForAccount.getInstance();
         Scanner sc = GlobalResource.SCANNER;
         //find the staff to be promoted
         System.out.println("Enter staffID");
@@ -329,6 +334,7 @@ public class AdminForStaff implements IAdminForStaff, Serializable{
      * Allows admin to transfer a Staff/Manager between branches
      */
     public void transferStaff(){
+        accountDB=DataManagerForAccount.getInstance();
         Scanner sc = GlobalResource.SCANNER;
 	//take in 2 branches and check if they both exist
 	System.out.println("Enter branch to transfer staff from");
