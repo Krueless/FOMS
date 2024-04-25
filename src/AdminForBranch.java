@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 public class AdminForBranch implements IAdminForBranch{
 	private IDataManager<Branch, String> branchDB;
@@ -45,15 +46,20 @@ public class AdminForBranch implements IAdminForBranch{
      */
 	public void closeBranch(){
 		Scanner sc = GlobalResource.SCANNER;
-        IDisplay displayFormatter = new Display();
-        displayFormatter.displayAll(branchDB.getAll());;
-		System.out.println("Enter the name of the branch to be closed:");
-		String branchName = sc.nextLine();
-		Branch branch = branchDB.find(branchName);//find the branch
-		if(branch != null){
-			branchDB.delete(branch);//delete the branch
-		}else{
-			System.out.println("Branch not found! Returning to user page...");
-		}
-	}
+        IDisplay displayFormatter = new Display(); 
+        ArrayList<Branch> branchList = branchDB.getAll();
+        if (branchList.size() > 0){
+            displayFormatter.displayAll(branchDB.getAll());;
+            System.out.println("Enter the name of the branch to be closed (case-semsitive):");
+            String branchName = sc.nextLine();
+            Branch branch = branchDB.find(branchName);//find the branch
+            if(branch != null){
+                branchDB.delete(branch);//delete the branch
+            }else{
+                System.out.println("Branch not found! Returning to user page...");
+            }
+	    }else{
+            System.out.println("No branch to be closed! Returning to user page...");
+        }
+    }
 }
