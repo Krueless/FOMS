@@ -71,6 +71,7 @@ public class Manager extends Staff{
         if(foodItem!=null){
             if(foodItem.getBranchName().equals(super.getBranchName())==false){
                 System.out.println("FoodItem not in menu of this branch! Returning to user page...");
+                sc.close();
                 return;
             }
             //foodItem found

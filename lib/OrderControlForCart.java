@@ -122,13 +122,16 @@ public class OrderControlForCart {
             quantity = sc.nextInt();
         } catch (Exception e) {
             System.out.println("Please input a valid integer");
+            sc.close();
 			return getValidNumber();
         }
 		if (quantity<=0 || quantity > max)
 		{
 			System.out.println("Please input a valid number!");
+            sc.close();
 			return getValidNumber(max);
 		}
+        sc.close();
 		return quantity;
 	}
 }

@@ -10,6 +10,7 @@ public class Serializer<T extends Serializable> {
 
     public ArrayList<T> deserialize() throws IOException, ClassNotFoundException {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(filepath));
+        in.close();
         return (ArrayList<T>) in.readObject();
     }
 
