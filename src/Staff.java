@@ -103,6 +103,7 @@ public class Staff extends Account implements IGetBranchName {
             Order order=orderDB.find(orderID);
             if (order != null && order.getBranchName().equals(branchName)) {
                 order.setOrderStatus(OrderStatus.READY_TO_PICKUP);
+                orderDB.update(order);
                 System.out.println("Order status updated to ready for collection. Returning to user page...");
             } else {
                 System.out.println("Order not found or does not belong to your branch.");
