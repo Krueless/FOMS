@@ -41,9 +41,6 @@ public class Online implements IPayment {
         this.name = name;
     }
 
-    public String toString(){
-        return getClass().getSimpleName() + " " + name;
-    }
     /**
      * Processes the payment for an order by simulating a PayNow QR code scan.
      * It displays the total cost and simulates a payment confirmation after a delay.
@@ -104,5 +101,16 @@ public class Online implements IPayment {
         }
         System.out.println("Total: $" + String.format("%.2f", totalCost));
         System.out.println("Order " + order.getOrderID() + " paid on " + formattedDateTime);
+    }
+
+     /**
+     * Returns a string representation of the {@code Online} object, including the class name and payment method name.
+     *
+     * @return A string representing the {@code Online} object, which includes the class name and the name of the payment method.
+     */
+    @Override
+    public String toString() 
+	{
+        return this.name + " (" + getClass().getSimpleName() +")";
     }
 }

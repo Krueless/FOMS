@@ -45,7 +45,6 @@ public class Credit implements IPayment
         this.name = name;
     }
 
-
     /**
      * Processes the payment for an order by asking the user to enter their credit card details.
      * This method simulates the process of a credit card transaction by taking input from the user
