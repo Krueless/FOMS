@@ -77,7 +77,7 @@ public class OrderControlForCart {
 
 	private FoodItem getFoodItem(IDataManager<FoodItem, Integer> foodItemDB)
 	{
-        System.out.println("Please input the name of the food item you want");
+        System.out.println("Please input the ID of the food item you want");
         int foodItemID = getValidNumber();
         FoodItem foodItem = foodItemDB.find(foodItemID);
 		if (foodItem == null)
@@ -87,41 +87,38 @@ public class OrderControlForCart {
 		}
         return foodItem;
 	}
-	private int getValidNumber()
-	{
-        Scanner sc =  GlobalResource.SCANNER;
-		System.out.println("Please input how many you want");
-        int quantity = -1;
-		try {
-            quantity = sc.nextInt();
-        } catch (Exception e) {
-            System.out.println("Please input a valid integer");
-			return getValidNumber();
+	private int getValidNumber() {
+        Scanner sc = GlobalResource.SCANNER;
+        while (true) {
+            try {
+                int number = sc.nextInt();
+                if (number > 0) {
+                    return number;
+                } else {
+                    System.out.println("Please input a positive number!");
+                }
+            } catch (Exception e) {
+                sc.nextLine(); // consume the invalid input to avoid infinite loop
+                System.out.println("Please input a valid integer");
+            }
         }
-		if (quantity<=0)
-		{
-			System.out.println("Please input a positive number!");
-			return getValidNumber();
-		}
-		return quantity;
-	}
+    }
 
-	private int getValidNumber(int max)
-	{
-        Scanner sc =  GlobalResource.SCANNER;
-		System.out.println("Please input how many you want");
-        int quantity = -1;
-		try {
-            quantity = sc.nextInt();
-        } catch (Exception e) {
-            System.out.println("Please input a valid integer");
-			return getValidNumber();
+	private int getValidNumber(int max) {
+        Scanner sc = GlobalResource.SCANNER;
+        System.out.println("Please input how many you want");
+        while (true) {
+            try {
+                int quantity = sc.nextInt();
+                if (quantity > 0 && quantity <= max) {
+                    return quantity;
+                } else {
+                    System.out.println("Please input a number between 1 and " + max + "!");
+                }
+            } catch (Exception e) {
+                sc.nextLine(); // consume the invalid input
+                System.out.println("Please input a valid integer");
+            }
         }
-		if (quantity<=0 || quantity > max)
-		{
-			System.out.println("Please input a valid number!");
-			return getValidNumber(max);
-		}
-		return quantity;
-	}
+    }
 }
