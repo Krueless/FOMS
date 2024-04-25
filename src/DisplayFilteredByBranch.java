@@ -11,7 +11,7 @@ public class DisplayFilteredByBranch implements IDisplayFilteredByBranch {
             @SuppressWarnings("unchecked")
             ArrayList<Object> array = (ArrayList<Object>) data;
             for (int i = 0; i < array.size(); i++){
-                System.out.println(i+1 +": " + array.get(i).toString());
+                System.out.println(i+1 +") " + array.get(i).toString());
         }
         }
 	}
@@ -25,7 +25,7 @@ public class DisplayFilteredByBranch implements IDisplayFilteredByBranch {
         int j = 1;
         for (int i = 0; i < data.size(); i++){
             if (data.get(i).getBranchName().compareTo(branchName) == 0){
-                System.out.println(j +": " + data.get(i).toString());
+                System.out.println(j +") " + data.get(i).toString());
                 j++ ;
             }
             
