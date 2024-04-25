@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+//TODO: Check why branch information does not save across session.
 public class AdminForBranch implements IAdminForBranch{
 	private IDataManager<Branch, String> branchDB;
 	public AdminForBranch(){
@@ -50,7 +51,7 @@ public class AdminForBranch implements IAdminForBranch{
         ArrayList<Branch> branchList = branchDB.getAll();
         if (branchList.size() > 0){
             displayFormatter.displayAll(branchDB.getAll());;
-            System.out.println("Enter the name of the branch to be closed (case-semsitive):");
+            System.out.println("Enter the name of the branch to be closed (case-sensitive):");
             String branchName = sc.nextLine();
             Branch branch = branchDB.find(branchName);//find the branch
             if(branch != null){

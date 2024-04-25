@@ -55,7 +55,7 @@ public class DataManagerForOrder implements IDataManager<Order, Integer> {
                 orderList.set(i, newOrder);
                 serializer.serialize(orderList);
                 System.out.println("Successfully updated order.");
-                return;
+                break;
             }
         }
     }

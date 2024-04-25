@@ -24,7 +24,6 @@ public class DataManagerForAccount implements IDataManagerWithCount{
 		try{
 			accountList = serializer.deserialize();
 		}catch (IOException | ClassNotFoundException e){
-            e.printStackTrace();;
 			System.out.println("Account: Serialized file not found or invalid, initialising from CSV.");
 			accountList = new ArrayList<Account>();
 			initializeFromCSV();
@@ -39,6 +38,7 @@ public class DataManagerForAccount implements IDataManagerWithCount{
 		File f = new File("data/staff_list.csv");
 		try{
 			Scanner sc = new Scanner(f);
+            sc.nextLine();
 			while (sc.hasNextLine()) {
 				String line = sc.nextLine();
 				String[] data = line.split(",");

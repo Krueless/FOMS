@@ -93,9 +93,8 @@ public class DataManagerForPayment implements IDataManager<IPayment, String>
             if (paymentList.get(i).getName().equals(newPayment.getName())) {
                 paymentList.set(i, newPayment);
 				System.out.println("Payment method successfully updated!");
-                return;
+                break;
             }
-			System.out.println("Payment method could not be found.");
         }
     }
 
@@ -106,13 +105,8 @@ public class DataManagerForPayment implements IDataManager<IPayment, String>
      * @param payment The new payment method to add to the list.
      */
     public void add(IPayment payment) {
-        for (int i = 0; i < paymentList.size(); i++) {
-            if (paymentList.get(i).getName().equals(payment.getName())) {
-                System.out.println("Payment method is already inside.");
-                return;
-            }
-        }
         paymentList.add(payment);
+        serializer.serialize(paymentList);
 		System.out.println("Payment method successfully added!");
     }
 
@@ -141,13 +135,11 @@ public class DataManagerForPayment implements IDataManager<IPayment, String>
      * @return The found {@code IPayment} object, or {@code null} if not found.
      */
     public IPayment find(String paymentName) {
-        for (int i = 0; i < paymentList.size(); i++) {
-            if (paymentList.get(i).getName().equals(paymentName)) {
-				System.out.println("Payment method found!");
-                return paymentList.get(i);
+        for (IPayment payment: paymentList) {
+            if (payment.getName().equals(paymentName)) {
+                return payment;
             }
         }
-        System.out.println("Payment method not found.");
         return null;
     }
 

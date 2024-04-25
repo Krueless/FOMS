@@ -46,6 +46,7 @@ public class LoginSystem {
      */
 	public void showLoginPage() {
 		Scanner sc = GlobalResource.SCANNER;
+        System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''");
 		System.out.println("Login Page");
 		System.out.println("Enter StaffID: ");
 		String staffID = sc.nextLine();

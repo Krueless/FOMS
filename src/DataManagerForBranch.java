@@ -9,8 +9,8 @@ public class DataManagerForBranch implements IDataManager<Branch,String>{
 	private final Serializer<Branch> serializer;
 
 	private DataManagerForBranch() {
-	        serializer = new Serializer<Branch>("data/branchData.ser");
-	        loadData();
+        serializer = new Serializer<Branch>("data/branchData.ser");
+        loadData();
 	}
 
 	public static DataManagerForBranch getInstance() {
@@ -29,6 +29,27 @@ public class DataManagerForBranch implements IDataManager<Branch,String>{
 			initializeFromCSV();
 		}
 	}
+
+    // Method to read CSV and initialize data
+    private void initializeFromCSV() {
+		File f = new File("data/branch_list.csv");
+        try (Scanner scanner = new Scanner(f)) {
+            scanner.nextLine();
+            while (scanner.hasNextLine()) {
+                // Assuming the CSV is properly formatted to match the Branch constructor
+                String line = scanner.nextLine();
+                String[] data = line.split(",");
+                // Create new Branch object and add to the list
+                Branch branch = new Branch(data[0], data[1], Integer.parseInt(data[2])); // Adapt constructor call as necessary
+                branchList.add(branch);
+            }
+            serializer.serialize(branchList);
+            System.out.println("Branch CSV data initialised.");
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Error: Branch CSV File not found");
+        }
+    }
 
 	/**
 	 * 
@@ -55,17 +76,16 @@ public class DataManagerForBranch implements IDataManager<Branch,String>{
 	    }
 	/**
 	 * 
-	 * @param oldBranch
 	 * @param newBranch
 	 */
 	public void update( Branch newBranch) {
 		String name = newBranch.getBranchName();
         for (int i = 0; i < branchList.size(); i++){
-                if (branchList.get(i).getBranchName().compareTo(name) == 0){
-                    branchList.set(i, newBranch);
-                    serializer.serialize(branchList);
-                    System.out.println("Successfully updated branch. ");
-                    break;
+            if (branchList.get(i).getBranchName().compareTo(name) == 0){
+                branchList.set(i, newBranch);
+                serializer.serialize(branchList);
+                System.out.println("Successfully updated branch. ");
+                break;
             }
         }
     }
@@ -76,36 +96,16 @@ public class DataManagerForBranch implements IDataManager<Branch,String>{
 	 */
 	public Branch find(String branchName) {
 		for (Branch branch : branchList){
-            		if (branch.getBranchName().compareTo(branchName) == 0){
-                		return branch;
-            		}
-        	}
+            if (branch.getBranchName().compareTo(branchName) == 0){
+                return branch;
+            }
+        }
 		return null;
 	}
 
 	public ArrayList<Branch> getAll() {
 		return branchList;
 	}
-
-            // Method to read CSV and initialize data
-    private void initializeFromCSV() {
-		File f = new File("data/branch_list.csv");
-        try (Scanner scanner = new Scanner(f)) {
-            scanner.nextLine();
-            while (scanner.hasNextLine()) {
-                // Assuming the CSV is properly formatted to match the Branch constructor
-                String line = scanner.nextLine();
-                String[] data = line.split(",");
-                // Create new Branch object and add to the list
-                Branch branch = new Branch(data[0], data[1], Integer.parseInt(data[2])); // Adapt constructor call as necessary
-                branchList.add(branch);
-            }
-            serializer.serialize(branchList);
-            System.out.println("Branch CSV data initialised.");
-        } catch (FileNotFoundException e) {
-            System.out.println("Error: Branch CSV File not found");
-        }
-    }
 }
 
 
