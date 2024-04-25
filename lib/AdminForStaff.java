@@ -10,9 +10,9 @@ public class AdminForStaff implements IAdminForStaff, Serializable{
 
 
     public AdminForStaff(){
-        this.accountDB = DataManagerForAccount.getInstance();
-        this.branchDB = DataManagerForBranch.getInstance();
-        this.displayFormatter = new DisplayFilteredForAccount();
+        this.accountDB=DataManagerForAccount.getInstance(); //TODO recursive here
+        this.branchDB=DataManagerForBranch.getInstance();
+        this.displayFormatter=new DisplayFilteredForAccount();
 	
     }
     /**

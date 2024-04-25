@@ -11,6 +11,7 @@ public class CustomerUI {
 		DisplayFilteredByBranch displayformatter = new DisplayFilteredByBranch();
         Scanner sc = new Scanner(System.in);
         boolean valid = false;
+        OrderControl control;
         while (!valid) {
             try {
                 System.out.println("Please select an option. ");
@@ -21,11 +22,13 @@ public class CustomerUI {
                 switch (option) {
                     case "1": //Dine-in
                         valid = true;
-                        new OrderControl(orderDB, foodItemDB, displayformatter, new Order(orderDB.getAll().size() + 1, false, branchName), branchName);
+                        control = new OrderControl(orderDB, foodItemDB, displayformatter, new Order(orderDB.getAll().size() + 1, false, branchName), branchName);
+                        control.showOptions();
                         break;
                     case "2": //Takeaway
                         valid = true;
-                        new OrderControl(orderDB, foodItemDB, displayformatter, new Order(orderDB.getAll().size() + 1, true, branchName), branchName);
+                        control = new OrderControl(orderDB, foodItemDB, displayformatter, new Order(orderDB.getAll().size() + 1, true, branchName), branchName);
+                        control.showOptions();
                         break;
                     default:
                         System.out.println("Invalid option. Please try again.\n");
