@@ -16,6 +16,7 @@ public class OrderControlForCart {
     public Order addToCart(Order order, IDataManager<FoodItem, Integer> foodItemDB) 
 	{
 		FoodItem foodItem = getFoodItem(foodItemDB);
+        System.out.println("Please input how many you want to add.");
         int quantity = getValidNumber();
         OrderedFoodItem orderedFoodItem = new OrderedFoodItem(foodItem, quantity);
         order.getCartItems().add(orderedFoodItem);

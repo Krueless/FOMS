@@ -22,12 +22,16 @@ public class CustomerUI {
                 switch (option) {
                     case "1": //Dine-in
                         valid = true;
-                        control = new OrderControl(orderDB, foodItemDB, displayformatter, new Order(orderDB.getAll().size() + 1, false, branchName), branchName);
+                        Order newOrderDineIn = new Order(orderDB.getAll().size() + 1, false, branchName);
+                        orderDB.add(newOrderDineIn);
+                        control = new OrderControl(orderDB, foodItemDB, displayformatter, newOrderDineIn, branchName);
                         control.showOptions();
                         break;
                     case "2": //Takeaway
                         valid = true;
-                        control = new OrderControl(orderDB, foodItemDB, displayformatter, new Order(orderDB.getAll().size() + 1, true, branchName), branchName);
+                        Order newOrderTakeaway = new Order(orderDB.getAll().size() + 1, true, branchName);
+                        orderDB.add(newOrderTakeaway);
+                        control = new OrderControl(orderDB, foodItemDB, displayformatter, newOrderTakeaway, branchName);
                         control.showOptions();
                         break;
                     default:
