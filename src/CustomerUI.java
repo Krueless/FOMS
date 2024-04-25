@@ -24,6 +24,7 @@ public class CustomerUI {
                         valid = true;
                         Order newOrderDineIn = new Order(orderDB.getAll().size() + 1, false, branchName);
                         orderDB.add(newOrderDineIn);
+                        System.out.println("Your order ID is: " + newOrderDineIn.getOrderID());
                         control = new OrderControl(orderDB, foodItemDB, displayformatter, newOrderDineIn, branchName);
                         control.chooseOptions();
                         break;
