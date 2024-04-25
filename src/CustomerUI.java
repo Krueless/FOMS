@@ -18,7 +18,6 @@ public class CustomerUI {
                 System.out.println("1. Dine-in");
                 System.out.println("2. Takeaway");
                 String option = sc.nextLine();
-                Order newOrder;
                 switch (option) {
                     case "1": //Dine-in
                         valid = true;
@@ -70,7 +69,7 @@ public class CustomerUI {
                 System.out.println("Please select one of the following options.");
                 System.out.println("1. Create Order");
                 System.out.println("2. Check Order Status");
-                System.out.println("3. Quit"); //TODO implement quit suggest refer to admin to see how to continuously show this menu
+                System.out.println("3. Quit");
                 String option = sc.nextLine();
 
                 switch (option) {
