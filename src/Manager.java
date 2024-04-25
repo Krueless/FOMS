@@ -63,7 +63,7 @@ public class Manager extends Staff{
      */
     public void editItem(){
         //get the foodID of the food item to edit
-        Scanner sc=new Scanner(System.in);
+        Scanner sc = GlobalResource.SCANNER;
         System.out.println("Enter the FoodID");
         int foodID=sc.nextInt();
         //search for the fooditem in foodItemDB
@@ -111,14 +111,13 @@ public class Manager extends Staff{
         }else{
             System.out.println("Food item not found! Returning to user page...");
         }
-        sc.close();
     }
 	
     /**
      * Allows Manager to remove an item from menu of the branch it is in charge of
      */
     public void removeItem(){
-        Scanner sc=new Scanner(System.in);
+        Scanner sc = GlobalResource.SCANNER;
         System.out.println("Enter the FoodID");
         int foodID=sc.nextInt();
         //search for the fooditem with the corresponding FoodID
@@ -135,14 +134,13 @@ public class Manager extends Staff{
         }else{
             System.out.println("Food item does not exist! Returning to user page...");
         }
-        sc.close();
     }
 
      /**
      * Allows the Manager to select options from menu, and handles user input
      */
 	public void selectOptions(){
-	Scanner sc = new Scanner(System.in);
+	Scanner sc = GlobalResource.SCANNER;
 		boolean quit =false;
 		while(!quit){
 	    showOptions();
@@ -169,7 +167,6 @@ public class Manager extends Staff{
 			}
         }
         System.out.println("Log out successfully.");
-        sc.close();
     }
     /**
      * Prints the available options that the Manager can do

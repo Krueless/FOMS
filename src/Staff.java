@@ -76,7 +76,7 @@ public class Staff extends Account implements IGetBranchName {
      * Allows the staff member to view an order from his/her branch.
      */
 	public void viewOrder(){
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = GlobalResource.SCANNER;
         System.out.println("Enter the Order ID:");
         try{
             int orderID = sc.nextInt();
@@ -89,14 +89,13 @@ public class Staff extends Account implements IGetBranchName {
         }catch (Exception e){
             System.out.println("Order ID must be number! Returning to user page...");
         }
-        sc.close();
     }
 	
     /**
      * Allows the staff member to process a new order from his/her branch, changing its status to ready to pickup
      */
 	public void processOrder(){
-		Scanner sc = new Scanner(System.in);
+		Scanner sc = GlobalResource.SCANNER;
         System.out.println("Enter the Order ID to be processed:");
         try{
             int orderID = sc.nextInt();
@@ -111,13 +110,12 @@ public class Staff extends Account implements IGetBranchName {
         }catch (Exception e){
             System.out.println("Order ID must be number! Returning to user page...");
         }
-        sc.close();
 	}
 	/**
      * Allows the staff member to select options from menu.
      */
 	public void selectOptions(){
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = GlobalResource.SCANNER;
 		boolean quit =false;
 		while(!quit){
             showOptions();
@@ -141,7 +139,6 @@ public class Staff extends Account implements IGetBranchName {
 			}
         }
         System.out.println("Log out successfully.");
-        sc.close();
     }
     /**
      * Displays the menu options for staff.
