@@ -355,18 +355,19 @@ public class AdminForStaff implements IAdminForStaff{
 		System.out.println("Choose option");
 		System.out.println("1. Transfer staff");
 		System.out.println("2. Transfer manager");
-		int option=sc.nextInt();
+		String option=sc.nextLine();
 		boolean validQuota=false;
 		switch(option){
-			case 1:
+			case "1":
 				validQuota=QuotaChecker.checkQuota(numStaff1-1,numManager1) && QuotaChecker.checkQuota(numStaff2+1,numManager2);
 				break;
-			case 2:
+			case "2":
 				validQuota=QuotaChecker.checkQuota(numStaff1,numManager1-1) && QuotaChecker.checkQuota(numStaff2,numManager2+1);
 				break;
 			default:
 				System.out.println("Invalid option! Returning to user page...");
-				break;
+				sc.close();
+				return;
 		}
 		if(validQuota){
 			//ask for details of staff to retrieve
