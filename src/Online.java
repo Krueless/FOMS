@@ -51,7 +51,6 @@ public class Online implements IPayment {
      */
     @Override
     public boolean processPayment(Order order) {
-        Scanner sc = GlobalResource.SCANNER;
         var cartItems = order.getCartItems();
         float totalCost = 0;
 		        
@@ -72,10 +71,8 @@ public class Online implements IPayment {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
 			System.out.println("There was an error while validating your payment");
-            return processPayment(order);  
+            return false;  
         }
-        System.out.println("Order Successful");
-        printReceipt(order);  
         return true;  
     }
 

@@ -21,35 +21,37 @@ public class PaymentUI {
 
     /**
      * Displays all available payment options and prompts the user to choose one.
-     * If the user enters invalid input, it catches the exception and prompts again.
-     *
-     * @param order The order for which payment is being processed.
+     * 
      */
-    public void showPaymentOptions(Order order) {
+    public void showPaymentOptions() {
         displayFormatter.displayAll(paymentDB.getAll()); //TIDO error checking
         System.out.println("Please choose which payment option you want.");
-        int choice = getValidNumber(paymentDB.getAll().size());
-		choosePaymentOption(order, choice);
     }
 
     /**
      * Processes the payment for an order based on the user-selected payment method.
+     * If the user enters invalid input, it catches the exception and prompts again.
      * If the payment is successful, it prints a receipt; otherwise, it notifies the user of the failure.
      *
      * @param order The order for which payment is to be processed.
      * @param choice The index of the payment method chosen by the user.
      */
-    public void choosePaymentOption(Order order, int choice) 
+    public Boolean choosePaymentOption(Order order) 
 	{
+        showPaymentOptions();
+        int choice = getValidNumber(paymentDB.getAll().size());
         ArrayList<IPayment> paymentList = paymentDB.getAll();
 		IPayment selectedPayment = paymentList.get(choice - 1);
 		if (selectedPayment.processPayment(order)) 
 		{
+            System.out.println("Payment Successful.");
 			selectedPayment.printReceipt(order);
+            return true;
 		} 
 		else 
 		{
 			System.out.println("Payment processing failed.");
+            return false;
 		}
 		
     }

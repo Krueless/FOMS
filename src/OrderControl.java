@@ -110,10 +110,11 @@ public class OrderControl {
 					orderDB.update(newOrder);
 					break;
 				case 5:
-					checkout.checkOut(order, displayFormatter);
-					newOrder = checkout.changeOrderStatus(order, OrderStatus.PREPARING);
-					orderDB.update(newOrder);
-					quit = true;
+					if (checkout.checkOut(order, displayFormatter)){
+                        newOrder = checkout.changeOrderStatus(order, OrderStatus.PREPARING);
+                        orderDB.update(newOrder);
+                        quit = true;
+                    }
 					break;
 				case 6:
                     System.out.println("Are you sure you want to quit? Your order will be removed. Press 1 if you're sure.");

@@ -73,23 +73,26 @@ public class Credit implements IPayment
         System.out.println("Total: $" + String.format("%.2f", totalCost));
 
         // Collect credit card information from user input
-		try 
-		{
-			System.out.println("Please input your credit card number");
-			long creditCardNumber = sc.nextLong(); 
-            sc.nextLine();
-			System.out.println("Please input your CVV");
-			int cvv = sc.nextInt(); 
-            sc.nextLine();
-		} 
-		catch (Exception e) 
-		{
-			System.out.println("Please input a valid card number/CVV");
-			return processPayment(order);
-		}
-
-		printReceipt(order);    
-        return true; 
+        int tries = 0;
+        while (tries < 3){
+            try 
+            {
+                tries += 1;
+                System.out.println("Please input your credit card number:");
+                long creditCardNumber = sc.nextLong(); 
+                sc.nextLine();
+                System.out.println("Please input your CVV:");
+                int cvv = sc.nextInt(); 
+                sc.nextLine();
+                break;
+            } 
+            catch (Exception e) 
+            {
+                System.out.println("Invalid card number/CVV. Please Try again!");
+                sc.nextLine();
+            }   
+        }
+        return (tries < 3);
     }
 
     /**

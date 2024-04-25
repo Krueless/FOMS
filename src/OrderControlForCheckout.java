@@ -25,14 +25,14 @@ public class OrderControlForCheckout {
      * @param order The order to check out.
      * @param displayFormatter The display formatter used to format the display of payment options.
      */
-    public void checkOut(Order order, IDisplay displayFormatter) {
+    public Boolean checkOut(Order order, IDisplay displayFormatter) {
 		if (order.getCartItems().size() == 0)
 		{
 			System.out.println("Cart is empty!");
-			return;
+			return false;
 		}
-        PaymentUI payment = new PaymentUI(DataManagerForPayment.getInstance(), displayFormatter);
-        payment.showPaymentOptions(order);
+        PaymentUI paymentUI = new PaymentUI(DataManagerForPayment.getInstance(), displayFormatter);
+        return paymentUI.choosePaymentOption(order);
     }
 
     /**
