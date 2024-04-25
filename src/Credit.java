@@ -59,7 +59,7 @@ public class Credit implements IPayment
 		// Retrieve items in the order
         ArrayList<OrderedFoodItem> cartItems = order.getCartItems(); 
 		// Initialize total cost
-        int totalCost = 0; 
+        double totalCost = 0; 
 
         // Calculate total cost by iterating over each item in the cart
 
@@ -67,7 +67,7 @@ public class Credit implements IPayment
 		{
             System.out.println(cartItems.get(i).getName() + " x " +
                 cartItems.get(i).getQuantity() + " : " +
-                cartItems.get(i).getPrice() * cartItems.get(i).getQuantity());
+                String.format("%.2f",cartItems.get(i).getPrice() * cartItems.get(i).getQuantity()));
             totalCost += cartItems.get(i).getPrice() * cartItems.get(i).getQuantity();
         }
         System.out.println("Total: $" + String.format("%.2f", totalCost));
@@ -102,11 +102,11 @@ public class Credit implements IPayment
         String formattedDateTime = now.format(formatter);
 
         ArrayList<OrderedFoodItem> cartItems = order.getCartItems();
-        int totalCost = 0;
+        float totalCost = 0;
 		// Maybe look into error checking here?
         for (int i = 0; i < cartItems.size(); i++) {
             System.out.println(cartItems.get(i).getName() + " x " + cartItems.get(i).getQuantity() + " : " +
-                cartItems.get(i).getPrice() * cartItems.get(i).getQuantity());
+            String.format("%.2f",cartItems.get(i).getPrice() * cartItems.get(i).getQuantity()));
             totalCost += cartItems.get(i).getPrice() * cartItems.get(i).getQuantity();
         }
         System.out.println("Total: $" + String.format("%.2f", totalCost));
@@ -121,6 +121,6 @@ public class Credit implements IPayment
     @Override
     public String toString() 
 	{
-        return this.name + " " + getClass().getSimpleName();
+        return this.name + " (" + getClass().getSimpleName() +")";
     }
 }
