@@ -1,5 +1,4 @@
 import java.time.ZonedDateTime;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -9,9 +8,9 @@ import java.time.Duration;
  * Represents an order within a restaurant management system. This class' only responsibility is to hold the details of an order,
  * including identification, status, pricing, takeaway or dine-in option, list of ordered items, and timestamp.
  */
-public class Order implements Serializable, IGetBranchName{
+public class Order implements IGetBranchName{
     private static final long serialVersionUID = 1L;
-    private int orderID;
+    private Integer orderID;
     private OrderStatus orderStatus;
     private double price;
     private boolean takeaway;
@@ -26,7 +25,7 @@ public class Order implements Serializable, IGetBranchName{
      * @param price The total price of the order.
      * @param takeaway Indicates whether the order is for takeaway (true) or dine-in (false).
      */
-    public Order(int orderID, boolean takeaway, String branchName) {
+    public Order(Integer orderID, boolean takeaway, String branchName) {
         this.orderID = orderID;
         this.orderStatus = OrderStatus.ORDERING;
         this.price = 0.0;
@@ -45,7 +44,7 @@ public class Order implements Serializable, IGetBranchName{
      *
      * @return The order ID.
      */
-    public int getOrderID() {
+    public Integer getOrderID() {
         return this.orderID;
     }
 

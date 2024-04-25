@@ -40,6 +40,7 @@ public class DataManagerForAccount implements IDataManagerWithCount{
 			Scanner sc = new Scanner(f);
 			while (sc.hasNextLine()) {
 				String line = sc.nextLine();
+                System.out.println(line);
 				String[] data = line.split(",");
 				String role = data[2];
 				switch (role){
@@ -54,6 +55,8 @@ public class DataManagerForAccount implements IDataManagerWithCount{
 					case "S":
 						accountList.add(new Staff(data[0], data[1], data[2], data[3],Integer.parseInt(data[4]), data[5], orderDB,staffDisplay));
 						System.out.println("added");
+                        break;
+                    default:
                         break;
 				}
 			}

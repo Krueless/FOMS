@@ -22,7 +22,6 @@ public class Serializer<T extends Serializable> {
             out.writeObject(TList);
         } catch (IOException e) {
             System.out.println("Error: I/O operation fails");
-            e.printStackTrace();
         }
     }
 }
