@@ -1,14 +1,23 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This class provides administrative functionalities for managing branches.
+ * It includes methods to open and close branches.
+ */
 public class AdminForBranch implements IAdminForBranch{
 	private IDataManager<Branch, String> branchDB;
+
+    /**
+     * Constructor that initialises the DataManager for managing branch data.
+     */
 	public AdminForBranch(){
 		this.branchDB=DataManagerForBranch.getInstance();
 	}
 	
     /**
-     * Allows admin to open a new branch
+     * Opens a new branch by prompting the admin to input necessary details with error checking.
+     * Ensures the branch name is unique and the staff quota is within specified limits.
      */
 	public void openBranch(){
 		//obtain the attributes for the new branch
@@ -42,8 +51,9 @@ public class AdminForBranch implements IAdminForBranch{
         branchDB.add(branch);
 	}
 	
-    /**
-     * Allows admin to close an existing branch
+     /**
+     * Closes an existing branch with the branch name inputted by admin.
+     * All associated accounts and menu items will also be deleted upon confirmation.
      */
 	public void closeBranch(){
 		Scanner sc = GlobalResource.SCANNER;

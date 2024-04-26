@@ -2,17 +2,26 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 
+/**
+ * AdminForStaff class implements the functionalities for managing staff accounts by an admin.
+ * It allows the admin to edit, remove, add, display, assign manager, promote staff, and transfer staff.
+ */
 public class AdminForStaff implements IAdminForStaff{
     private IDataManagerWithCount accountDB;
     private IDataManager<Branch, String> branchDB;
     private IDisplayFilteredForAccount displayFormatter;
 
+    /**
+     * Constructor that initialises the data manager and display formatter.
+     */
     public AdminForStaff(){
         this.displayFormatter=new DisplayFilteredForAccount();
         this.branchDB=DataManagerForBranch.getInstance();
     }
+
     /**
-     * Helper function to find the staff account based on user input for Staff ID
+     * Retrieves a staff account based on user input for Staff ID.
+     * @return The found Account or null if no account is found.
      */
     private Account getStaffFromUser(){
         Scanner sc = GlobalResource.SCANNER;
@@ -23,7 +32,7 @@ public class AdminForStaff implements IAdminForStaff{
     }
 
     /**
-     * Allows admin to edit the attributes in a staff account
+     * Allows the admin to edit the attributes of a staff account such as name, gender, age, and password.
      */
     public void editStaff(){
         Scanner sc = GlobalResource.SCANNER;
@@ -106,7 +115,7 @@ public class AdminForStaff implements IAdminForStaff{
     }
 	
     /**
-     * Allows admin to remove an existing staff account from the staff list
+     * Allows the admin to remove an existing staff account from the staff list.
      */
     public void removeStaff(){
         accountDB=DataManagerForAccount.getInstance();
@@ -138,6 +147,12 @@ public class AdminForStaff implements IAdminForStaff{
         }
     }
 
+     /**
+     * Helper method to create a new Staff or Manager based on the specified role and branch.
+     * @param branchName The branch name to which the staff or manager will be assigned.
+     * @param role The role of the new staff member (Staff or Manager).
+     * @return A new Staff or Manager object.
+     */
     private Staff createStaff(String branchName, String role){
         Scanner sc = GlobalResource.SCANNER;
         System.out.println("Enter Staff ID:");
@@ -191,7 +206,7 @@ public class AdminForStaff implements IAdminForStaff{
         }
     }
      /**
-     * Allows admin to add a new staff account to the staff list
+     * Allows admin to add a new staff account to a branch based on the quota constraints.
      */
     public void addStaff(){
         Scanner sc = GlobalResource.SCANNER;
@@ -227,7 +242,7 @@ public class AdminForStaff implements IAdminForStaff{
     }
 
     /**
-     * Allows admin to display the staff list with filters
+     * Displays staff members with filtering options based on branch, role, gender, and age, or display all.
      */
     public void displayStaff(){
         Scanner sc = GlobalResource.SCANNER;
@@ -341,7 +356,7 @@ public class AdminForStaff implements IAdminForStaff{
     }
 
     /**
-     * Allows admin to assign Managers to a branch within the quota constraint
+     * Assigns a manager to a branch considering the quota constraints.
      */
     public void assignManager(){
         Scanner sc = GlobalResource.SCANNER;
@@ -370,7 +385,7 @@ public class AdminForStaff implements IAdminForStaff{
     }
 
      /**
-     * Allows admin to promote a staff to branch manager
+     * Promotes a staff member to manager while keeping within quota constraints.
      */
     public void promoteStaff(){
         accountDB = DataManagerForAccount.getInstance();
@@ -417,7 +432,7 @@ public class AdminForStaff implements IAdminForStaff{
     }
 
     /**
-     * Allows admin to transfer a Staff/Manager between branches
+     * Transfers a staff or manager between branches while maintaining quota constraints.
      */
     public void transferStaff(){
         Scanner sc = GlobalResource.SCANNER;

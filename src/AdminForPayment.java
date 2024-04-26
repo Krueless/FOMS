@@ -1,9 +1,17 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+
+/**
+ * This class provides administrative functionalities for managing payment methods.
+ * It includes methods to add and remove payment methods.
+ */
 public class AdminForPayment implements IAdminForPayment{
 	private IDataManager<IPayment, String> paymentDB;
+
     /**
-     * Allows admin to add a new payment method
+     * Adds a new payment method by allowing the admin to specify the type and details.
+     * It prompts the admin to choose between "Online" and "Credit" payment types,
+     * and ensures the uniqueness of the payment method name before adding it.
      */
 	public void addPaymentMethod(){
         paymentDB=DataManagerForPayment.getInstance();
@@ -39,7 +47,8 @@ public class AdminForPayment implements IAdminForPayment{
 	}
 	
     /**
-     * Allows admin to remove an existing payment method
+     * Removes an existing payment method with the payment name inputted by admin.
+     * The method ensures the payment method exists before attempting to remove it.
      */
 	public void removePaymentMethod(){
         paymentDB=DataManagerForPayment.getInstance();
