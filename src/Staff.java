@@ -65,9 +65,9 @@ public class Staff extends Account implements IGetBranchName {
 		ArrayList<Order> orderList=orderDB.getAll();
 		ArrayList<IGetBranchName> newOrders=new ArrayList<IGetBranchName>();
 		//loop through orderList and add only the new orders to newOrders
-		for(Order order: orderList){
-			if(order.getOrderStatus()==OrderStatus.PREPARING)
-				newOrders.add(order);
+		for(int i = 0; i<orderList.size();i++){
+			if(orderList.get(i).getOrderStatus()==OrderStatus.PREPARING)
+				newOrders.add(orderList.get(i));
 		}
 		displayFormatter.displayFilteredByBranch(newOrders,branchName);
 	}
