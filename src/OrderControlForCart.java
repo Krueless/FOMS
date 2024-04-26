@@ -96,7 +96,7 @@ public class OrderControlForCart {
         System.out.println("Please input the ID of the food item you want");
         int foodItemID = getValidNumber();
         FoodItem foodItem = foodItemDB.find(foodItemID);
-		if (foodItem == null || !foodItem.getBranchName().equals(branchName))
+		if (foodItem == null || !foodItem.getBranchName().equals(branchName) || !foodItem.getAvailability())
 		{
 			System.out.println("Please input a valid ID!");
 			return getFoodItem(foodItemDB, branchName);
