@@ -157,7 +157,16 @@ public class Manager extends Staff{
 		case "4":
 		    removeItem();
 		    break;
-		case "5":
+        case "5":
+            displayNewOrders();
+            break;
+        case "6":
+            viewOrder();
+            break;
+        case "7":
+            processOrder();
+            break;
+		case "8":
 		    quit = true;
 		    break;
 			    default:
@@ -178,7 +187,10 @@ public class Manager extends Staff{
         System.out.println("(2) Add item to menu");
         System.out.println("(3) Edit item in menu");
         System.out.println("(4) Remove item from menu");
-        System.out.println("(5) Log out");
+        System.out.println("(5) Display new orders");
+        System.out.println("(6) View order");
+        System.out.println("(7) Process order");
+        System.out.println("(8) Log out");
         System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''");
     }
 }
