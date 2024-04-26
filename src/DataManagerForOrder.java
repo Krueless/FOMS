@@ -42,7 +42,9 @@ public class DataManagerForOrder implements IDataManager<Order, Integer> {
 			orderList = new ArrayList<Order>();
 		}
 	}
-
+    public void saveData(){
+        serializer.serialize(orderList);
+    }
     /**
      * Updates an existing order in the order list with new details.
      * If the order exists, it is replaced with the new order object.

@@ -65,6 +65,9 @@ public class DataManagerForAccount implements IDataManagerWithCount{
 		}
        
     }
+    public void saveData(){
+        serializer.serialize(accountList);
+    }
 
 
 	/**

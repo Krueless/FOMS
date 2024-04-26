@@ -52,6 +52,14 @@ public class MainUI {
      * @param args Command line arguments (not used).
      */
     public static void main(String[] args) {
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.println("Application shutting down. Saving data...");
+            DataManagerForAccount.getInstance().saveData();
+            DataManagerForBranch.getInstance().saveData();
+            DataManagerForFoodItem.getInstance().saveData();
+            DataManagerForOrder.getInstance().saveData();
+            DataManagerForPayment.getInstance().saveData();
+        }));
         try{
             MainUI mainUI = new MainUI();
             mainUI.chooseOption();

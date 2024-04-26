@@ -13,6 +13,10 @@ public class DisplayFilteredForAccount implements IDisplayFilteredForAccount {
             for (int i = 0; i < array.size(); i++){
                 System.out.println(i+1 +") " + array.get(i).toString());
             }
+            if (array.size() == 0){
+                System.out.println("No records found!");
+                
+            }
         }
 	}
 

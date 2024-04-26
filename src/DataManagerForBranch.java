@@ -20,6 +20,10 @@ public class DataManagerForBranch implements IDataManager<Branch,String>{
 		return instance;
 	}
 
+    public void saveData(){
+        serializer.serialize(branchList);
+    }
+
 	public void loadData(){
 		try{
 			branchList = serializer.deserialize();

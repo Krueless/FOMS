@@ -39,6 +39,10 @@ public class DataManagerForPayment implements IDataManager<IPayment, String>
         return instance;
     }
 
+    public void saveData(){
+        serializer.serialize(paymentList);
+    }
+
 	private void loadData(){
 		try
 		{

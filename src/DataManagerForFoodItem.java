@@ -20,6 +20,10 @@ public class DataManagerForFoodItem implements IDataManager<FoodItem, Integer>{
 		return instance;
 	}
 
+    public void saveData(){
+        serializer.serialize(foodItemList);
+    }
+
     public void loadData(){
         try{
 			foodItemList = serializer.deserialize();
