@@ -1,4 +1,3 @@
-import java.util.Scanner;
 import java.time.ZonedDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -54,8 +53,6 @@ public class Online implements IPayment {
         var cartItems = order.getCartItems();
         float totalCost = 0;
 		        
-		// Calculate total cost by iterating over each item in the cart
-		
         for (int i = 0; i < cartItems.size(); i++) {
             System.out.println(cartItems.get(i).getName() + " x " + 
                 cartItems.get(i).getQuantity() + " : " + 
