@@ -43,7 +43,7 @@ public class OrderedFoodItem extends FoodItem {
     }
 
     /**
-     * Returns a string representation of the ordered food item, detailing its name, unit price, and quantity.
+     * Returns a string representation of the ordered food item, detailing its name, price, and quantity.
      *
      * @return A formatted string describing the ordered food item.
      */

@@ -7,13 +7,12 @@ import java.util.ArrayList;
  */
 public class OrderControl {
 
-    private IDataManager<Order, Integer> orderDB;           // Interface to interact with order data
-    private IDataManager<FoodItem, Integer> foodItemDB;        // Interface to interact with food item data
-    private IDisplayFilteredByBranch displayFormatter;      // Interface for displaying data
-    private OrderControlForCheckout checkout; // Controls the checkout process
-    private OrderControlForCart cart;       // Controls the cart management process
-    private Order order;                    // Current order being managed
-    private String branchName;              // Branch name for context-specific operations
+    private IDataManager<Order, Integer> orderDB;         
+    private IDataManager<FoodItem, Integer> foodItemDB;      
+    private IDisplayFilteredByBranch displayFormatter;      
+    private IOrderControlForCheckout checkout; 
+    private IOrderControlForCart cart;       
+    private Order order;                                
 
     /**
      * Constructs a new OrderControl with all necessary components and initial order settings.
@@ -26,14 +25,13 @@ public class OrderControl {
      * @param order The current order to be managed.
      * @param branchName The branch name where the order is being placed.
      */
-    public OrderControl(IDataManager<Order, Integer> orderDB, IDataManager<FoodItem, Integer> foodItemDB, IDisplayFilteredByBranch displayFormatter, Order order, String branchName) {
+    public OrderControl(IDataManager<Order, Integer> orderDB, IDataManager<FoodItem, Integer> foodItemDB, IDisplayFilteredByBranch displayFormatter, Order order) {
         this.orderDB = orderDB;
         this.foodItemDB = foodItemDB;
         this.displayFormatter = displayFormatter;
         this.checkout = new OrderControlForCheckout();
         this.cart = new OrderControlForCart();
         this.order = order;
-        this.branchName = branchName;
     }
 
     /**
@@ -46,8 +44,8 @@ public class OrderControl {
             branchNameList.add(item);
         }
         System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''");
-        System.out.println(branchName + " Menu");
-        displayFormatter.displayFilteredByBranch(branchNameList, branchName);
+        System.out.println(order.getBranchName() + " Menu");
+        displayFormatter.displayFilteredByBranch(branchNameList, order.getBranchName());
         System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''");
         
     }
@@ -60,8 +58,8 @@ public class OrderControl {
                 branchNameList.add(item);
         }
         System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''");
-        System.out.println(branchName + " Menu");
-        displayFormatter.displayFilteredByBranch(branchNameList, branchName);
+        System.out.println(order.getBranchName() + " Menu");
+        displayFormatter.displayFilteredByBranch(branchNameList, order.getBranchName());
         System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''");
         
     }
@@ -91,7 +89,8 @@ public class OrderControl {
 		{   
             showOptions();
             int choice = GetOption.getValidNumber(7);
-            Order newOrder;
+            Order newOrder;            Order newOrder;
+
 			switch (choice) {
                 case 1: 
                     viewMenu();
@@ -129,7 +128,8 @@ public class OrderControl {
 					break;
 				case 6:
 					if (checkout.checkOut(order, displayFormatter)){
-                        newOrder = checkout.changeOrderStatus(order, OrderStatus.PREPARING);
+                        order.setOrderStatus(OrderStatus.PREPARING);
+                        newOrder = order;
                         orderDB.update(newOrder);
                         quit = true;
                     }
