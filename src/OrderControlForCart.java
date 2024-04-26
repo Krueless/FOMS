@@ -76,16 +76,11 @@ public class OrderControlForCart {
         System.out.println("Please input the ID of the food item you want");
         int foodItemID = getValidNumber();
         FoodItem foodItem = foodItemDB.find(foodItemID);
-		if (foodItem == null)
+		if (foodItem == null || !foodItem.getBranchName().equals(branchName))
 		{
 			System.out.println("Please input a valid ID!");
 			return getFoodItem(foodItemDB, branchName);
 		}
-        if (!foodItem.getBranchName().equals(branchName))
-        {
-            System.out.println("Please input a valid ID!");
-            return getFoodItem(foodItemDB, branchName);
-        }
         return foodItem;
 	}
 	private int getValidNumber() {

@@ -113,14 +113,6 @@ public class Staff extends Account implements IGetBranchName {
 	}
 
 	/**
-	* Return attributes of Staff as String format
- 	*/
-	public String toString(){
-        String out;
-        out = "Name: " + super.getName() + ", StaffID: " + super.getStaffID() + ", Role: " + super.getRole() + ", Gender: " + super.getGender() + ", Age: " + super.getAge() + ", Branch name: " + branchName;
-        return out;
-    }
-	/**
      * Allows the staff member to select options from menu.
      */
 	public void selectOptions(){

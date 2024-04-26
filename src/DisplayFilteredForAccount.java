@@ -48,6 +48,9 @@ public class DisplayFilteredForAccount implements IDisplayFilteredForAccount {
                 j++ ;
             }
         }
+        if (j == 1){
+            System.out.println("No account found for this role!");
+        }
 	}
 
 	/**
@@ -62,6 +65,9 @@ public class DisplayFilteredForAccount implements IDisplayFilteredForAccount {
                 System.out.println(j + ") " + account.toString());
                 j++ ;
             }
+        }
+        if (j == 1){
+            System.out.println("No account found for this gender!");
         }
 	}
 
@@ -78,6 +84,8 @@ public class DisplayFilteredForAccount implements IDisplayFilteredForAccount {
                 j++ ;
             }
         }
+        if (j == 1){
+            System.out.println("No account found for this age!");
+        }
 	}
-
 }
