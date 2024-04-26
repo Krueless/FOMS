@@ -73,11 +73,9 @@ public class Credit implements IPayment
         System.out.println("Total: $" + String.format("%.2f", totalCost));
 
         // Collect credit card information from user input
-        int tries = 0;
-        while (tries < 3){
+        while (true){
             try 
             {
-                tries += 1;
                 System.out.println("Please input your credit card number:");
                 long creditCardNumber = sc.nextLong(); 
                 sc.nextLine();
@@ -92,7 +90,7 @@ public class Credit implements IPayment
                 sc.nextLine();
             }   
         }
-        return (tries < 3);
+        return true;
     }
 
     /**
