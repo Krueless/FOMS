@@ -199,7 +199,7 @@ public class Manager extends Staff{
         FoodItem foodItem=foodItemDB.find(foodID);
         if(foodItem!=null){
             if(!foodItem.getBranchName().equals(branchName)){
-                System.out.println("foodItem not in menu of this branch! Returning to user page...");
+                System.out.println("Food item not in menu of this branch! Returning to user page...");
             }
             //foodItem found
             //delete foodItem

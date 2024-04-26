@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-//TODO: Check why branch information does not save across session.
+
 public class AdminForBranch implements IAdminForBranch{
 	private IDataManager<Branch, String> branchDB;
 	public AdminForBranch(){
@@ -56,8 +56,29 @@ public class AdminForBranch implements IAdminForBranch{
             Branch branch = branchDB.find(branchName);//find the branch
 
             if (branch != null){
-                branchDB.delete(branch);//delete the branch
+                System.out.println("Warning: Closing the branch will cause all account associated to it to be deleted.");
+                System.out.println("To cancel this operation, enter 0.");
+                System.out.println("To confirm this operation, enter 1.");
+                int option = GetOption.getBinaryNumber();
+                if (option == 1){
+                    branchDB.delete(branch);//delete the branch
+                    IDataManagerWithCount accountDB = DataManagerForAccount.getInstance();
+                    ArrayList<Account> accList = accountDB.getAll();
+                    ArrayList<Account> deletedAccList = new ArrayList<Account>();
 
+                    for (Account acc: accList){
+                        if (acc instanceof Staff){
+                            Staff staffAcc = (Staff) acc;
+                            if (staffAcc.getBranchName().equals(branchName)){
+                                deletedAccList.add(staffAcc);
+                            }
+                        }
+                    }
+
+                    for (Account acc: deletedAccList){
+                        accountDB.delete(acc);
+                    }
+                }
             }
             else{
                 System.out.println("Branch not found! Returning to user page...");
