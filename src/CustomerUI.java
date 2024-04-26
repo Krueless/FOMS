@@ -86,10 +86,6 @@ public class CustomerUI {
 	}
 
 	public void showCustomerOptions() {
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            System.out.println("Application shutting down. Saving data...");
-            DataManagerForOrder.getInstance().saveData();
-        }));
 		Scanner sc = GlobalResource.SCANNER;
         boolean quit = false;
 
