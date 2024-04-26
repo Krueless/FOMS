@@ -1,9 +1,20 @@
 import java.io.Serializable;
 
+/**
+ * The {@code IAdminForPayment} interface defines the administrative operations needed for managing payment methods within a system.
+ */
 public interface IAdminForPayment extends Serializable {
 
-	public abstract void addPaymentMethod();
+    /**
+     * Adds a new payment method to the system.
+	 * 
+     */
+    void addPaymentMethod();
 
-	public abstract void removePaymentMethod();
+    /**
+     * Removes an existing payment method from the system.
+     *
+     */
+    void removePaymentMethod();
 
 }
