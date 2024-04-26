@@ -1,5 +1,3 @@
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
 /**
  * Manages the checkout processes for an order, including updating order status, handling payment,

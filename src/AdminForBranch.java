@@ -56,15 +56,20 @@ public class AdminForBranch implements IAdminForBranch{
             Branch branch = branchDB.find(branchName);//find the branch
 
             if (branch != null){
-                System.out.println("Warning: Closing the branch will cause all account associated to it to be deleted.");
+                System.out.println("Warning: Closing the branch will cause all account and menu items associated to it to be deleted.");
                 System.out.println("To cancel this operation, enter 0.");
                 System.out.println("To confirm this operation, enter 1.");
                 int option = GetOption.getBinaryNumber();
                 if (option == 1){
                     branchDB.delete(branch);//delete the branch
                     IDataManagerWithCount accountDB = DataManagerForAccount.getInstance();
+                    IDataManager<FoodItem,Integer> foodItemDB = DataManagerForFoodItem.getInstance();
+
                     ArrayList<Account> accList = accountDB.getAll();
                     ArrayList<Account> deletedAccList = new ArrayList<Account>();
+
+                    ArrayList<FoodItem> foodItemList = foodItemDB.getAll();
+                    ArrayList<FoodItem> deletedFoodItems = new ArrayList<FoodItem>();
 
                     for (Account acc: accList){
                         if (acc instanceof Staff){
@@ -78,6 +83,17 @@ public class AdminForBranch implements IAdminForBranch{
                     for (Account acc: deletedAccList){
                         accountDB.delete(acc);
                     }
+
+                    for (FoodItem item: foodItemList){
+                        if (item.getBranchName().equals(branchName)){
+                            deletedFoodItems.add(item);
+                        }
+                    }
+
+                    for (FoodItem item: deletedFoodItems){
+                        foodItemDB.delete(item);
+                    }
+
                 }
             }
             else{
