@@ -3,17 +3,18 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 /**
- * The {@code Online} class implements the {@code IPayment} interface to handle online payments via a QR code system.
- * It includes methods to process the payment and print a receipt for the transaction.
+ * Implements the {@code IPayment} interface to handle online payments for orders via a QR code system.
+ * This class supports operations to process payments and print detailed receipts for transactions.
+ * It assumes payments always succeed for demonstration purposes.
  */
 public class Online implements IPayment {
     private static final long serialVersionUID = 1L;
     private String name;  // Name of the online payment system
 
     /**
-     * Constructs a new {@code Online} object with the specified name of the online payment type.
+     * Constructs a new {@code Online} object with the name of the online payment type.
      *
-     * @param name The name of the online payment type
+     * @param name The name of the online payment type used in transactions.
      */
     public Online(String name) 
 	{
@@ -21,9 +22,9 @@ public class Online implements IPayment {
     }
 
     /**
-     * Returns the name of the online payment type.
+     * Retrieves the name of the online payment system.
      *
-     * @return The name of the payment type.
+     * @return The name of the online payment system.
      */
     public String getName() 
 	{
@@ -33,7 +34,7 @@ public class Online implements IPayment {
     /**
      * Sets the name of the online payment system to the specified string.
      *
-     * @param name The new name of the payment system.
+     * @param name The new name for the online payment system.
      */
     public void setName(String name) 
 	{
@@ -41,12 +42,13 @@ public class Online implements IPayment {
     }
 
     /**
-     * Processes the payment for an order by simulating a PayNow QR code scan.
-     * It displays the total cost and simulates a payment confirmation after a delay.
-     * This implementation assumes the payment process always succeeds for simulation purposes.
+     * Processes the payment for the specified order by simulating a QR code payment.
+     * Displays the total cost and simulates payment confirmation after a short delay.
+     * Always returns {@code true} to indicate successful payment simulation.
      *
-     * @param order The order for which payment is to be processed.
-     * @return {@code true} to indicate that the payment was processed successfully.
+     * @param order The order for which payment is being processed.
+     * @return {@code true} indicating that the payment was processed successfully.
+     * @throws InterruptedException if the thread is interrupted during the simulated delay.
      */
     @Override
     public boolean processPayment(Order order) {
@@ -74,10 +76,10 @@ public class Online implements IPayment {
     }
 
     /**
-     * Prints a receipt for the order, including the order details and the payment confirmation time.
-     * The receipt includes each item's name, quantity, price, and the total payment made.
+     * Prints a receipt for the specified order, detailing each item purchased and the total cost.
+     * The receipt also includes the payment confirmation time stamped with the current date and time.
      *
-     * @param order The order for which the receipt is printed.
+     * @param order The order for which the receipt is being printed.
      */
     @Override
     public void printReceipt(Order order) {
@@ -98,13 +100,14 @@ public class Online implements IPayment {
     }
 
      /**
-     * Returns a string representation of the {@code Online} object, including the class name and payment method name.
+     * Returns a string representation of the {@code Online} object, which includes the name of the payment system
+     * and the class name, formatted for clarity and debugging purposes.
      *
-     * @return A string representing the {@code Online} object, which includes the class name and the name of the payment method.
+     * @return A string representation of the {@code Online} payment system details.
      */
     @Override
     public String toString() 
 	{
-        return this.name + " (" + getClass().getSimpleName() +")";
+        return this.name + " (" + getClass().getSimpleName() + ")";
     }
 }
