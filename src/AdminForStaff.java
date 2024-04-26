@@ -395,6 +395,7 @@ public class AdminForStaff implements IAdminForStaff{
                         accountDB.delete(staffAccount);
                             //add the Manager object to the accountList in Data ManagerForAccount
                         accountDB.add(managerAccount);
+                        System.out.println("Staff is successfully promoted.");
                     }
                     else{
                         System.out.println("Too many Managers in branch!");
@@ -451,6 +452,7 @@ public class AdminForStaff implements IAdminForStaff{
                 if (validQuota){
                     staffAcc.setBranchName(branchNameTo);
                     accountDB.update(staffAcc);
+                    System.out.println("Staff is successfully transferred.");
                 }
 
                 else{
