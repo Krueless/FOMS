@@ -94,7 +94,7 @@ public class Online implements IPayment {
             totalCost += cartItems.get(i).getPrice() * cartItems.get(i).getQuantity();
         }
         System.out.println("Total: $" + String.format("%.2f", totalCost));
-        System.out.println("Order " + order.getOrderID() + " paid on " + formattedDateTime);
+        System.out.println("Order " + order.getOrderID() + " paid on " + formattedDateTime + " using " + name);
     }
 
      /**

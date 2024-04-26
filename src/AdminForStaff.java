@@ -44,29 +44,55 @@ public class AdminForStaff implements IAdminForStaff{
                 choice = sc.nextLine();
                 switch (choice){
                     case "1":
-                        System.out.println("Enter new name:");
-                        String name = sc.nextLine();
+                        String name;
+                        do {
+                            System.out.println("Enter new name:");
+                            name = sc.nextLine();
+                            if (name.trim().isEmpty())
+                                System.out.println("Name field cannot be empty.");
+                        } while (name.trim().isEmpty());
                         account.setName(name);
                         break;
+
                     case "2":
-                        System.out.println("Enter new gender:");
-                        String gender = sc.nextLine();
+                        String gender;
+                        do {
+                            System.out.println("Enter new gender (M/F):");
+                            gender = sc.nextLine();
+                            if (!(gender.equals("M") || gender.equals("F")))
+                                System.out.println("Invalid gender.");
+                        } while (!(gender.equals("M") || gender.equals("F")));
                         account.setGender(gender);
                         break;
+
                     case "3":
-                        System.out.println("Enter new age:");
-                        int age = sc.nextInt();
+                        int age = -1;
+                        do{
+                            try {
+                                System.out.println("Enter age (18 to 65):");
+                                age = sc.nextInt();
+                                sc.nextLine();
+                                if (!(age >= 18 || age <= 65)) {
+                                    System.out.println("Please enter an age number between 18 to 65.");
+                                } 
+                            } catch (InputMismatchException e) {
+                                System.out.println("Please enter a valid number.");
+                                sc.nextLine();
+                            }
+                        } while (!(age >= 18 || age <= 65) || (age == -1));
                         account.setAge(age);
-                        sc.nextLine();
                         break;
+
                     case "4":
                         System.out.println("Enter new password:");
                         String password = sc.nextLine();
                         account.setPassword(password);
                         break;
+
                     case "5":
                         exit = true;
                         break;
+
                     default:
                         System.out.println("Invalid option.");
                         break;
@@ -94,10 +120,10 @@ public class AdminForStaff implements IAdminForStaff{
             Boolean valid = false;
 
             if (account instanceof Manager){
-                valid = QuotaChecker.checkQuotaForManager(numStaff, numManager - 1);
+                valid = QuotaChecker.checkQuotaForRemoveManager(numStaff, numManager - 1);
             }
             else{
-                valid = QuotaChecker.checkQuotaForStaff(numStaff - 1, numManager);
+                valid = QuotaChecker.checkQuotaForRemoveStaff(numStaff - 1, numManager);
             }
 
             if (valid)
@@ -185,7 +211,7 @@ public class AdminForStaff implements IAdminForStaff{
             if (numStaff < branch.getStaffQuota()) {
 
 
-                if (QuotaChecker.checkQuotaForStaff(numStaff + 1, numManager)){
+                if (QuotaChecker.checkQuotaForAddStaff(numStaff + 1, numManager)){
                     accountDB.add(createStaff(branchName, "S"));
                 } 
                 else{
@@ -222,7 +248,7 @@ public class AdminForStaff implements IAdminForStaff{
 
         do{
             System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''");
-	        System.out.println("Choose filter by");
+	        System.out.println("Choose option to filter by");
 	        System.out.println("(1) Branch");
 	        System.out.println("(2) Role");
 	        System.out.println("(3) Gender");
@@ -271,8 +297,8 @@ public class AdminForStaff implements IAdminForStaff{
 
                 case "3":
                     System.out.println("Choose gender to display");
-                    System.out.println("1. Male");
-                    System.out.println("2. Female");
+                    System.out.println("(1) Male");
+                    System.out.println("(2) Female");
                     String gender = sc.nextLine();
 
                     switch (gender){
@@ -296,7 +322,7 @@ public class AdminForStaff implements IAdminForStaff{
                         displayFormatter.displayFilteredByAge(accountList,age);
                     } catch (InputMismatchException e){
                         System.out.println("Age must be a number.");
-                        sc.nextLine(); //consume the invalid input
+                        sc.nextLine();
                     }
                     break;
                 
@@ -331,7 +357,7 @@ public class AdminForStaff implements IAdminForStaff{
             int numStaff = accountDB.countStaffInBranch(branchName);
             int numManager = accountDB.countManagerInBranch(branchName);
 
-            if (QuotaChecker.checkQuotaForManager(numStaff, numManager+1)){
+            if (QuotaChecker.checkQuotaForAddManager(numStaff, numManager+1)){
                 //add manager
                 accountDB.add(createStaff(branchName, "M"));
             }
@@ -361,7 +387,7 @@ public class AdminForStaff implements IAdminForStaff{
                     int numStaff = accountDB.countStaffInBranch(branchName);
                     int numManager = accountDB.countManagerInBranch(branchName);
 
-                    if (QuotaChecker.checkQuotaForStaff(numStaff - 1,numManager) && QuotaChecker.checkQuotaForManager(numStaff,numManager + 1)){
+                    if (QuotaChecker.checkQuotaForRemoveStaff(numStaff - 1,numManager) && QuotaChecker.checkQuotaForAddManager(numStaff,numManager + 1)){
                         //create a new Manager object and copy all attributes of staff
                         DataManagerForOrder orderDB = DataManagerForOrder.getInstance();
                         DisplayFilteredByBranch displayFilteredByBranch = new DisplayFilteredByBranch();
@@ -418,11 +444,11 @@ public class AdminForStaff implements IAdminForStaff{
                 boolean validQuota = false;
 
                 if (staffAcc instanceof Manager){
-                    validQuota = QuotaChecker.checkQuotaForManager(numStaffFrom, numManagerFrom - 1) && QuotaChecker.checkQuotaForManager(numStaffTo, numManagerTo + 1);
+                    validQuota = QuotaChecker.checkQuotaForRemoveManager(numStaffFrom, numManagerFrom - 1) && QuotaChecker.checkQuotaForAddManager(numStaffTo, numManagerTo + 1);
                 }
 
                 else{
-                    validQuota = QuotaChecker.checkQuotaForStaff(numStaffFrom - 1, numManagerFrom) && QuotaChecker.checkQuotaForStaff(numStaffTo + 1,numManagerTo);
+                    validQuota = QuotaChecker.checkQuotaForRemoveStaff(numStaffFrom - 1, numManagerFrom) && QuotaChecker.checkQuotaForAddStaff(numStaffTo + 1,numManagerTo);
                 }
 
                 if (validQuota){
