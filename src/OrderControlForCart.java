@@ -24,6 +24,7 @@ public class OrderControlForCart {
             if (orderedFoodItem.getID() == currentFoodItem.getID()){
                 currentFoodItem.setQuantity(currentFoodItem.getQuantity() + orderedFoodItem.getQuantity());
                 order.getCartItems().set(i, currentFoodItem);
+                order.setPrice(order.getPrice()+currentFoodItem.getPrice());
                 return order;
             }
         }
@@ -53,6 +54,7 @@ public class OrderControlForCart {
             System.out.println("Going back to Customer Interface");
 			return null;
         } else {
+            order.setPrice(order.getPrice()-order.getCartItems().get(index).getPrice());
             order.getCartItems().remove(index);
         }
 		System.out.println("Item successfully removed from cart!");
@@ -83,7 +85,9 @@ public class OrderControlForCart {
             System.out.println("Please input what quantity you want to change it to");
             int newQuantity = GetOption.getValidNumber();
             OrderedFoodItem item = order.getCartItems().get(index);
+            order.setPrice(order.getPrice() - item.getPrice());
             item.setQuantity(newQuantity);
+            order.setPrice(order.getPrice() + item.getPrice());
 			order.getCartItems().set(index,item);
         }
         return order;
