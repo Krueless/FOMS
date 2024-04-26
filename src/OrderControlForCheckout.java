@@ -47,7 +47,7 @@ public class OrderControlForCheckout {
         String dineInOption = order.getTakeaway() ? "takeout" : "dine-in";
         System.out.println("Dine-in option is currently " + dineInOption);
         System.out.println("Would you like to change it? If so, enter 1 else enter 0");
-		int choice = getValidNumber();
+		int choice = GetOption.getBinaryNumber();
 		if (choice == 1)
 		{
 			order.setTakeaway(!order.getTakeaway());
@@ -55,24 +55,5 @@ public class OrderControlForCheckout {
         return order;
     }
 
-	private int getValidNumber() {
-        Scanner sc = GlobalResource.SCANNER;
-        while (true) {
-            try {
-                int number = sc.nextInt();
-                if (number == 0 || number == 1) {
-                    return number;
-                } else {
-                    sc.nextLine();
-                    System.out.println("Please input a 1 or 0");
-                }
-            } catch (InputMismatchException e) {
-                sc.nextLine(); 
-                System.out.println("Please input a valid integer");
-            } catch (Exception e) {
-                sc.nextLine();
-                System.out.println("An error occured, please try again.");
-            }
-        }
-    }
+	
 }

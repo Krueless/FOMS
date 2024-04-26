@@ -31,6 +31,44 @@ public class Manager extends Staff{
         displayFormatter.displayFilteredByBranch(menuList, branchName);
         System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''");
     }
+
+    private double getPriceFromUser(){
+        Scanner sc = GlobalResource.SCANNER;
+        double price = 0;
+        do{
+            try {
+                System.out.println("Enter the price of the food item");
+                price = sc.nextDouble();
+                sc.nextLine();
+                if (price <= 0) {
+                    System.out.println("Please input a positive number!");
+                }
+            } catch (InputMismatchException e) {
+                sc.nextLine(); 
+                System.out.println("Please input a valid numeric!");
+            }
+        }while (price <= 0);
+        return price;
+    }
+
+    private int getFoodIDFromUser(){
+        Scanner sc = GlobalResource.SCANNER;
+        int foodID = 0;
+        do{
+            try{
+                System.out.println("Enter the FoodID of the item:");
+                foodID = sc.nextInt();
+                sc.nextLine();  
+                if (foodID == 0){
+                    System.out.println("FoodID cannot be 0! Try again.");
+                }
+            }catch (InputMismatchException e) {
+                sc.nextLine(); 
+                System.out.println("Please input a valid Integer!");
+            }
+        }while (foodID == 0);
+        return foodID;
+    }
    /**
      * Allows Manager to display the staff list in the branch supervised by the manager. 
      */
@@ -54,14 +92,14 @@ public class Manager extends Staff{
         displayMenu();
         Scanner sc=GlobalResource.SCANNER;
         int FoodID = menuList.size() + 1;
-        boolean duplicate = true;
+        boolean duplicate = false;
         do{
             System.out.println("Enter the name of the new food item: ");
             String name=sc.nextLine();
     
             for (FoodItem item: foodItemList){
                 if (item.getBranchName().equals(branchName) && item.getName().equals(name)){
-                    duplicate = false;
+                    duplicate = true;
                     System.out.println("New food item must be different from existing. Try again!");
                     break;
                 }
@@ -96,21 +134,7 @@ public class Manager extends Staff{
             }
         }while (itemCategory.equals("NA"));
         
-        double price = 0;
-        do{
-            try {
-                System.out.println("Enter the price of the food item");
-                price = sc.nextDouble();
-                sc.nextLine();
-                if (price <= 0) {
-                    System.out.println("Please input a positive number!");
-                }
-            } catch (InputMismatchException e) {
-                sc.nextLine(); 
-                System.out.println("Please input a valid numeric!");
-            }
-        }while (price <= 0);
-        
+        double price = getPriceFromUser();
         //construct new food item
         FoodItem fooditem=new FoodItem(FoodID,name,price,super.getBranchName(),itemCategory);
         //add the new food item to menu
@@ -124,52 +148,62 @@ public class Manager extends Staff{
         //get the foodID of the food item to edit
         Scanner sc = GlobalResource.SCANNER;
         displayMenu();
-        System.out.println("Enter the FoodID");
-        int foodID=sc.nextInt();
+        int foodID = getFoodIDFromUser();
         //search for the fooditem in foodItemDB
         FoodItem foodItem=foodItemDB.find(foodID);
-        if(foodItem!=null){
-            if(foodItem.getBranchName().equals(branchName)==false){
+        if (foodItem != null){
+            if(!foodItem.getBranchName().equals(branchName)){
                 System.out.println("FoodItem not in menu of this branch! Returning to user page...");
-                sc.close();
                 return;
             }
-            //foodItem found
+            //else foodItem found in manager's branch
             //select the attribute to edit
             int choice;
+            boolean exit = false;
             do{
                 System.out.println("Select the attribute to edit:");
-                System.out.println("1. Availability of FoodItem");
-                System.out.println("2. Price of FoodItem");
-                System.out.println("3. Exit");
+                System.out.println("(1) Availability of FoodItem");
+                System.out.println("(2) Price of FoodItem");
+                System.out.println("(3) Exit");
                 choice=sc.nextInt();
+                
                 switch(choice){
                     case 1:
-                    System.out.println("Select the availability of the food item");
-                    System.out.println("1. Available");
-                    System.out.println("2. Not Available");
-                    int availability_choice = sc.nextInt();
-                    switch (availability_choice){
-                        case 1:
-                        foodItem.setAvailability(true);
+                        System.out.println("Select the availability of the food item");
+                        System.out.println("(1) Available");
+                        System.out.println("(2) Not Available");
+                        int availability_choice = sc.nextInt();
+
+                        switch (availability_choice){
+                            case 1:
+                                foodItem.setAvailability(true);
+                                System.out.println("Food Item is changed to available.");
+                                break;
+                            case 2:
+                                foodItem.setAvailability(false);
+                                System.out.println("Food Item is changed to not available.");
+                                break;
+                            case 3: 
+                                exit = true;
+                                break;
+                            default:
+                                System.out.println("Invalid option");
+                                break;
+                        }
                         break;
-                        case 2:
-                        foodItem.setAvailability(false);
-                        break;
-                        default:
-                        System.out.println("Invalid option");
-                    }
-                    break;
                     case 2:
-                    System.out.println("Enter the new price of the food item");
-                    double price=sc.nextDouble();
-                    foodItem.setPrice(price);
-                    break;
+                        foodItem.setPrice(getPriceFromUser());
+                        break;
+                    default:
+                        System.out.println("Invalid option");
+                        break;
                 }
-            }while(choice != 3);
+            } while (exit);
+
             foodItemDB.update(foodItem);
-        }else{
-            System.out.println("Food item not found! Returning to user page...");
+        }
+        else{
+            System.out.println("Food item does not exist! Returning to user page...");
         }
     }
 	
@@ -177,13 +211,13 @@ public class Manager extends Staff{
      * Allows Manager to remove an item from menu of the branch it is in charge of
      */
     public void removeItem(){
-        Scanner sc = GlobalResource.SCANNER;
-        System.out.println("Enter the FoodID");
-        int foodID=sc.nextInt();
+        displayMenu();
+        int foodID = getFoodIDFromUser();
+
         //search for the fooditem with the corresponding FoodID
         FoodItem foodItem=foodItemDB.find(foodID);
         if(foodItem!=null){
-            if(foodItem.getBranchName().equals(super.getBranchName())==false){
+            if(!foodItem.getBranchName().equals(branchName)){
                 System.out.println("foodItem not in menu of this branch! Returning to user page...");
             }
             //foodItem found

@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * Handles the user interface for payment processing. It allows users to select a payment method,
@@ -39,7 +38,7 @@ public class PaymentUI {
     public Boolean choosePaymentOption(Order order) 
 	{
         showPaymentOptions();
-        int choice = getValidNumber(paymentDB.getAll().size());
+        int choice = GetOption.getValidNumber(paymentDB.getAll().size());
         ArrayList<IPayment> paymentList = paymentDB.getAll();
 		IPayment selectedPayment = paymentList.get(choice - 1);
 		if (selectedPayment.processPayment(order)) 
@@ -54,24 +53,6 @@ public class PaymentUI {
             return false;
 		}
 		
-    }
-
-	private int getValidNumber(int max) {
-        Scanner sc = GlobalResource.SCANNER;
-        while (true) {
-            try {
-                int quantity = sc.nextInt();
-                sc.nextLine();
-                if (quantity > 0 && quantity <= max) { 
-                    return quantity;
-                } else {
-                    System.out.println("Please input a number between 1 and " + max + "!");
-                }
-            } catch (Exception e) {
-                sc.nextLine();
-                System.out.println("Please input a valid integer");
-            }
-        }
     }
 
 }
