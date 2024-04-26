@@ -24,7 +24,6 @@ public class DataManagerForAccount implements IDataManagerWithCount{
 		try{
 			accountList = serializer.deserialize();
 		}catch (IOException | ClassNotFoundException e){
-			System.out.println("Account: Serialized file not found or invalid, initialising from CSV.");
 			accountList = new ArrayList<Account>();
 			initializeFromCSV();
 		}

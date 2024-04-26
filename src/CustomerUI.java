@@ -15,8 +15,8 @@ public class CustomerUI {
         while (!valid) {
             try {
                 System.out.println("Please select an option. ");
-                System.out.println("1. Dine-in");
-                System.out.println("2. Takeaway");
+                System.out.println("(1) Dine-in");
+                System.out.println("(2) Takeaway");
                 String option = sc.nextLine();
                 switch (option) {
                     case "1": //Dine-in
@@ -97,9 +97,9 @@ public class CustomerUI {
             try {
                 System.out.println("Welcome to " + branchName);
                 System.out.println("Please select one of the following options.");
-                System.out.println("1. Create Order");
-                System.out.println("2. Check Order Status");
-                System.out.println("3. Quit");
+                System.out.println("(1) Create Order");
+                System.out.println("(2) Check Order Status");
+                System.out.println("(3) Quit");
                 String option = sc.nextLine();
 
                 switch (option) {
