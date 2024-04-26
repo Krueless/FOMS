@@ -6,8 +6,6 @@ public class AdminForStaff implements IAdminForStaff{
     private IDataManagerWithCount accountDB;
     private IDataManager<Branch, String> branchDB;
     private IDisplayFilteredForAccount displayFormatter;
-    private transient Scanner sc = GlobalResource.SCANNER;
-
 
     public AdminForStaff(){
         this.displayFormatter=new DisplayFilteredForAccount();
@@ -17,6 +15,7 @@ public class AdminForStaff implements IAdminForStaff{
      * Helper function to find the staff account based on user input for Staff ID
      */
     private Account getStaffFromUser(){
+        Scanner sc = GlobalResource.SCANNER;
         System.out.println("Enter the staffID:");
         String staffID = sc.nextLine();
         Account account = accountDB.find(staffID);
@@ -27,6 +26,7 @@ public class AdminForStaff implements IAdminForStaff{
      * Allows admin to edit the attributes in a staff account
      */
     public void editStaff(){
+        Scanner sc = GlobalResource.SCANNER;
         accountDB=DataManagerForAccount.getInstance();
         Account account = getStaffFromUser();
         Boolean exit = false;
@@ -84,33 +84,36 @@ public class AdminForStaff implements IAdminForStaff{
      */
     public void removeStaff(){
         accountDB=DataManagerForAccount.getInstance();
-	    System.out.println("Enter branch to remove Staff from:");
-        String branchName = sc.nextLine();
-        Branch branch = branchDB.find(branchName);
+        Account account = getStaffFromUser();
 
-        if (branch != null){
+        if (account instanceof Staff){
+            Staff staffAccount = (Staff) account;
+            String branchName = staffAccount.getBranchName(); 
             int numManager = accountDB.countManagerInBranch(branchName);
             int numStaff = accountDB.countStaffInBranch(branchName);
+            Boolean valid = false;
 
-            if (QuotaChecker.checkQuota(numStaff-1, numManager)){
-                Account staffAccount = getStaffFromUser();
-                if (staffAccount != null){
-                    accountDB.delete(staffAccount);
-                }else {
-                    System.out.println("Account not found! Returning to user page...");
-                }
-            } 
-            else {
-                System.out.println("Too many Managers in branch! ");
-                System.out.println("Returning to user page..."); 
+            if (account instanceof Manager){
+                valid = QuotaChecker.checkQuotaForManager(numStaff, numManager - 1);
             }
-        } 
-        else{
-            System.out.println("Branch not found! Returning to user page...");
+            else{
+                valid = QuotaChecker.checkQuotaForStaff(numStaff - 1, numManager);
+            }
+
+            if (valid)
+                accountDB.delete(staffAccount);
+            else{
+                System.out.println("Account cannot be removed. Invalid Manager to Staff Ratio!");
+                System.out.println("Returning to user page...");
+            }
+        }
+        else {
+            System.out.println("Account not found/Admin account cannot be removed! Returning to user page...");
         }
     }
 
     private Staff createStaff(String branchName, String role){
+        Scanner sc = GlobalResource.SCANNER;
         System.out.println("Enter Staff ID:");
         String staffID = sc.nextLine();
 
@@ -146,6 +149,7 @@ public class AdminForStaff implements IAdminForStaff{
      * Allows admin to add a new staff account to the staff list
      */
     public void addStaff(){
+        Scanner sc = GlobalResource.SCANNER;
         accountDB = DataManagerForAccount.getInstance();
         displayFormatter.displayAll(branchDB.getAll());
 	    System.out.println("Enter the name of branch to assign Staff:");
@@ -155,15 +159,18 @@ public class AdminForStaff implements IAdminForStaff{
 
         if (branch != null){
             int numStaff = accountDB.countStaffInBranch(branchName);
+            int numManager = accountDB.countManagerInBranch(branchName);
+            System.out.println(numStaff);
+            System.out.println(numManager);
 
             if (numStaff < branch.getStaffQuota()) {
-                int numManager = accountDB.countManagerInBranch(branchName);
 
-                if (QuotaChecker.checkQuota(numStaff + 1, numManager)){
+
+                if (QuotaChecker.checkQuotaForStaff(numStaff + 1, numManager)){
                     accountDB.add(createStaff(branchName, "S"));
                 } 
                 else{
-                    System.out.println("Not enough Managers in branch. Failed to add staff! ");
+                    System.out.println("Not enough managers in branch. Failed to add staff! ");
                     System.out.println("Returning to user page..."); 
                 }
             }
@@ -180,6 +187,7 @@ public class AdminForStaff implements IAdminForStaff{
      * Allows admin to display the staff list with filters
      */
     public void displayStaff(){
+        Scanner sc = GlobalResource.SCANNER;
         accountDB = DataManagerForAccount.getInstance();
 		ArrayList<Account> accountList = accountDB.getAll();
         ArrayList<IGetBranchName> staffList = new ArrayList<>();
@@ -293,6 +301,7 @@ public class AdminForStaff implements IAdminForStaff{
      * Allows admin to assign Managers to a branch within the quota constraint
      */
     public void assignManager(){
+        Scanner sc = GlobalResource.SCANNER;
         accountDB = DataManagerForAccount.getInstance();
         displayFormatter.displayAll(branchDB.getAll());
         System.out.println("Enter the name of branch to assign Manager:");
@@ -303,7 +312,7 @@ public class AdminForStaff implements IAdminForStaff{
             int numStaff = accountDB.countStaffInBranch(branchName);
             int numManager = accountDB.countManagerInBranch(branchName);
 
-            if (QuotaChecker.checkQuota(numStaff, numManager+1)){
+            if (QuotaChecker.checkQuotaForManager(numStaff, numManager+1)){
                 //add manager
                 accountDB.add(createStaff(branchName, "M"));
             }
@@ -321,7 +330,6 @@ public class AdminForStaff implements IAdminForStaff{
      * Allows admin to promote a staff to branch manager
      */
     public void promoteStaff(){
-        //find the staff to be promoted
         accountDB = DataManagerForAccount.getInstance();
         Account account = getStaffFromUser();
         if(account != null){
@@ -334,7 +342,7 @@ public class AdminForStaff implements IAdminForStaff{
                     int numStaff = accountDB.countStaffInBranch(branchName);
                     int numManager = accountDB.countManagerInBranch(branchName);
 
-                    if (QuotaChecker.checkQuota(numStaff-1,numManager+1)){
+                    if (QuotaChecker.checkQuotaForStaff(numStaff - 1,numManager) && QuotaChecker.checkQuotaForManager(numStaff,numManager + 1)){
                         //create a new Manager object and copy all attributes of staff
                         DataManagerForOrder orderDB = DataManagerForOrder.getInstance();
                         DisplayFilteredByBranch displayFilteredByBranch = new DisplayFilteredByBranch();
@@ -369,6 +377,7 @@ public class AdminForStaff implements IAdminForStaff{
      * Allows admin to transfer a Staff/Manager between branches
      */
     public void transferStaff(){
+        Scanner sc = GlobalResource.SCANNER;
         accountDB = DataManagerForAccount.getInstance();
         //take in 2 branches and check if they both exist
         Account account = getStaffFromUser();
@@ -390,11 +399,11 @@ public class AdminForStaff implements IAdminForStaff{
                 boolean validQuota = false;
 
                 if (staffAcc instanceof Manager){
-                    validQuota = QuotaChecker.checkQuota(numStaffFrom, numManagerFrom - 1) && QuotaChecker.checkQuota(numStaffTo, numManagerTo + 1);
+                    validQuota = QuotaChecker.checkQuotaForManager(numStaffFrom, numManagerFrom - 1) && QuotaChecker.checkQuotaForManager(numStaffTo, numManagerTo + 1);
                 }
 
                 else{
-                    validQuota = QuotaChecker.checkQuota(numStaffFrom - 1, numManagerFrom) && QuotaChecker.checkQuota(numStaffTo + 1,numManagerTo);
+                    validQuota = QuotaChecker.checkQuotaForStaff(numStaffFrom - 1, numManagerFrom) && QuotaChecker.checkQuotaForStaff(numStaffTo + 1,numManagerTo);
                 }
 
                 if (validQuota){
