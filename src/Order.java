@@ -152,7 +152,7 @@ public class Order implements IGetBranchName{
 
     /**
      * Generates a detailed string representation of the order, including all attributes and their values,
-     * formatted for easy reading. This is particularly useful for logging and debugging purposes.
+     * formatted for easy reading.
      *
      * @return A string representation of the order.
      */
@@ -179,7 +179,10 @@ public class Order implements IGetBranchName{
 
 
     /**
-     * @return
+     * Generates a string for each of the different order status', providing the customer with a consumer-friendly
+     * message on the status of their order.
+     * 
+     * @return A string with a message on the orderstatus.
      */
     public String viewOrderStatus() {
         updateCancelled();
