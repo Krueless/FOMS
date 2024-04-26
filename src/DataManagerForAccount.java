@@ -130,10 +130,10 @@ public class DataManagerForAccount implements IDataManagerWithCount{
 	public int countStaffInBranch(String branchName) {
 		int staffCount = 0;
 		for (Account currAcc: accountList) {
-			if (currAcc.getRole() == "S"){
+			if (currAcc.getRole().equals("S")){
 				if (currAcc instanceof Staff){
 					Staff staffAcc = (Staff) currAcc;
-					if (staffAcc.getBranchName() == branchName) 
+					if (staffAcc.getBranchName().equals(branchName)) 
 						staffCount++;
 				}
 			}
@@ -148,10 +148,10 @@ public class DataManagerForAccount implements IDataManagerWithCount{
 	public int countManagerInBranch(String branchName) {
 		int managerCount = 0;
 		for (Account currAcc: accountList) {
-			if (currAcc.getRole() == "M"){
+			if (currAcc.getRole().equals("M")){
 				if (currAcc instanceof Manager){
 					Manager managerAcc = (Manager) currAcc;
-					if (managerAcc.getBranchName() == branchName) 
+					if (managerAcc.getBranchName().equals(branchName)) 
 						managerCount++;
 				}
 			}

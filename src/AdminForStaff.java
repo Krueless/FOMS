@@ -123,15 +123,36 @@ public class AdminForStaff implements IAdminForStaff{
             staffID = sc.nextLine();
         }
 
-        System.out.println("Enter name:");
-        String name = sc.nextLine();
-
-        System.out.println("Enter gender:");
-        String gender = sc.nextLine();
-
-        System.out.println("Enter age:");
-        int age = sc.nextInt();
-        sc.nextLine();
+        String name, gender;
+        int age = -1;
+        do {
+            System.out.println("Enter name:");
+            name = sc.nextLine();
+            if (name.trim().isEmpty())
+                System.out.println("Name field cannot be empty.");
+        } while (name.trim().isEmpty());
+        
+        do {
+            System.out.println("Enter gender (M/F):");
+            gender = sc.nextLine();
+            if (!(gender.equals("M") || gender.equals("F")))
+                System.out.println("Invalid gender.");
+        } while (!(gender.equals("M") || gender.equals("F")));
+        
+        do{
+            try {
+                System.out.println("Enter age (18 to 65):");
+                age = sc.nextInt();
+                sc.nextLine();
+                if (!(age >= 18 || age <= 65)) {
+                    System.out.println("Please enter an age number between 18 to 65.");
+                } 
+            } catch (InputMismatchException e) {
+                System.out.println("Please enter a valid number.");
+                sc.nextLine();
+            }
+        } while (!(age >= 18 || age <= 65) || (age == -1));
+        
 
         IDataManager<Order,Integer> orderDB = DataManagerForOrder.getInstance();
         DisplayFilteredByBranch displayFormatter = new DisplayFilteredByBranch();
@@ -152,7 +173,7 @@ public class AdminForStaff implements IAdminForStaff{
         Scanner sc = GlobalResource.SCANNER;
         accountDB = DataManagerForAccount.getInstance();
         displayFormatter.displayAll(branchDB.getAll());
-	    System.out.println("Enter the name of branch to assign Staff:");
+	    System.out.println("Enter the name of branch to assign Staff (case-sensitive):");
     
         String branchName = sc.nextLine();
         Branch branch = branchDB.find(branchName);
@@ -160,8 +181,6 @@ public class AdminForStaff implements IAdminForStaff{
         if (branch != null){
             int numStaff = accountDB.countStaffInBranch(branchName);
             int numManager = accountDB.countManagerInBranch(branchName);
-            System.out.println(numStaff);
-            System.out.println(numManager);
 
             if (numStaff < branch.getStaffQuota()) {
 
