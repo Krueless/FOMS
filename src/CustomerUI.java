@@ -48,31 +48,17 @@ public class CustomerUI {
 
     private void completeOrder(Order order)
     {
-        Scanner sc = GlobalResource.SCANNER;
-        int choice = -1;
-        while (true)
-        {
-            try{
-                System.out.println("Would you like to pick up? Press 1 for yes and 0 for no");
-                choice = sc.nextInt();
-                if (choice == 1){
-                    System.out.println("Thank you for shopping at McOOP!");
-                    break;
-                }
-                else if (choice == 0){
-                    System.out.println("Remember to pick up your food before it cancels");
-                    break;
-                }
-                System.out.println("Please input 1 or 0");
-                sc.nextLine();
-            } catch (InputMismatchException e){
-                sc.nextLine();
-                System.out.println("Please input a valid number!");
-            } catch (Exception e){
-                sc.nextLine();
-                System.out.println("An error occured, please try again");
-            }
+        System.out.println("Would you like to pick up? Press 1 for yes and 0 for no");
+        int choice = GetOption.getBinaryNumber();
+        if (choice == 1){
+            order.setOrderStatus(OrderStatus.COMPLETED);
+            orderDB.update(order);
+            System.out.println("Thank you for shopping at McOOP!");
         }
+        else if (choice == 0){
+            System.out.println("Remember to pick up your food before it cancels");
+        }
+        
     }
 
 	/**
