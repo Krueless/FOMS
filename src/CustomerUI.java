@@ -1,4 +1,3 @@
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class CustomerUI {
@@ -16,8 +15,8 @@ public class CustomerUI {
         while (!valid) {
             try {
                 System.out.println("Please select an option. ");
-                System.out.println("1. Dine-in");
-                System.out.println("2. Takeaway");
+                System.out.println("(1) Dine-in");
+                System.out.println("(2) Takeaway");
                 String option = sc.nextLine();
                 switch (option) {
                     case "1": //Dine-in
@@ -26,14 +25,14 @@ public class CustomerUI {
                         Order newOrderDineIn = new Order(Integer.valueOf(orderID), false, branchName);
                         orderDB.add(newOrderDineIn);
                         System.out.println("Your order ID is: " + newOrderDineIn.getOrderID());
-                        control = new OrderControl(orderDB, foodItemDB, displayformatter, newOrderDineIn, branchName);
+                        control = new OrderControl(orderDB, foodItemDB, displayformatter, newOrderDineIn);
                         control.chooseOptions();
                         break;
                     case "2": //Takeaway
                         valid = true;
                         Order newOrderTakeaway = new Order(orderDB.getAll().size() + 1, true, branchName);
                         orderDB.add(newOrderTakeaway);
-                        control = new OrderControl(orderDB, foodItemDB, displayformatter, newOrderTakeaway, branchName);
+                        control = new OrderControl(orderDB, foodItemDB, displayformatter, newOrderTakeaway);
                         control.chooseOptions();
                         break;
                     default:
@@ -87,6 +86,10 @@ public class CustomerUI {
 	}
 
 	public void showCustomerOptions() {
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.println("Application shutting down. Saving data...");
+            DataManagerForOrder.getInstance().saveData();
+        }));
 		Scanner sc = GlobalResource.SCANNER;
         boolean quit = false;
 
@@ -94,9 +97,9 @@ public class CustomerUI {
             try {
                 System.out.println("Welcome to " + branchName);
                 System.out.println("Please select one of the following options.");
-                System.out.println("1. Create Order");
-                System.out.println("2. Check Order Status");
-                System.out.println("3. Quit");
+                System.out.println("(1) Create Order");
+                System.out.println("(2) Check Order Status");
+                System.out.println("(3) Quit");
                 String option = sc.nextLine();
 
                 switch (option) {

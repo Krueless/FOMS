@@ -1,24 +1,8 @@
-import java.util.InputMismatchException;
-import java.util.Scanner;
-
 /**
- * Manages the checkout processes for an order, including updating order status, handling payment,
+ * Manages the checkout processes for an order, handling payment, and the checkout option of takeaway
  * and changing dining options. These will be done by the PaymentUI class, and the Order Class set methods
  */
-public class OrderControlForCheckout {
-
-    /**
-     * Changes the status of the specified order to the new status provided.
-     *
-     * @param order The order whose status is to be changed.
-     * @param status The new status to set for the order.
-     * @return The order with its status updated.
-     */
-    public Order changeOrderStatus(Order order, OrderStatus status) {
-        order.setOrderStatus(status);
-        return order;
-    }
-
+public class OrderControlForCheckout implements IOrderControlForCheckout{
     /**
      * Initiates the checkout process for the specified order. This method triggers the payment UI
      * to display payment options and process the payment.
