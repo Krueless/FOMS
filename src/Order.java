@@ -1,5 +1,5 @@
 import java.time.ZonedDateTime;
-import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.time.Duration;
@@ -171,7 +171,9 @@ public class Order implements IGetBranchName{
             returnString += String.format("\tName: %s\tQuantity: %d\tPrice: %.2f\n",
                                           item.getName(), item.getQuantity(), item.calculatePrice());
         }
-        returnString += String.format("Timestamp: %s\n", this.getTimestamp());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDateTime = timestamp.format(formatter);
+        returnString += "Timestamp: " + formattedDateTime;
         return returnString;
     }
 

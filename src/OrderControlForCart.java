@@ -32,11 +32,16 @@ public class OrderControlForCart {
      * @return The updated order after removing the selected item.
      */
     public Order removeFromCart(Order order, IDisplayFilteredByBranch displayFormatter) {
+        if (order.getCartItems().size() == 0)
+        {
+            System.out.println("Your cart is empty!");
+            return null;
+        }
         displayFormatter.displayAll(order.getCartItems());
-        System.out.println((order.getCartItems().size() + 1) + " Quit");
+        System.out.println((order.getCartItems().size() + 1) + ") Quit");
         System.out.println("Please choose which item number you wish to remove");
         int index = getValidNumber(order.getCartItems().size() + 1)-1;
-        if (index == order.getCartItems().size() + 1) {
+        if (index == order.getCartItems().size()) {
             System.out.println("Going back to Customer Interface");
 			return null;
         } else {
@@ -54,11 +59,16 @@ public class OrderControlForCart {
      * @return The updated order after changing the quantity of the selected item.
      */
     public Order editCart(Order order, IDisplay displayFormatter) {
+        if (order.getCartItems().size() == 0)
+        {
+            System.out.println("Your cart is empty!");
+            return null;
+        }
         displayFormatter.displayAll(order.getCartItems());
         System.out.println((order.getCartItems().size() + 1) + ") Quit");
         System.out.println("Please choose which item quantity you want to edit");
         int index = getValidNumber(order.getCartItems().size() + 1)-1;
-        if (index == order.getCartItems().size() + 1) {
+        if (index == order.getCartItems().size()) {
             System.out.println("Going back to Customer Interface");
 			return null;
         } else {

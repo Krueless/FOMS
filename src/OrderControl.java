@@ -85,6 +85,7 @@ public class OrderControl {
                     }
                     System.out.println("Please input a valid choice.");
                 } catch (Exception e) {
+                    sc.nextLine();
                     System.out.println("You did not enter a valid number");
                 }
             }
