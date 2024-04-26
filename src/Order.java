@@ -168,8 +168,8 @@ public class Order implements IGetBranchName{
         }
         returnString += "CartItems:\n";
         for (OrderedFoodItem item : this.cartItems) {
-            returnString += String.format("\tName: %s\tQuantity: %d\tPrice: %.2f\n",
-                                          item.getName(), item.getQuantity(), item.calculatePrice());
+            returnString += String.format("\tName: %s\tQuantity: %d\tPrice: %s\n",
+                                          item.getName(), item.getQuantity(), String.format("%.2f", item.calculatePrice()));
         }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDateTime = timestamp.format(formatter);

@@ -110,7 +110,7 @@ public class OrderControlForCart {
                 System.out.println("Please input a valid integer");
             } catch (Exception e){
                 sc.nextLine();
-                System.out.println("An error occured. Please try again.");
+                System.out.println("An error occured, please try again.");
             }
         }
     }

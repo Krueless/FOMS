@@ -50,7 +50,7 @@ public class FoodItem implements IGetBranchName {
 
 	public String toString(){
         String out;
-        out = "Food ID: " + foodItemID + ", Name: " + name + ", Price: " + price + ", Category: " + itemCategory;
+        out = "Food ID: " + foodItemID + ", Name: " + name + ", Price: " + String.format("%.2f", price)  + ", Category: " + itemCategory;
         if (available)
             return out + " (available)";
         else
