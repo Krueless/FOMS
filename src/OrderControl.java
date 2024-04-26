@@ -12,7 +12,8 @@ public class OrderControl {
     private IDisplayFilteredByBranch displayFormatter;      
     private IOrderControlForCheckout checkout; 
     private IOrderControlForCart cart;       
-    private Order order;                                
+    private Order order;           
+    private String branchName;                      
 
     /**
      * Constructs a new OrderControl with all necessary components and initial order settings.
@@ -25,13 +26,14 @@ public class OrderControl {
      * @param order The current order to be managed.
      * @param branchName The branch name where the order is being placed.
      */
-    public OrderControl(IDataManager<Order, Integer> orderDB, IDataManager<FoodItem, Integer> foodItemDB, IDisplayFilteredByBranch displayFormatter, Order order) {
+    public OrderControl(IDataManager<Order, Integer> orderDB, IDataManager<FoodItem, Integer> foodItemDB, IDisplayFilteredByBranch displayFormatter, Order order,  String branchName) {
         this.orderDB = orderDB;
         this.foodItemDB = foodItemDB;
         this.displayFormatter = displayFormatter;
         this.checkout = new OrderControlForCheckout();
         this.cart = new OrderControlForCart();
         this.order = order;
+        this.branchName = branchName;
     }
 
     /**
@@ -89,7 +91,7 @@ public class OrderControl {
 		{   
             showOptions();
             int choice = GetOption.getValidNumber(7);
-            Order newOrder;
+            Order newOrder;   
 
 			switch (choice) {
                 case 1: 
@@ -97,9 +99,20 @@ public class OrderControl {
                     break;
 				case 2:
 					viewAvailableMenu();
-					newOrder = cart.addToCart(order, foodItemDB);
-					if(newOrder != null) 
-					    orderDB.update(newOrder);
+                    boolean empty = true;
+                    for (FoodItem item : foodItemDB.getAll()){
+                        if (item.getBranchName().equals(branchName)){
+                            empty = false;
+                            break;
+                        }
+                    }
+                    if (!empty){
+                        newOrder = cart.addToCart(order, foodItemDB);
+                        if(newOrder != null) 
+                            orderDB.update(newOrder);
+                    } else{
+                        System.out.println("Branch has no food items. Please try again next time.");
+                    }
 					break;
 				case 3:
 					newOrder = cart.removeFromCart(order, displayFormatter);

@@ -25,14 +25,14 @@ public class CustomerUI {
                         Order newOrderDineIn = new Order(Integer.valueOf(orderID), false, branchName);
                         orderDB.add(newOrderDineIn);
                         System.out.println("Your order ID is: " + newOrderDineIn.getOrderID());
-                        control = new OrderControl(orderDB, foodItemDB, displayformatter, newOrderDineIn);
+                        control = new OrderControl(orderDB, foodItemDB, displayformatter, newOrderDineIn, branchName);
                         control.chooseOptions();
                         break;
                     case "2": //Takeaway
                         valid = true;
                         Order newOrderTakeaway = new Order(orderDB.getAll().size() + 1, true, branchName);
                         orderDB.add(newOrderTakeaway);
-                        control = new OrderControl(orderDB, foodItemDB, displayformatter, newOrderTakeaway);
+                        control = new OrderControl(orderDB, foodItemDB, displayformatter, newOrderTakeaway,branchName);
                         control.chooseOptions();
                         break;
                     default:
