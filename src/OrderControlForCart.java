@@ -25,7 +25,7 @@ public class OrderControlForCart implements IOrderControlForCart {
 
         // Check for existing item in the cart and update quantity if found.
         for (OrderedFoodItem item : order.getCartItems()) {
-            if (item.equals(orderedFoodItem)) {
+            if (item.getName().equals(orderedFoodItem.getName())) {
                 item.setQuantity(item.getQuantity() + quantity);
                 order.setPrice(order.getPrice() + item.getPrice());
                 System.out.println("Item quantity updated in cart!");
