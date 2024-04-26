@@ -9,23 +9,21 @@ import java.util.Scanner;
 public class Manager extends Staff{
     private IDataManager<FoodItem, Integer> foodItemDB;
     private IDataManager<Account, String> accountDB;
-    private ArrayList<FoodItem> foodItemList;
-    private ArrayList<IGetBranchName> menuList;
+
 
     public Manager(String name,String staffID,String role,String gender,int age,String branchName, IDataManager<Order, Integer> orderDB, IDisplayFilteredByBranch displayFormatter, IDataManager<FoodItem,Integer> foodItemDB, IDataManager<Account, String> accountDB){
         super(name,staffID,role,gender,age,branchName,orderDB,displayFormatter);
         this.foodItemDB=foodItemDB;
         this.accountDB=accountDB;
+    }
 
-        foodItemList = foodItemDB.getAll();
-        menuList = new ArrayList<IGetBranchName>();
+    private void displayMenu(){
+        ArrayList<FoodItem> foodItemList = foodItemDB.getAll();
+        ArrayList<IGetBranchName> menuList = new ArrayList<IGetBranchName>();
 
 		for (FoodItem item: foodItemList){
 		    menuList.add((IGetBranchName)item);
         }
-    }
-
-    private void displayMenu(){
         System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''");
         System.out.println(branchName + " Menu");
         displayFormatter.displayFilteredByBranch(menuList, branchName);
@@ -37,7 +35,7 @@ public class Manager extends Staff{
         double price = 0;
         do{
             try {
-                System.out.println("Enter the price of the food item");
+                System.out.println("Enter the price of the food item:");
                 price = sc.nextDouble();
                 sc.nextLine();
                 if (price <= 0) {
@@ -90,15 +88,17 @@ public class Manager extends Staff{
     public void addItem(){
         //get details of food item
         displayMenu();
+        ArrayList<FoodItem> foodItemList = foodItemDB.getAll();
         Scanner sc=GlobalResource.SCANNER;
-        int FoodID = menuList.size() + 1;
+        int FoodID = foodItemList.size() + 1;
         boolean duplicate = false;
+        String foodName;
         do{
             System.out.println("Enter the name of the new food item: ");
-            String name=sc.nextLine();
+            foodName = sc.nextLine();
     
             for (FoodItem item: foodItemList){
-                if (item.getBranchName().equals(branchName) && item.getName().equals(name)){
+                if (item.getBranchName().equals(branchName) && item.getName().equals(foodName)){
                     duplicate = true;
                     System.out.println("New food item must be different from existing. Try again!");
                     break;
@@ -106,37 +106,31 @@ public class Manager extends Staff{
             }
         } while (duplicate);
         
-        String itemCategory = "NA", choice;
-        do{
-            System.out.println("Select the food category of new item");
-            System.out.println("(1) Set meal");
-            System.out.println("(2) Burger");
-            System.out.println("(3) Sides");
-            System.out.println("(4) Drink");
-            choice = sc.nextLine();
-
-            switch (choice){
-                case "1":
-                    itemCategory  = "Set meal";
-                    break;
-                case "2":
-                    itemCategory  = "Burger";
-                    break;
-                case "3":
-                    itemCategory  = "Sides";
-                    break;
-                case "4":
-                    itemCategory  = "Drink";
-                    break;
-                default:
-                    System.out.println("Invalid option.");
-                    break;
-            }
-        }while (itemCategory.equals("NA"));
+        System.out.println("Select the food category of new item");
+        System.out.println("(1) Set meal");
+        System.out.println("(2) Burger");
+        System.out.println("(3) Sides");
+        System.out.println("(4) Drink");
+        String itemCategory = "";
+        int choice = GetOption.getValidNumber(4);
         
+        switch (choice){
+            case 1:
+                itemCategory  = "Set meal";
+                break;
+            case 2:
+                itemCategory  = "Burger";
+                break;
+            case 3:
+                itemCategory  = "Sides";
+                break;
+            case 4:
+                itemCategory  = "Drink";
+                break;
+        }
         double price = getPriceFromUser();
         //construct new food item
-        FoodItem fooditem=new FoodItem(FoodID,name,price,super.getBranchName(),itemCategory);
+        FoodItem fooditem=new FoodItem(FoodID,foodName,price,super.getBranchName(),itemCategory);
         //add the new food item to menu
         foodItemDB.add(fooditem);
     }
@@ -146,7 +140,6 @@ public class Manager extends Staff{
      */
     public void editItem(){
         //get the foodID of the food item to edit
-        Scanner sc = GlobalResource.SCANNER;
         displayMenu();
         int foodID = getFoodIDFromUser();
         //search for the fooditem in foodItemDB
@@ -159,21 +152,18 @@ public class Manager extends Staff{
             //else foodItem found in manager's branch
             //select the attribute to edit
             int choice;
-            boolean exit = false;
             do{
                 System.out.println("Select the attribute to edit:");
                 System.out.println("(1) Availability of FoodItem");
                 System.out.println("(2) Price of FoodItem");
                 System.out.println("(3) Exit");
-                choice=sc.nextInt();
-                
+                choice=GetOption.getValidNumber(3);
                 switch(choice){
                     case 1:
                         System.out.println("Select the availability of the food item");
                         System.out.println("(1) Available");
                         System.out.println("(2) Not Available");
-                        int availability_choice = sc.nextInt();
-
+                        int availability_choice = GetOption.getValidNumber(2);
                         switch (availability_choice){
                             case 1:
                                 foodItem.setAvailability(true);
@@ -183,23 +173,13 @@ public class Manager extends Staff{
                                 foodItem.setAvailability(false);
                                 System.out.println("Food Item is changed to not available.");
                                 break;
-                            case 3: 
-                                exit = true;
-                                break;
-                            default:
-                                System.out.println("Invalid option");
-                                break;
                         }
                         break;
                     case 2:
                         foodItem.setPrice(getPriceFromUser());
                         break;
-                    default:
-                        System.out.println("Invalid option");
-                        break;
                 }
-            } while (exit);
-
+            } while (choice!= 3);
             foodItemDB.update(foodItem);
         }
         else{
