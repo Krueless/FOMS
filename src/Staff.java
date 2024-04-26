@@ -82,7 +82,7 @@ public class Staff extends Account implements IGetBranchName {
             int orderID = sc.nextInt();
             Order order=orderDB.find(orderID);
             if (order != null && order.getBranchName().equals(branchName)) {
-                System.out.println(order);
+                System.out.println(order.toString());
             } else {
                 System.out.println("Order not found or does not belong to your branch. Returning to user page...");
             }
@@ -105,9 +105,11 @@ public class Staff extends Account implements IGetBranchName {
                 orderDB.update(order);
                 System.out.println("Order status updated to ready for collection. Returning to user page...");
             } else {
+                sc.nextLine();
                 System.out.println("Order not found or does not belong to your branch.");
             }        
         }catch (Exception e){
+            sc.nextLine();
             System.out.println("Order ID must be number! Returning to user page...");
         }
 	}

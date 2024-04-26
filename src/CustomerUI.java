@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class CustomerUI {
@@ -45,6 +46,21 @@ public class CustomerUI {
         }
 	}
 
+    private void completeOrder(Order order)
+    {
+        System.out.println("Would you like to pick up? Press 1 for yes and 0 for no");
+        int choice = GetOption.getBinaryNumber();
+        if (choice == 1){
+            order.setOrderStatus(OrderStatus.COMPLETED);
+            orderDB.update(order);
+            System.out.println("Thank you for shopping at McOOP!");
+        }
+        else if (choice == 0){
+            System.out.println("Remember to pick up your food before it cancels");
+        }
+        
+    }
+
 	/**
 	 * 
 	 * @param orderID
@@ -53,6 +69,10 @@ public class CustomerUI {
         Order order = orderDB.find(orderID);
         if (order != null){
 		    System.out.println(order.viewOrderStatus());
+            if (order.getOrderStatus() == OrderStatus.READY_TO_PICKUP)
+            {
+                completeOrder(order);
+            }
             System.out.println("Returning to customer page...");
         }
         else
@@ -80,7 +100,7 @@ public class CustomerUI {
                         System.out.println("What is your order ID? ");
                         int id = sc.nextInt();
                         sc.nextLine();
-                        checkOrder(id);;
+                        checkOrder(id);
                         break;
                     case "3":
                         quit = true;
