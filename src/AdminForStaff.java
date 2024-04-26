@@ -274,9 +274,9 @@ public class AdminForStaff implements IAdminForStaff{
             
                 case "2":
                     System.out.println("Choose role to display");
-                    System.out.println("1. Admin");
-                    System.out.println("2. Manager");
-                    System.out.println("3. Staff");
+                    System.out.println("(1) Admin");
+                    System.out.println("(2) Manager");
+                    System.out.println("(3) Staff");
                     String role = sc.nextLine();
 
                     switch (role){

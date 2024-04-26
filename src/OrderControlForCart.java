@@ -1,5 +1,3 @@
-import java.util.Scanner;
-import java.util.InputMismatchException;
 
 /**
  * Manages the functionalities related to modifying the shopping cart, including adding to, removing from,
@@ -18,7 +16,7 @@ public class OrderControlForCart {
 	{
         FoodItem foodItem = getFoodItem(foodItemDB, branchName);
         System.out.println("Please input the number of food item(s) you want");
-        int quantity = getValidNumber();
+        int quantity = GetOption.getValidNumber();
         OrderedFoodItem orderedFoodItem = new OrderedFoodItem(foodItem, quantity);
 
         for (int i = 0;i<order.getCartItems().size(); i++){
@@ -50,7 +48,7 @@ public class OrderControlForCart {
         displayFormatter.displayAll(order.getCartItems());
         System.out.println((order.getCartItems().size() + 1) + ") Quit");
         System.out.println("Please choose which item number you wish to remove");
-        int index = getValidNumber(order.getCartItems().size() + 1)-1;
+        int index = GetOption.getValidNumber(order.getCartItems().size() + 1)-1;
         if (index == order.getCartItems().size()) {
             System.out.println("Going back to Customer Interface");
 			return null;
@@ -77,13 +75,13 @@ public class OrderControlForCart {
         displayFormatter.displayAll(order.getCartItems());
         System.out.println((order.getCartItems().size() + 1) + ") Quit");
         System.out.println("Please choose which item quantity you want to edit");
-        int index = getValidNumber(order.getCartItems().size() + 1)-1;
+        int index = GetOption.getValidNumber(order.getCartItems().size() + 1)-1;
         if (index == order.getCartItems().size()) {
             System.out.println("Going back to Customer Interface");
 			return null;
         } else {
             System.out.println("Please input what quantity you want to change it to");
-            int newQuantity = getValidNumber();
+            int newQuantity = GetOption.getValidNumber();
             OrderedFoodItem item = order.getCartItems().get(index);
             item.setQuantity(newQuantity);
 			order.getCartItems().set(index,item);
@@ -94,7 +92,7 @@ public class OrderControlForCart {
 	private FoodItem getFoodItem(IDataManager<FoodItem, Integer> foodItemDB, String branchName)
 	{
         System.out.println("Please input the ID of the food item you want");
-        int foodItemID = getValidNumber();
+        int foodItemID = GetOption.getValidNumber();
         FoodItem foodItem = foodItemDB.find(foodItemID);
 		if (foodItem == null || !foodItem.getBranchName().equals(branchName))
 		{
@@ -103,45 +101,4 @@ public class OrderControlForCart {
 		}
         return foodItem;
 	}
-	private int getValidNumber() {
-        Scanner sc = GlobalResource.SCANNER;
-        while (true) {
-            try {
-                int number = sc.nextInt();
-                if (number > 0) {
-                    return number;
-                } else {
-                    sc.nextLine();
-                    System.out.println("Please input a positive number!");
-                }
-            } catch (InputMismatchException e) {
-                sc.nextLine(); 
-                System.out.println("Please input a valid integer");
-            } catch (Exception e){
-                sc.nextLine();
-                System.out.println("An error occured, please try again.");
-            }
-        }
-    }
-
-	private int getValidNumber(int max) {
-        Scanner sc = GlobalResource.SCANNER;
-        while (true) {
-            try {
-                int quantity = sc.nextInt();
-                if (quantity > 0 && quantity <= max) {
-                    return quantity;
-                } else {
-                    sc.nextLine();
-                    System.out.println("Please input a number between 1 and " + max + "!");
-                }
-            } catch (InputMismatchException e) {
-                sc.nextLine();
-                System.out.println("Please input a valid integer");
-            } catch (Exception e){
-                sc.nextLine();
-                System.out.println("An error occured, please try again.");
-            }
-        }
-    }
 }
