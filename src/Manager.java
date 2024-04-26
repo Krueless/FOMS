@@ -91,9 +91,10 @@ public class Manager extends Staff{
         ArrayList<FoodItem> foodItemList = foodItemDB.getAll();
         Scanner sc=GlobalResource.SCANNER;
         int FoodID = foodItemList.size() + 1;
-        boolean duplicate = false;
+        boolean duplicate;
         String foodName;
         do{
+            duplicate = false;
             System.out.println("Enter the name of the new food item: ");
             foodName = sc.nextLine();
     
@@ -104,7 +105,7 @@ public class Manager extends Staff{
                     break;
                 }
             }
-            duplicate = false;
+            
         } while (duplicate);
         
         System.out.println("Select the food category of new item");
