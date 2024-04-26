@@ -159,13 +159,14 @@ public class Manager extends Staff{
             //else foodItem found in manager's branch
             //select the attribute to edit
             int choice;
+            boolean exit = false;
             do{
                 System.out.println("Select the attribute to edit:");
                 System.out.println("(1) Availability of FoodItem");
                 System.out.println("(2) Price of FoodItem");
                 System.out.println("(3) Exit");
                 choice=sc.nextInt();
-
+                
                 switch(choice){
                     case 1:
                         System.out.println("Select the availability of the food item");
@@ -182,6 +183,9 @@ public class Manager extends Staff{
                                 foodItem.setAvailability(false);
                                 System.out.println("Food Item is changed to not available.");
                                 break;
+                            case 3: 
+                                exit = true;
+                                break;
                             default:
                                 System.out.println("Invalid option");
                                 break;
@@ -191,9 +195,10 @@ public class Manager extends Staff{
                         foodItem.setPrice(getPriceFromUser());
                         break;
                     default:
+                        System.out.println("Invalid option");
                         break;
                 }
-            } while(choice != 3);
+            } while (exit);
 
             foodItemDB.update(foodItem);
         }

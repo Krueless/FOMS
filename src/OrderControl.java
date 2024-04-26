@@ -1,6 +1,4 @@
-import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 
 /**
  * The {@code OrderControl} class manages the order process within a restaurant management system.
@@ -74,29 +72,12 @@ public class OrderControl {
      * Processes user input to choose an option and perform the corresponding action.
      */
     public void chooseOptions() {
-        Scanner sc = GlobalResource.SCANNER;
 		boolean quit = false;
 		while (!quit)
 		{   
             showOptions();
-            int choice = -1;
+            int choice = GetOption.getValidNumber(7);
 
-            while (true) {
-                try {
-                    choice = sc.nextInt();
-                    if (choice >= 1 && choice <= 6) {
-                        sc.nextLine();
-                        break;
-                    }
-                    System.out.println("Please input a valid choice.");
-                } catch (InputMismatchException e) {
-                    sc.nextLine(); 
-                    System.out.println("You did not enter a valid number. Please try again.");
-                } catch (Exception e) {
-                    sc.nextLine(); 
-                    System.out.println("An unexpected error occurred, please try again.");
-                }
-            }
 			switch (choice) {
                 case 1: 
                     viewMenu();
@@ -130,33 +111,14 @@ public class OrderControl {
 					break;
 				case 7:
                     System.out.println("Are you sure you want to quit? Your order will be removed. Press 1 if you're sure.");
-                    int choiceToQuit = -1;
-                    while (true)
-                    {
-                        try{
-                            choiceToQuit = sc.nextInt();
-                            if (choiceToQuit == 1 || choiceToQuit == 0)
-                            {
-                                break;
-                            }
-                            System.out.println("Please input a 1 or 0");
-                        }catch(InputMismatchException e){
-                            sc.nextLine();
-                            System.out.println("Please input 1 or 0");
-                        }catch(Exception e){
-                            sc.nextLine();
-                            System.out.println("An error occured, please try again.");
-                        }
-                    }
+                    int choiceToQuit = GetOption.getBinaryNumber();
                     if (choiceToQuit == 1)
                     {
                         System.out.println("Exiting...");
                         orderDB.delete(order);
                         quit = true;
-					    break;
                     }
-				default:
-					System.out.println("Please choose a valid option");
+                    break;
             }
 	    }
     }
