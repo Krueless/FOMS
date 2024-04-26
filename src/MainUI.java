@@ -31,7 +31,8 @@ public class MainUI {
                 case "1":
                     DataManagerForBranch branchDB = DataManagerForBranch.getInstance();
                     Display displayFormatter = new Display();
-                    new BranchUI(branchDB, displayFormatter);
+
+                    BranchUI branchUI = new BranchUI(branchDB, displayFormatter);
                     valid = true;
                     break;
                 case "2":

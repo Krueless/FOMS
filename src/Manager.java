@@ -104,6 +104,7 @@ public class Manager extends Staff{
                     break;
                 }
             }
+            duplicate = false;
         } while (duplicate);
         
         System.out.println("Select the food category of new item");

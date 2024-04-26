@@ -22,7 +22,8 @@ public class CustomerUI {
                 switch (option) {
                     case "1": //Dine-in
                         valid = true;
-                        Order newOrderDineIn = new Order(orderDB.getAll().size() + 1, false, branchName);
+                        int orderID = orderDB.getAll().size() + 1;
+                        Order newOrderDineIn = new Order(Integer.valueOf(orderID), false, branchName);
                         orderDB.add(newOrderDineIn);
                         System.out.println("Your order ID is: " + newOrderDineIn.getOrderID());
                         control = new OrderControl(orderDB, foodItemDB, displayformatter, newOrderDineIn, branchName);
@@ -67,19 +68,29 @@ public class CustomerUI {
 	 */
 	public void checkOrder(int orderID) {
         Order order = orderDB.find(orderID);
+    
         if (order != null){
-		    System.out.println(order.viewOrderStatus());
-            if (order.getOrderStatus() == OrderStatus.READY_TO_PICKUP)
-            {
-                completeOrder(order);
+            if (order.getBranchName().equals(branchName)){
+                System.out.println(order.viewOrderStatus());
+                if (order.getOrderStatus() == OrderStatus.READY_TO_PICKUP)
+                {
+                    completeOrder(order);
+                }
             }
-            System.out.println("Returning to customer page...");
+            else{
+                System.out.println("OrderID keyed in not for this branch!");
+            }
+		    System.out.println("Returning to customer page...");
         }
         else
             System.out.println("Invalid orderID! Returning to customer page...");
 	}
 
 	public void showCustomerOptions() {
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            System.out.println("Application shutting down. Saving data...");
+            DataManagerForOrder.getInstance().saveData();
+        }));
 		Scanner sc = GlobalResource.SCANNER;
         boolean quit = false;
 

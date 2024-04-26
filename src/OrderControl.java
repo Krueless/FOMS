@@ -52,6 +52,20 @@ public class OrderControl {
         
     }
 
+    private void viewAvailableMenu() {
+        ArrayList<FoodItem> foodItemList = foodItemDB.getAll();
+        ArrayList<IGetBranchName> branchNameList = new ArrayList<>(foodItemList.size());
+        for (FoodItem item : foodItemList) {
+            if (item.getAvailability())
+                branchNameList.add(item);
+        }
+        System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''");
+        System.out.println(branchName + " Menu");
+        displayFormatter.displayFilteredByBranch(branchNameList, branchName);
+        System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''");
+        
+    }
+
     /**
      * Shows the main options available for the user to interact with the cart and order process.
      */
@@ -83,7 +97,7 @@ public class OrderControl {
                     viewMenu();
                     break;
 				case 2:
-					viewMenu();
+					viewAvailableMenu();
 					Order newOrder = cart.addToCart(order, foodItemDB,branchName);
 					if(newOrder != null) 
 					    orderDB.update(newOrder);
