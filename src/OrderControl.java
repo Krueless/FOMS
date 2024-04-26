@@ -91,16 +91,27 @@ public class OrderControl {
 		{   
             showOptions();
             int choice = GetOption.getValidNumber(7);
-
+            Order newOrder;
 			switch (choice) {
                 case 1: 
                     viewMenu();
                     break;
 				case 2:
 					viewAvailableMenu();
-					Order newOrder = cart.addToCart(order, foodItemDB,branchName);
-					if(newOrder != null) 
-					    orderDB.update(newOrder);
+                    boolean empty = true;
+                    for (FoodItem item : foodItemDB.getAll()){
+                        if (item.getBranchName().equals(branchName)){
+                            empty = false;
+                            break;
+                        }
+                    }
+                    if (!empty){
+                        newOrder = cart.addToCart(order, foodItemDB,branchName);
+                        if(newOrder != null) 
+                            orderDB.update(newOrder);
+                    } else{
+                        System.out.println("Branch has no food items. Please try again next time.");
+                    }
 					break;
 				case 3:
 					newOrder = cart.removeFromCart(order, displayFormatter);
