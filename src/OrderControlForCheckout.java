@@ -60,11 +60,11 @@ public class OrderControlForCheckout {
         while (true) {
             try {
                 int number = sc.nextInt();
-                if (number > 0) {
+                if (number == 0 || number == 1) {
                     return number;
                 } else {
                     sc.nextLine();
-                    System.out.println("Please input a positive number!");
+                    System.out.println("Please input a 1 or 0");
                 }
             } catch (InputMismatchException e) {
                 sc.nextLine(); 
