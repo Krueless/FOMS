@@ -12,7 +12,10 @@ public class DisplayFilteredByBranch implements IDisplayFilteredByBranch {
             ArrayList<Object> array = (ArrayList<Object>) data;
             for (int i = 0; i < array.size(); i++){
                 System.out.println(i+1 +") " + array.get(i).toString());
-        }
+            }
+            if (array.size() == 0){
+                System.out.println("No records found!"); 
+            }
         }
 	}
 
@@ -28,7 +31,9 @@ public class DisplayFilteredByBranch implements IDisplayFilteredByBranch {
                 System.out.println(j +") " + data.get(i).toString());
                 j++ ;
             }
-            
+        }
+        if (j == 1){
+            System.out.println("No records found for this branch!");
         }
     }
 }

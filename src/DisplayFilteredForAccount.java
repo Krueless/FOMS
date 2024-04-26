@@ -30,8 +30,10 @@ public class DisplayFilteredForAccount implements IDisplayFilteredForAccount {
 					j++ ;
 				}
 			}
-			
 		}
+        if (j == 1){
+            System.out.println("No records found for this branch!");
+        }
 	}
 	
 
