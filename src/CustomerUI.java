@@ -53,6 +53,11 @@ public class CustomerUI {
         Order order = orderDB.find(orderID);
         if (order != null){
 		    System.out.println(order.viewOrderStatus());
+            if (order.getOrderStatus() == OrderStatus.READY_TO_PICKUP)
+            {
+                System.out.println("Thank you for ordering McOOP!");
+                order.setOrderStatus(OrderStatus.COMPLETED);
+            }
             System.out.println("Returning to customer page...");
         }
         else
@@ -80,7 +85,7 @@ public class CustomerUI {
                         System.out.println("What is your order ID? ");
                         int id = sc.nextInt();
                         sc.nextLine();
-                        checkOrder(id);;
+                        checkOrder(id);
                         break;
                     case "3":
                         quit = true;
