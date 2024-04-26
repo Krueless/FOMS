@@ -186,10 +186,10 @@ public class Order implements IGetBranchName{
         String returnString = null;
         switch(orderStatus){
             case ORDERING:
-            returnString = "Order has not yet been sent";
+            returnString = "Order has yet to been sent";
             break;
             case PREPARING:
-            returnString = "Order is being Prepared";
+            returnString = "Order is being prepared";
             break;
             case READY_TO_PICKUP:
             returnString = "Order is ready to be picked up!";

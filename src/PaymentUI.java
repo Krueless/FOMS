@@ -61,10 +61,10 @@ public class PaymentUI {
         while (true) {
             try {
                 int quantity = sc.nextInt();
-                if (quantity > 0 && quantity <= max) {
+                sc.nextLine();
+                if (quantity > 0 && quantity <= max) { 
                     return quantity;
                 } else {
-                    sc.nextLine();
                     System.out.println("Please input a number between 1 and " + max + "!");
                 }
             } catch (Exception e) {

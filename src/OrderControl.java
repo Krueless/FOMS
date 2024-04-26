@@ -55,7 +55,7 @@ public class OrderControl {
      */
     public void showOptions() {
         System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''");
-        System.out.println("Welcome!, please choose one of the following options: ");
+        System.out.println("Welcome! Please choose one of the following options: ");
         System.out.println("(1) Add to cart");
         System.out.println("(2) Remove from cart");
         System.out.println("(3) Edit cart");
@@ -80,6 +80,7 @@ public class OrderControl {
                 try {
                     choice = sc.nextInt();
                     if (choice >= 1 && choice <= 6) {
+                        sc.nextLine();
                         break;
                     }
                     System.out.println("Please input a valid choice.");
