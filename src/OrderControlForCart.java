@@ -27,13 +27,14 @@ public class OrderControlForCart implements IOrderControlForCart {
         for (OrderedFoodItem item : order.getCartItems()) {
             if (item.getName().equals(orderedFoodItem.getName())) {
                 item.setQuantity(item.getQuantity() + quantity);
-                order.setPrice(order.getPrice() + item.getPrice());
+                order.setPrice(order.getPrice() + item.calculatePrice());
                 System.out.println("Item quantity updated in cart!");
                 return order;
             }
         }
 
         // Add new item to the cart.
+        order.setPrice(order.getPrice() + orderedFoodItem.calculatePrice());
         order.getCartItems().add(orderedFoodItem);
         System.out.println("Item successfully added to cart!");
         return order;
@@ -61,7 +62,7 @@ public class OrderControlForCart implements IOrderControlForCart {
             System.out.println("Going back to Customer Interface");
             return null;
         } else {
-            order.setPrice(order.getPrice() - order.getCartItems().get(index).getPrice());
+            order.setPrice(order.getPrice() - order.getCartItems().get(index).calculatePrice());
             order.getCartItems().remove(index);
             System.out.println("Item successfully removed from cart!");
             return order;
@@ -93,9 +94,9 @@ public class OrderControlForCart implements IOrderControlForCart {
             System.out.println("Please input what quantity you want to change it to");
             int newQuantity = GetOption.getValidNumber();
             OrderedFoodItem item = order.getCartItems().get(index);
-            order.setPrice(order.getPrice() - order.getCartItems().get(index).getPrice());
+            order.setPrice(order.getPrice() - order.getCartItems().get(index).calculatePrice());
             item.setQuantity(newQuantity);
-            order.setPrice(order.getPrice() + item.getPrice());
+            order.setPrice(order.getPrice() + item.calculatePrice());
             System.out.println("Item quantity updated in cart!");
             return order;
         }
