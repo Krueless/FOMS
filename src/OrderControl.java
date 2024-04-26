@@ -12,7 +12,8 @@ public class OrderControl {
     private IDisplayFilteredByBranch displayFormatter;      
     private IOrderControlForCheckout checkout; 
     private IOrderControlForCart cart;       
-    private Order order;                                
+    private Order order;           
+    private String branchName;                      
 
     /**
      * Constructs a new OrderControl with all necessary components and initial order settings.
@@ -25,13 +26,14 @@ public class OrderControl {
      * @param order The current order to be managed.
      * @param branchName The branch name where the order is being placed.
      */
-    public OrderControl(IDataManager<Order, Integer> orderDB, IDataManager<FoodItem, Integer> foodItemDB, IDisplayFilteredByBranch displayFormatter, Order order) {
+    public OrderControl(IDataManager<Order, Integer> orderDB, IDataManager<FoodItem, Integer> foodItemDB, IDisplayFilteredByBranch displayFormatter, Order order,  String branchName) {
         this.orderDB = orderDB;
         this.foodItemDB = foodItemDB;
         this.displayFormatter = displayFormatter;
         this.checkout = new OrderControlForCheckout();
         this.cart = new OrderControlForCart();
         this.order = order;
+        this.branchName = branchName;
     }
 
     /**
@@ -89,7 +91,7 @@ public class OrderControl {
 		{   
             showOptions();
             int choice = GetOption.getValidNumber(7);
-            Order newOrder;            Order newOrder;
+            Order newOrder;   
 
 			switch (choice) {
                 case 1: 
@@ -105,7 +107,7 @@ public class OrderControl {
                         }
                     }
                     if (!empty){
-                        newOrder = cart.addToCart(order, foodItemDB,branchName);
+                        newOrder = cart.addToCart(order, foodItemDB);
                         if(newOrder != null) 
                             orderDB.update(newOrder);
                     } else{

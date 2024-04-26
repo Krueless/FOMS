@@ -14,19 +14,19 @@ public class QuotaChecker {
      *         {@code false} otherwise.
      */
     public static Boolean checkQuotaForAddManager(int numStaff, int numManager){
-        if (numStaff >= 0 && numStaff <= 4){
+        if (numStaff >= 0 && numStaff <= 3){
             return (numManager == 1);
         }
-        else if (numStaff == 5){
+        else if (numStaff == 4 || numStaff == 5){
             return (numManager == 1 || numManager == 2);
         }
-        else if (numStaff >= 5 && numStaff <= 8){
+        else if (numStaff >= 6 && numStaff <= 7){
             return (numManager == 2);
         }
-        else if (numStaff == 9){
+        else if (numStaff == 8 || numStaff == 9){
             return (numManager == 2 || numManager == 3);
         }
-        else if (numStaff >= 9 && numStaff <= 15) {
+        else if (numStaff >= 10 && numStaff <= 15) {
             return (numManager == 3);
         }
         else {
@@ -43,19 +43,19 @@ public class QuotaChecker {
      *         {@code false} otherwise.
      */
     public static Boolean checkQuotaForRemoveManager(int numStaff, int numManager){
-        if (numStaff >= 0 && numStaff <= 4){
+        if (numStaff >= 0 && numStaff <= 3){
             return (numManager == 1);
         }
-        else if (numStaff == 5){
+        else if (numStaff == 4 || numStaff == 5){
             return (numManager == 1 || numManager == 2);
         }
-        else if (numStaff >= 5 && numStaff <= 8){
+        else if (numStaff >= 6 && numStaff <= 7){
             return (numManager == 2);
         }
-        else if (numStaff == 9){
+        else if (numStaff == 8 || numStaff == 9){
             return (numManager == 2 || numManager == 3);
         }
-        else if (numStaff >= 9 && numStaff <= 15) {
+        else if (numStaff >= 10 && numStaff <= 15) {
             return (numManager == 3);
         }
         else {
