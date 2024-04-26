@@ -27,6 +27,7 @@ public class OrderControlForCart implements IOrderControlForCart {
         for (OrderedFoodItem item : order.getCartItems()) {
             if (item.equals(orderedFoodItem)) {
                 item.setQuantity(item.getQuantity() + quantity);
+                order.setPrice(order.getPrice() + item.getPrice());
                 System.out.println("Item quantity updated in cart!");
                 return order;
             }
@@ -60,6 +61,7 @@ public class OrderControlForCart implements IOrderControlForCart {
             System.out.println("Going back to Customer Interface");
             return null;
         } else {
+            order.setPrice(order.getPrice() - order.getCartItems().get(index).getPrice());
             order.getCartItems().remove(index);
             System.out.println("Item successfully removed from cart!");
             return order;
@@ -91,7 +93,9 @@ public class OrderControlForCart implements IOrderControlForCart {
             System.out.println("Please input what quantity you want to change it to");
             int newQuantity = GetOption.getValidNumber();
             OrderedFoodItem item = order.getCartItems().get(index);
+            order.setPrice(order.getPrice() - order.getCartItems().get(index).getPrice());
             item.setQuantity(newQuantity);
+            order.setPrice(order.getPrice() + item.getPrice());
             System.out.println("Item quantity updated in cart!");
             return order;
         }
