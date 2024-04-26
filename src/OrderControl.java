@@ -47,7 +47,11 @@ public class OrderControl {
         for (FoodItem item : foodItemList) {
             branchNameList.add(item);
         }
+        System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''");
+        System.out.println(branchName + " Menu");
         displayFormatter.displayFilteredByBranch(branchNameList, branchName);
+        System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''");
+        
     }
 
     /**
@@ -56,12 +60,13 @@ public class OrderControl {
     public void showOptions() {
         System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''");
         System.out.println("Welcome! Please choose one of the following options: ");
-        System.out.println("(1) Add to cart");
-        System.out.println("(2) Remove from cart");
-        System.out.println("(3) Edit cart");
-        System.out.println("(4) Change dine-in option");
-        System.out.println("(5) Checkout");
-        System.out.println("(6) Quit");
+        System.out.println("(1) View Menu");
+        System.out.println("(2) Add to cart");
+        System.out.println("(3) Remove from cart");
+        System.out.println("(4) Edit cart");
+        System.out.println("(5) Change dine-in option");
+        System.out.println("(6) Checkout");
+        System.out.println("(7) Quit");
         System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''");
     }
 
@@ -93,34 +98,37 @@ public class OrderControl {
                 }
             }
 			switch (choice) {
-				case 1:
+                case 1: 
+                    viewMenu();
+                    break;
+				case 2:
 					viewMenu();
 					Order newOrder = cart.addToCart(order, foodItemDB,branchName);
 					if(newOrder != null) 
 					    orderDB.update(newOrder);
 					break;
-				case 2:
+				case 3:
 					newOrder = cart.removeFromCart(order, displayFormatter);
 					if(newOrder != null)
 					    orderDB.update(newOrder);
 					break;
-				case 3:
+				case 4:
 					newOrder = cart.editCart(order, displayFormatter);
 					if(newOrder != null) 
 					    orderDB.update(newOrder);
 					break;
-				case 4:
+				case 5:
 					newOrder = checkout.changeDineInOption(order);
 					orderDB.update(newOrder);
 					break;
-				case 5:
+				case 6:
 					if (checkout.checkOut(order, displayFormatter)){
                         newOrder = checkout.changeOrderStatus(order, OrderStatus.PREPARING);
                         orderDB.update(newOrder);
                         quit = true;
                     }
 					break;
-				case 6:
+				case 7:
                     System.out.println("Are you sure you want to quit? Your order will be removed. Press 1 if you're sure.");
                     int choiceToQuit = -1;
                     while (true)

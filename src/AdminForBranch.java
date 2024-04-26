@@ -49,7 +49,7 @@ public class AdminForBranch implements IAdminForBranch{
 		Scanner sc = GlobalResource.SCANNER;
         IDisplay displayFormatter = new Display(); 
         ArrayList<Branch> branchList = branchDB.getAll();
-        if (branchList.size() > 0){
+        if (branchList.size() >= 0){
             displayFormatter.displayAll(branchDB.getAll());;
             System.out.println("Enter the name of the branch to be closed (case-sensitive):");
             String branchName = sc.nextLine();
@@ -57,6 +57,7 @@ public class AdminForBranch implements IAdminForBranch{
 
             if (branch != null){
                 branchDB.delete(branch);//delete the branch
+
             }
             else{
                 System.out.println("Branch not found! Returning to user page...");

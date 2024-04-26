@@ -235,7 +235,7 @@ public class AdminForStaff implements IAdminForStaff{
         Scanner sc = GlobalResource.SCANNER;
         accountDB = DataManagerForAccount.getInstance();
 		ArrayList<Account> accountList = accountDB.getAll();
-        ArrayList<IGetBranchName> staffList = new ArrayList<>();
+        ArrayList<IGetBranchName> staffList = new ArrayList<IGetBranchName>();
 
 		for (Account item: accountList){
 			if (item instanceof Staff){
