@@ -52,11 +52,11 @@ public class OrderControl {
         
     }
 
-    private void viewAvailableMenu() {
+    public void viewAvailableMenu() {
         ArrayList<FoodItem> foodItemList = foodItemDB.getAll();
         ArrayList<IGetBranchName> branchNameList = new ArrayList<>(foodItemList.size());
         for (FoodItem item : foodItemList) {
-            if (item.getAvailability())
+            if (item.getAvailability()) // only add when food item available
                 branchNameList.add(item);
         }
         System.out.println("'''''''''''''''''''''''''''''''''''''''''''''''''''''");

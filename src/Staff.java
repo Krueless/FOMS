@@ -32,14 +32,13 @@ public class Staff extends Account implements IGetBranchName {
      * @param orderDB The data manager for managing orders.
      * @param displayFormatter The display formatter for filtered orders.
      */
-	public Staff(String name,String staffID,String role,String gender,int age,String branchName, IDataManager<Order, Integer> orderDB, IDisplayFilteredByBranch displayFormatter){
+	public Staff(String name,String staffID,String role,String gender,int age,String branchName, IDisplayFilteredByBranch displayFormatter){
 		super.name=name;
 		super.staffID=staffID;
 		super.role=role;
 		super.gender=gender;
 		super.age=age;
 		this.branchName=branchName;
-		this.orderDB=orderDB;
 		this.displayFormatter=displayFormatter;
 	}
 
@@ -123,6 +122,7 @@ public class Staff extends Account implements IGetBranchName {
      */
 	public void selectOptions(){
         Scanner sc = GlobalResource.SCANNER;
+        orderDB = DataManagerForOrder.getInstance();
 		boolean quit =false;
 		while(!quit){
             showOptions();

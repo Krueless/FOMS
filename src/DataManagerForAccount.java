@@ -31,7 +31,6 @@ public class DataManagerForAccount implements IDataManagerWithCount{
 	}
 
 	private void initializeFromCSV() {
-		DataManagerForOrder orderDB = DataManagerForOrder.getInstance();
 		DataManagerForFoodItem foodItemDB = DataManagerForFoodItem.getInstance();
 		DisplayFilteredByBranch staffDisplay = new DisplayFilteredByBranch();
 	
@@ -48,10 +47,10 @@ public class DataManagerForAccount implements IDataManagerWithCount{
 						accountList.add(new Admin(data[0], data[1], data[2], data[3], Integer.parseInt(data[4])));
                         break;
 					case "M":
-						accountList.add(new Manager(data[0], data[1], data[2], data[3],Integer.parseInt(data[4]), data[5], orderDB,staffDisplay, foodItemDB, this));
+						accountList.add(new Manager(data[0], data[1], data[2], data[3],Integer.parseInt(data[4]), data[5],staffDisplay, foodItemDB, this));
                         break;
 					case "S":
-						accountList.add(new Staff(data[0], data[1], data[2], data[3],Integer.parseInt(data[4]), data[5], orderDB,staffDisplay));
+						accountList.add(new Staff(data[0], data[1], data[2], data[3],Integer.parseInt(data[4]), data[5],staffDisplay));
                         break;
                     default:
                         break;

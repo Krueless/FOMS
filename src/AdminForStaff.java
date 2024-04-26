@@ -179,17 +179,15 @@ public class AdminForStaff implements IAdminForStaff{
             }
         } while (!(age >= 18 || age <= 65) || (age == -1));
         
-
-        IDataManager<Order,Integer> orderDB = DataManagerForOrder.getInstance();
         DisplayFilteredByBranch displayFormatter = new DisplayFilteredByBranch();
 
         if (role.equals("S")){
-            return new Staff(name, staffID, role, gender, age, branchName, orderDB, displayFormatter);
+            return new Staff(name, staffID, role, gender, age, branchName, displayFormatter);
         } 
         // Manager to be added
         else{
             IDataManager<FoodItem,Integer> foodItemDB = DataManagerForFoodItem.getInstance();
-            return new Manager(name, staffID, role, gender, age, branchName, orderDB, displayFormatter, foodItemDB, accountDB);
+            return new Manager(name, staffID, role, gender, age, branchName, displayFormatter, foodItemDB, accountDB);
         }
     }
      /**
@@ -389,10 +387,9 @@ public class AdminForStaff implements IAdminForStaff{
 
                     if (QuotaChecker.checkQuotaForRemoveStaff(numStaff - 1,numManager) && QuotaChecker.checkQuotaForAddManager(numStaff,numManager + 1)){
                         //create a new Manager object and copy all attributes of staff
-                        DataManagerForOrder orderDB = DataManagerForOrder.getInstance();
                         DisplayFilteredByBranch displayFilteredByBranch = new DisplayFilteredByBranch();
                         DataManagerForFoodItem foodItemDB = DataManagerForFoodItem.getInstance();
-                        Manager managerAccount=new Manager(account.getName(),account.getStaffID(),"M",account.getGender(),account.getAge(),staffAccount.getBranchName(),orderDB,displayFilteredByBranch, foodItemDB, accountDB);
+                        Manager managerAccount=new Manager(account.getName(),account.getStaffID(),"M", account.getGender(), account.getAge(), staffAccount.getBranchName(), displayFilteredByBranch, foodItemDB, accountDB);
                         managerAccount.setPassword(staffAccount.getPassword());
                             //delete the Staff object to the accountList in DataManagerForAccount
                         accountDB.delete(staffAccount);

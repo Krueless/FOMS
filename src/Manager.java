@@ -11,8 +11,8 @@ public class Manager extends Staff{
     private IDataManager<Account, String> accountDB;
 
 
-    public Manager(String name,String staffID,String role,String gender,int age,String branchName, IDataManager<Order, Integer> orderDB, IDisplayFilteredByBranch displayFormatter, IDataManager<FoodItem,Integer> foodItemDB, IDataManager<Account, String> accountDB){
-        super(name,staffID,role,gender,age,branchName,orderDB,displayFormatter);
+    public Manager(String name,String staffID,String role,String gender,int age,String branchName, IDisplayFilteredByBranch displayFormatter, IDataManager<FoodItem,Integer> foodItemDB, IDataManager<Account, String> accountDB){
+        super(name,staffID,role,gender,age,branchName,displayFormatter);
         this.foodItemDB=foodItemDB;
         this.accountDB=accountDB;
     }
@@ -216,6 +216,7 @@ public class Manager extends Staff{
      */
 	public void selectOptions(){
         Scanner sc = GlobalResource.SCANNER;
+        orderDB = DataManagerForOrder.getInstance();
         boolean quit = false;
 
         while(!quit){
