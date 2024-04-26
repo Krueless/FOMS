@@ -49,7 +49,7 @@ public class OrderedFoodItem extends FoodItem {
      */
     @Override
     public String toString() {
-        String out = this.getName() + " : $" + this.getPrice() + " x " + this.getQuantity();
+        String out = this.getName() + " : $" + String.format("%.2f",this.getPrice()) + " x " + this.getQuantity();
         return out;
     }
 }
