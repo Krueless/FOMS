@@ -7,8 +7,7 @@ import java.time.format.DateTimeFormatter;
 /**
  * The {@code Credit} class implements the {@code IPayment} interface to handle payments made via credit cards.
  * It includes functionalities to process a payment by capturing credit card details and validating them,
- * and to print a detailed receipt for the transaction. Additionally, it provides basic getter and setter methods
- * for the payment method's name.
+ * and to print a detailed receipt for the transaction.
  */
 public class Credit implements IPayment 
 {
@@ -56,9 +55,7 @@ public class Credit implements IPayment
      */
     public boolean processPayment(Order order) {
         Scanner sc = GlobalResource.SCANNER;
-		// Retrieve items in the order
         ArrayList<OrderedFoodItem> cartItems = order.getCartItems(); 
-		// Initialize total cost
         double totalCost = 0; 
 
         // Calculate total cost by iterating over each item in the cart

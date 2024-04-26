@@ -39,10 +39,16 @@ public class DataManagerForPayment implements IDataManager<IPayment, String>
         return instance;
     }
 
+    /**
+     * Saves the current list of payment methods to the serialized file.
+     */
     public void saveData(){
         serializer.serialize(paymentList);
     }
 
+    /**
+     * Loads payment methods from the serialized file, or initializes from a CSV file if the serialized data is not available.
+     */
 	private void loadData(){
 		try
 		{
@@ -56,6 +62,9 @@ public class DataManagerForPayment implements IDataManager<IPayment, String>
 		}
 	}
 
+    /**
+     * Initializes payment methods from a CSV file. This method reads payment types and names from a CSV and populates the payment list.
+     */
 	private void initializeFromCSV() 
 	{
 	
@@ -147,6 +156,12 @@ public class DataManagerForPayment implements IDataManager<IPayment, String>
         return null;
     }
 
+    /**
+     * Retrieves the entire list of payment methods currently managed by the DataManager.
+     * This method provides access to all payment methods stored.
+     *
+     * @return An {@link ArrayList} of {@code IPayment} objects representing all stored payment methods.
+     */
     public ArrayList<IPayment> getAll(){
         return this.paymentList;
     }

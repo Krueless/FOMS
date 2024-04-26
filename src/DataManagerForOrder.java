@@ -34,6 +34,10 @@ public class DataManagerForOrder implements IDataManager<Order, Integer> {
         return instance;
     }
 
+    /**
+     * Loads the list of orders from a serialized file. If the file is not found or cannot be read,
+     * initializes a new empty list and logs the issue to the console.
+     */
 	private void loadData(){
 		try{
 			orderList = serializer.deserialize();
@@ -42,6 +46,11 @@ public class DataManagerForOrder implements IDataManager<Order, Integer> {
 			orderList = new ArrayList<Order>();
 		}
 	}
+
+    /**
+     * Saves the current list of orders to a serialized file. This method serializes the entire list of orders
+     * to ensure all current data is persisted.
+     */
     public void saveData(){
         serializer.serialize(orderList);
     }
@@ -105,6 +114,11 @@ public class DataManagerForOrder implements IDataManager<Order, Integer> {
 		return null;
 	}
 
+    /**
+     * Retrieves the complete list of orders managed by this data manager.
+     *
+     * @return An ArrayList of {@code Order} objects representing all the orders currently managed.
+     */
     public ArrayList <Order> getAll(){
         return orderList;
     }
