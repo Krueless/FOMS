@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -65,9 +66,12 @@ public class OrderControlForCheckout {
                     sc.nextLine();
                     System.out.println("Please input a positive number!");
                 }
-            } catch (Exception e) {
+            } catch (InputMismatchException e) {
                 sc.nextLine(); 
                 System.out.println("Please input a valid integer");
+            } catch (Exception e) {
+                sc.nextLine();
+                System.out.println("An error occured, please try again.");
             }
         }
     }

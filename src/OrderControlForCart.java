@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 /**
  * Manages the functionalities related to modifying the shopping cart, including adding to, removing from,
@@ -104,9 +105,12 @@ public class OrderControlForCart {
                     sc.nextLine();
                     System.out.println("Please input a positive number!");
                 }
-            } catch (Exception e) {
+            } catch (InputMismatchException e) {
                 sc.nextLine(); 
                 System.out.println("Please input a valid integer");
+            } catch (Exception e){
+                sc.nextLine();
+                System.out.println("An error occured. Please try again.");
             }
         }
     }
@@ -122,9 +126,12 @@ public class OrderControlForCart {
                     sc.nextLine();
                     System.out.println("Please input a number between 1 and " + max + "!");
                 }
-            } catch (Exception e) {
+            } catch (InputMismatchException e) {
                 sc.nextLine();
                 System.out.println("Please input a valid integer");
+            } catch (Exception e){
+                sc.nextLine();
+                System.out.println("An error occured, please try again.");
             }
         }
     }

@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 
 /**
  * The {@code OrderControl} class manages the order process within a restaurant management system.
@@ -75,18 +76,19 @@ public class OrderControl {
             showOptions();
             int choice = -1;
 
-            while (true)
-            {
+            while (true) {
                 try {
                     choice = sc.nextInt();
-                    if (choice >= 1 && choice <= 6)
-                    {
+                    if (choice >= 1 && choice <= 6) {
                         break;
                     }
                     System.out.println("Please input a valid choice.");
+                } catch (InputMismatchException e) {
+                    sc.nextLine(); 
+                    System.out.println("You did not enter a valid number. Please try again.");
                 } catch (Exception e) {
-                    sc.nextLine();
-                    System.out.println("You did not enter a valid number");
+                    sc.nextLine(); 
+                    System.out.println("An unexpected error occurred, please try again.");
                 }
             }
 			switch (choice) {
@@ -129,8 +131,12 @@ public class OrderControl {
                                 break;
                             }
                             System.out.println("Please input a 1 or 0");
-                        }catch(Exception e){
+                        }catch(InputMismatchException e){
+                            sc.nextLine();
                             System.out.println("Please input 1 or 0");
+                        }catch(Exception e){
+                            sc.nextLine();
+                            System.out.println("An error occured, please try again.");
                         }
                     }
                     if (choiceToQuit == 1)
