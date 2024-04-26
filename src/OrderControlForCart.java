@@ -20,6 +20,15 @@ public class OrderControlForCart {
         System.out.println("Please input the number of food item(s) you want");
         int quantity = getValidNumber();
         OrderedFoodItem orderedFoodItem = new OrderedFoodItem(foodItem, quantity);
+
+        for (int i = 0;i<order.getCartItems().size(); i++){
+            OrderedFoodItem currentFoodItem = order.getCartItems().get(i);
+            if (orderedFoodItem.getID() == currentFoodItem.getID()){
+                currentFoodItem.setQuantity(currentFoodItem.getQuantity() + orderedFoodItem.getQuantity());
+                order.getCartItems().set(i, currentFoodItem);
+                return order;
+            }
+        }
         order.getCartItems().add(orderedFoodItem);
 		System.out.println("Item successfully added to cart!");
         return order;
